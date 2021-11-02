@@ -6,7 +6,7 @@ namespace Task_2
 {
   interface IRemind
   {
-    public void getDateTimeRemind();
-    public DateTime setDateTimeRemind(); 
+    public DateTime getDateTimeRemind();
+    public void setDateTimeRemind(DateTime dateTimeRemind); 
   }
 }
