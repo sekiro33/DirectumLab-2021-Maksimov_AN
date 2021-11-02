@@ -6,7 +6,12 @@ namespace Task_2
   {
     public static void Main(string[] args)
     {
-      Console.WriteLine("Hello, Directum!");
+      Meeting meeting = new Meeting();
+      meeting.MeetingName = "Тестовая встреча";
+      meeting.StartDate = DateTime.Now;
+      meeting.EndDate = DateTime.Now;
+      Console.WriteLine(meeting.ToString());
+      Console.ReadKey();
     }
   }
 }
