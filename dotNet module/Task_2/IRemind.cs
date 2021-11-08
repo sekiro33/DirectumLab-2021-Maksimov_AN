@@ -1,12 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Task_2
 {
-  interface IRemind
+  /// <summary>
+  /// Интерфейс "Напоминание".
+  /// </summary>
+  public interface IRemind
   {
-    public DateTime getDateTimeRemind();
-    public void setDateTimeRemind(DateTime dateTimeRemind); 
+    /// <summary>
+    /// Дата-время напоминания о событии.
+    /// </summary>
+    DateTime? DateTimeRemind { get; set; }
   }
 }
