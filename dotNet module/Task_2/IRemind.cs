@@ -3,13 +3,13 @@
 namespace Task_2
 {
   /// <summary>
-  /// Интерфейс "Напоминание".
+  /// Представляет свойство дата-время напоминания.
   /// </summary>
   public interface IRemind
   {
     /// <summary>
     /// Дата-время напоминания о событии.
     /// </summary>
-    DateTime? DateTimeRemind { get; set; }
+    DateTime? Remind { get; set; }
   }
 }

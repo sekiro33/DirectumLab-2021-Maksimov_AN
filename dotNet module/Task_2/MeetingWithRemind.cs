@@ -4,29 +4,29 @@ using System.Timers;
 namespace Task_2
 {
   /// <summary>
-  /// Класс "Встреча с напоминанием".
+  /// Встреча с напоминанием.
   /// </summary>
   public class MeetingWithRemind : Meeting, IRemind
   {
     private Timer timer;
-    private DateTime? remindDateTime;
+    private DateTime? remind;
     private const double CHECKINTERVAL = 60000;
 
     /// <summary>
     /// Дата-время напоминания о встрече.
     /// </summary>
-    public DateTime? DateTimeRemind
+    public DateTime? Remind
     {
       get
       {
-        return this.remindDateTime;
+        return this.remind;
       }
 
       set
       {
         if (this.StartDate != null && value < this.StartDate)
         {
-          this.remindDateTime = value;
+          this.remind = value;
           this.InitializeTimer();
         }
         else
@@ -40,10 +40,10 @@ namespace Task_2
     /// <param name="name">Название встречи.</param>
     /// <param name="startDate">Дата-время начала встречи.</param>
     /// <param name="endDate">Дата-время окончания встречи.</param>
-    /// <param name="remindDateTime">Дата-время напоминания о встрече.</param>
-    public MeetingWithRemind(string name, DateTime startDate, DateTime endDate, DateTime remindDateTime) : base(name, startDate, endDate)
+    /// <param name="remind">Дата-время напоминания о встрече.</param>
+    public MeetingWithRemind(string name, DateTime startDate, DateTime endDate, DateTime remind) : base(name, startDate, endDate)
     {
-      this.DateTimeRemind = remindDateTime;
+      this.Remind = remind;
     }
 
     private void InitializeTimer()
@@ -55,16 +55,16 @@ namespace Task_2
 
     private void CheckRemindDate(object source, ElapsedEventArgs e)
     {
-      if (DateTime.Now > this.remindDateTime)
+      if (DateTime.Now > this.remind)
       { 
         this.timer.Enabled = false;
-        this.Remind();
+        this.Reminder();
       }
     }
 
-    private void Remind()
+    private void Reminder()
     {
-      Console.WriteLine($"Напоминание о встрече \"{this.MeetingName}\". Встреча начнётся в {this.StartDate}.");
+      Console.WriteLine($"Напоминание о встрече \"{this.MeetingName}\". Встреча начнётся в {this.StartDate}. Текущее время: {DateTime.Now}.");
     }
   }
 }

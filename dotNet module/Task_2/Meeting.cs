@@ -3,7 +3,7 @@
 namespace Task_2
 {
   /// <summary>
-  /// Класс "Встреча".
+  /// Встреча.
   /// </summary>
   public class Meeting
   {
@@ -62,13 +62,7 @@ namespace Task_2
     /// <summary>
     /// Продолжительность встречи.
     /// </summary>
-    public TimeSpan? Duration
-    {
-      get
-      {
-        return this.endDate - this.startDate;
-      }
-    }
+    public TimeSpan? Duration => this.endDate - this.startDate;
 
     /// <summary>
     /// Создать экземляр класса "Встреча" на основе переданных значений дат и времени.
@@ -82,6 +76,13 @@ namespace Task_2
       this.StartDate = startDate;
       this.EndDate = endDate;
     }
+    /// <summary>
+    /// Создать экземпля класса "Встреча".
+    /// </summary>
+    /// <remarks>
+    /// Даты инициализируются как null. Требуется инициализация дат.
+    /// </remarks>
+    public Meeting() { }
 
     /// <summary>
     /// Информация о встрече.
