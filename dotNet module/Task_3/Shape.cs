@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace Task_3
 {
+  /// <summary>
+  /// Абстрактная фигура
+  /// </summary>
   public abstract class Shape
   {
-    private double x;
-    private double y;
-
-    public double X { get { return x; } set { x = value; } }
-    public double Y { get { return y; } set { y = value; } }
-
-    public abstract double GetArea();
-    public abstract double GetPerimeter();
+    public abstract double X { get; set; }
+    public abstract double Y { get; set; }
   }
 }
