@@ -23,5 +23,12 @@ namespace Task_3
     /// Площадь круга.
     /// </summary>
     public override double Area => Math.PI * Math.Pow(radius, 2);
+    /// <summary>
+    /// Создать круг.
+    /// </summary>
+    /// <param name="radius">Радиус.</param>
+    public Round(double radius) : base(radius)
+    { 
+    }
   }
 }

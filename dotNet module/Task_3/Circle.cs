@@ -32,5 +32,15 @@ namespace Task_3
     /// Площадь окружности.
     /// </summary>
     public override double Area { get => 0; }
+    /// <summary>
+    /// Создать окружность.
+    /// </summary>
+    /// <param name="radius">Радиус.</param>
+    public Circle(double radius)
+    {
+      this.radius = radius;
+      this.x = 0;
+      this.y = 0;
+    }
   }
 }

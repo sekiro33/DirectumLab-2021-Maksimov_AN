@@ -29,11 +29,11 @@ namespace Task_3
     /// <summary>
     /// Координата нижней левой вершины треугольника по оси абцисс.
     /// </summary>
-    public override double X { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public override double X { get => this.x; set => this.x = value; }
     /// <summary>
     /// Координата нижней левой вершины треугольника по оси ординат.
     /// </summary>
-    public override double Y { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+    public override double Y { get => this.y; set => this.y = value; }
     /// <summary>
     /// Периметр треугольника.
     /// </summary>
@@ -42,5 +42,19 @@ namespace Task_3
     /// Площадь треугольника.
     /// </summary>
     public override double Area => Math.Sqrt(this.Perimeter / 2 * (this.Perimeter / 2 - this.sideA) * (this.Perimeter / 2 - this.sideB) * (this.Perimeter / 2 - this.sideC));
+    /// <summary>
+    /// Создать треугольник на основе длин его сторон.
+    /// </summary>
+    /// <param name="sideA">Первая сторона</param>
+    /// <param name="sideB">Вторая сторона</param>
+    /// <param name="sideC">Третья сторона</param>
+    public Triangle(double sideA, double sideB, double sideC)
+    {
+      this.sideA = sideA;
+      this.sideB = sideB;
+      this.sideC = sideC;
+      this.x = 0;
+      this.y = 0;
+    }
   }
 }
