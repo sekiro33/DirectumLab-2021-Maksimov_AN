@@ -14,10 +14,24 @@ namespace Task_3
     protected double x;
     protected double y;
 
+    /// <summary>
+    /// Координата расположения фигуры по оси абсцисс.
+    /// </summary>
     public abstract double X { get; set; }
-    public abstract double Y { get; set; }
-    public abstract double Perimeter { get; }
-    public abstract double Area { get; }
 
+    /// <summary>
+    /// Координата расположения фигуры по оси ординат.
+    /// </summary>
+    public abstract double Y { get; set; }
+
+    /// <summary>
+    /// Периметр фигуры.
+    /// </summary>
+    public abstract double Perimeter { get; }
+
+    /// <summary>
+    /// Площадь фигуры.
+    /// </summary>
+    public abstract double Area { get; }
   }
 }

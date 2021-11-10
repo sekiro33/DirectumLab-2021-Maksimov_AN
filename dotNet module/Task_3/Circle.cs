@@ -11,27 +11,36 @@ namespace Task_3
   /// </summary>
   public class Circle : Shape
   {
-    protected double radius;
-    /// <summary>
-    /// Координата центр-окружности по оси абцисс.
-    /// </summary>
-    public override double X { get => x; set => x = value; }
-    /// <summary>
-    /// Координата центр-окружности по оси ординат.
-    /// </summary>
-    public override double Y { get => y; set => y = value; }
     /// <summary>
     /// Радиус окружности.
     /// </summary>
-    public double Radius { get => radius; set => radius = value >= 0 ? value : radius; }
+    private double radius;
+
+    /// <summary>
+    /// Координата центр-окружности по оси абсцисс.
+    /// </summary>
+    public override double X { get => this.x; set => this.x = value; }
+
+    /// <summary>
+    /// Координата центр-окружности по оси ординат.
+    /// </summary>
+    public override double Y { get => this.y; set => this.y = value; }
+
+    /// <summary>
+    /// Радиус окружности.
+    /// </summary>
+    protected double Radius { get => this.radius; set => this.radius = value >= 0 ? value : this.radius; }
+
     /// <summary>
     /// Длина окружности.
     /// </summary>
-    public override double Perimeter => 2 * Math.PI * radius;
+    public override double Perimeter => 2 * Math.PI * this.radius;
+
     /// <summary>
     /// Площадь окружности.
     /// </summary>
     public override double Area { get => 0; }
+
     /// <summary>
     /// Создать окружность.
     /// </summary>

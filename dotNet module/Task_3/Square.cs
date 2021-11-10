@@ -12,26 +12,32 @@ namespace Task_3
   public class Square : Shape
   {
     private double side;
+
     /// <summary>
     /// Сторона квадрата.
     /// </summary>
-    public double Side { get => side; set => side = value; }
+    public double Side { get => this.side; set => this.side = value; }
+
     /// <summary>
-    /// Координата нижней левой вершины квадрата по оси абцисс.
+    /// Координата нижней левой вершины квадрата по оси абсцисс.
     /// </summary>
     public override double X { get => this.x; set => this.x = value; }
+
     /// <summary>
     /// Координата нижней левой вершины квадрата по оси ординат.
     /// </summary>
     public override double Y { get => this.y; set => this.y = value; }
+
     /// <summary>
     /// Периметр квадрата.
     /// </summary>
     public override double Perimeter => this.side * 4;
+
     /// <summary>
     /// Площадь квадрата.
     /// </summary>
     public override double Area => this.side * this.side;
+
     /// <summary>
     /// Создать квадрат на основе длины его стороны.
     /// </summary>

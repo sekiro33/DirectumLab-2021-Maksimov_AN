@@ -13,27 +13,34 @@ namespace Task_3
   {
     private double outerRaidus;
     private double innerRadius;
+
     /// <summary>
     /// Радиус внутренней окружности.
     /// </summary>
-    public double InnerRadius { get => innerRadius; set => this.innerRadius = value; }
+    public double InnerRadius { get => this.innerRadius; set => this.innerRadius = value; }
+
     /// <summary>
     /// Радиус внешней окружности.
     /// </summary>
-    public double OuterRadius { get => outerRaidus; set => this.outerRaidus = value; }
+    public double OuterRadius { get => this.outerRaidus; set => this.outerRaidus = value; }
+
     /// <summary>
-    /// Координата центр-кольца по оси абцисс.
+    /// Координата центр-кольца по оси абсцисс.
     /// </summary>
     public override double X { get => this.x; set => this.x = value; }
+
     /// <summary>
     /// Координата центр-кольца по оси ординат.
     /// </summary>
     public override double Y { get => this.y; set => this.y = value; }
+
     public override double Perimeter => throw new NotImplementedException();
+
     /// <summary>
     /// Площадь кольца.
     /// </summary>
-    public override double Area => Math.PI * (outerRaidus * outerRaidus - innerRadius * innerRadius);
+    public override double Area => Math.PI * ((this.outerRaidus * this.outerRaidus) - (this.innerRadius * this.innerRadius));
+
     /// <summary>
     /// Создать кольцо.
     /// </summary>

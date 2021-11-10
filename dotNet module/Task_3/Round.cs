@@ -12,17 +12,20 @@ namespace Task_3
   public class Round : Circle
   {
     /// <summary>
-    /// Координата центр-круга по оси абцисс.
+    /// Координата центр-круга по оси абсцисс.
     /// </summary>
-    public override double X { get => x; set => x = value; }
+    public override double X { get => this.x; set => this.x = value; }
+
     /// <summary>
     /// Координата центр-круга по оси ординат.
     /// </summary>
-    public override double Y { get => y; set => y = value; }
+    public override double Y { get => this.y; set => this.y = value; }
+
     /// <summary>
     /// Площадь круга.
     /// </summary>
-    public override double Area => Math.PI * Math.Pow(radius, 2);
+    public override double Area => Math.PI * Math.Pow(this.Radius, 2);
+
     /// <summary>
     /// Создать круг.
     /// </summary>

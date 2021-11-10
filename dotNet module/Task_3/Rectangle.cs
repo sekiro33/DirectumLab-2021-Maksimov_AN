@@ -13,30 +13,37 @@ namespace Task_3
   {
     private double width;
     private double height;
+
     /// <summary>
     /// Ширина прямоугольника.
     /// </summary>
-    public double Width { get => width; set => width = value; }
+    public double Width { get => this.width; set => this.width = value; }
+
     /// <summary>
     /// Высота прямоугольника.
     /// </summary>
-    public double Height { get => height; set => height = value; }
+    public double Height { get => this.height; set => this.height = value; }
+
     /// <summary>
-    /// Координата нижней левой вершины прямоугольника по оси абцисс.
+    /// Координата нижней левой вершины прямоугольника по оси абсцисс.
     /// </summary>
     public override double X { get => this.x; set => this.x = value; }
+
     /// <summary>
     /// Координата нижней левой вершины прямоугольника по оси ординат.
     /// </summary>
     public override double Y { get => this.y; set => this.y = value; }
+
     /// <summary>
     /// Периметр прямоугольника.
     /// </summary>
-    public override double Perimeter => (width + height) * 2;
+    public override double Perimeter => (this.width + this.height) * 2;
+
     /// <summary>
     /// Площадь прямоугольника.
     /// </summary>
-    public override double Area => width * height;
+    public override double Area => this.width * this.height;
+
     /// <summary>
     /// Создать прямоугольник на основе высоты и ширины его сторон.
     /// </summary>
