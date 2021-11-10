@@ -20,9 +20,9 @@ namespace Task_2
     /// Создать встречу с типом.
     /// </summary>
     /// <param name="name">Имя встречи.</param>
+    /// <param name="meetingType">Тип встречи.</param>
     /// <param name="startDate">Дата-время начала встречи.</param>
     /// <param name="endDate">Дата-время конца встречи.</param>
-    /// <param name="meetingType">Тип встречи.</param>
     public MeetingWithType(string name, TypeMeeting meetingType,  DateTime? startDate, DateTime? endDate = null) : base(name, startDate, endDate)
     {
       this.type = meetingType;
