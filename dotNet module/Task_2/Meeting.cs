@@ -20,13 +20,15 @@ namespace Task_2
     /// </summary>
     public DateTime? StartDate
     {
-      get
-      {
-        return this.startDate;
-      }
+      get => this.startDate;
 
       set
       {
+        if (value == null)
+        {
+          this.startDate = value;
+          return;
+        }
         if (this.endDate != null)
         {
           if (value <= this.endDate)
@@ -44,25 +46,31 @@ namespace Task_2
     /// </summary>
     public DateTime? EndDate
     {
-      get
-      {
-        return this.endDate;
-      }
+      get => this.endDate;
 
       set
       {
+        if (value == null)
+        {
+          this.endDate = value;
+          return;
+        }
         if (this.startDate != null)
+        {
           if (value >= this.startDate)
             this.endDate = value;
           else
             Console.WriteLine("Неправильная дата окончания встречи. Дата окончания встречи не может быть раньше даты начала встречи.");
+        }
+        else
+          this.endDate = value;
       }
     }
 
     /// <summary>
     /// Продолжительность встречи.
     /// </summary>
-    public TimeSpan? Duration => this.endDate - this.startDate;
+    public virtual TimeSpan? Duration => this.endDate - this.startDate;
 
     /// <summary>
     /// Создать экземляр класса "Встреча" на основе переданных значений дат и времени.
@@ -70,7 +78,7 @@ namespace Task_2
     /// <param name="name">Название встречи.</param>
     /// <param name="startDate">Дата-время начала встречи.</param>
     /// <param name="endDate">Дата-время окончания встречи.</param>
-    public Meeting(string name, DateTime startDate, DateTime endDate)
+    public Meeting(string name, DateTime? startDate, DateTime? endDate)
     {
       this.MeetingName = name;
       this.StartDate = startDate;
