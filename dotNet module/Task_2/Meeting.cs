@@ -76,13 +76,16 @@ namespace Task_2
       this.StartDate = startDate;
       this.EndDate = endDate;
     }
+
     /// <summary>
     /// Создать экземпля класса "Встреча".
     /// </summary>
     /// <remarks>
     /// Даты инициализируются как null. Требуется инициализация дат.
     /// </remarks>
-    public Meeting() { }
+    public Meeting() 
+    {
+    }
 
     /// <summary>
     /// Информация о встрече.
