@@ -39,9 +39,9 @@ namespace Task_5
     /// <summary>
     /// Определяет, имеют ли два экземпляра класса StringValue одинаковые значения строк. 
     /// </summary>
-    /// <param name="sv1">Первый сравниваемый экземпляр класса StringValue</param>
-    /// <param name="sv2">Второй сравниваемый экземпляр класса StringValue</param>
-    /// <returns>true если значение sv1 совпадает со значением sv2; иначе - false</returns>
+    /// <param name="sv1">Первый сравниваемый экземпляр класса StringValue.</param>
+    /// <param name="sv2">Второй сравниваемый экземпляр класса StringValue.</param>
+    /// <returns>true если значение sv1 совпадает со значением sv2; иначе - false.</returns>
     public static bool operator ==(StringValue sv1, StringValue sv2)
     {
       return sv1.Value.Equals(sv2.Value);
@@ -50,9 +50,9 @@ namespace Task_5
     /// <summary>
     /// Определяет, имеют ли два экземпляра класса StringValue разные значения строк. 
     /// </summary>
-    /// <param name="sv1">Первый сравниваемый экземпляр класса StringValue</param>
-    /// <param name="sv2">Второй сравниваемый экземпляр класса StringValue</param>
-    /// <returns>true если значение sv1 не совпадает со значением sv2; иначе - true</returns>
+    /// <param name="sv1">Первый сравниваемый экземпляр класса StringValue.</param>
+    /// <param name="sv2">Второй сравниваемый экземпляр класса StringValue.</param>
+    /// <returns>true если значение sv1 не совпадает со значением sv2; иначе - true.</returns>
     public static bool operator !=(StringValue sv1, StringValue sv2)
     {
       return !sv1.Value.Equals(sv2.Value);
