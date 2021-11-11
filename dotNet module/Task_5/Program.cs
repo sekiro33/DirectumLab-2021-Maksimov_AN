@@ -13,7 +13,7 @@ namespace Task_5
     /// <param name="args">Аргументы.</param>
     private static void Main(string[] args)
     { 
-      Console.WriteLine(new StringValue("а").Equals(new StringValue("а")));
+      Console.WriteLine(new StringValue("A") != new StringValue("AA"));
       Console.ReadKey();
     }
   }
