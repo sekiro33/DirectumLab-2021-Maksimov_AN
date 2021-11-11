@@ -8,29 +8,18 @@ namespace Task_4
   /// Program.
   /// </summary>
   public class Program
-  {
-    private static Logger logger = new Logger("logFile.txt");
-
+  { 
     /// <summary>
     /// Точка входа в программу.
     /// </summary>
     /// <param name="args">Аргументы.</param>
     private static void Main(string[] args)
     {
-      logger.WriteString("Привет, Мир!");
-      Console.WriteLine(ParseDataSet(GetStandartDataSet(), "\n", "\t"));
-      logger.Dispose();
-
-      // Попытка записи в закрытый лог приведёт к исключению.
-      try
+      using (Logger logger = new Logger("log.txt"))
       {
-        logger.WriteString("Тест");
+        logger.WriteString("Hello, Directum!");
       }
-      catch (ObjectDisposedException e)
-      {
-        Console.Write(e.Message);
-      }
-
+      Console.Write(GetAllowsRights(AccessRights.Run | AccessRights.View));
       Console.ReadKey();
     }
 
@@ -41,19 +30,18 @@ namespace Task_4
     /// <returns>Строка с перечнем действий.</returns>
     private static string GetAllowsRights(AccessRights accessRights)
     {
-      if (accessRights == AccessRights.AccessDenied)
+      if (accessRights.HasFlag(AccessRights.AccessDenied))
       {
-        return accessRights.ToString();
+        return AccessRights.AccessDenied.ToString();
       }
       else
       {
-        StringBuilder allowsRights = new StringBuilder();
+        var allowsRights = new StringBuilder();
         foreach (AccessRights r in Enum.GetValues(typeof(AccessRights)))
         {
-          if ((int)r <= (int)accessRights)
+          if (accessRights.HasFlag(r))
             allowsRights.AppendLine(r.ToString());
         }
-
         return allowsRights.ToString();
       }
     }
@@ -91,8 +79,7 @@ namespace Task_4
     /// <returns>Набор данных в виде одной строки.</returns>
     private static string ParseDataSet(DataSet dataSet, string rowDelimeter, string columnDelimeter)
     {
-      logger.WriteString("Парсим DataSet...");
-      StringBuilder parseResult = new StringBuilder();
+      var parseResult = new StringBuilder();
       foreach (DataTable dt in dataSet.Tables)
       {
         foreach (DataRow row in dt.Rows)
@@ -113,22 +100,21 @@ namespace Task_4
     /// <returns>Тестовый набор.</returns>
     private static DataSet GetStandartDataSet()
     {
-        logger.WriteString("Инициализация тестового набора DataSet...");
-      DataSet bookStore = new DataSet("BookStore");
-      DataTable booksTable = new DataTable("Books");
+      var bookStore = new DataSet("BookStore");
+      var booksTable = new DataTable("Books");
       bookStore.Tables.Add(booksTable);
 
-      DataColumn idColumn = new DataColumn("Id", Type.GetType("System.Int32"));
+      var idColumn = new DataColumn("Id", Type.GetType("System.Int32"));
       idColumn.Unique = true;
       idColumn.AllowDBNull = false;
       idColumn.AutoIncrement = true;
       idColumn.AutoIncrementSeed = 1;
       idColumn.AutoIncrementStep = 1;
 
-      DataColumn nameColumn = new DataColumn("Name", Type.GetType("System.String"));
-      DataColumn priceColumn = new DataColumn("Price", Type.GetType("System.Decimal"));
+      var nameColumn = new DataColumn("Name", Type.GetType("System.String"));
+      var priceColumn = new DataColumn("Price", Type.GetType("System.Decimal"));
       priceColumn.DefaultValue = 100;
-      DataColumn discountColumn = new DataColumn("Discount", Type.GetType("System.Decimal"));
+      var discountColumn = new DataColumn("Discount", Type.GetType("System.Decimal"));
       discountColumn.Expression = "Price * 0.2";
 
       booksTable.Columns.Add(idColumn);
@@ -137,7 +123,7 @@ namespace Task_4
       booksTable.Columns.Add(discountColumn);
       booksTable.PrimaryKey = new DataColumn[] { booksTable.Columns["Id"] };
 
-      DataRow row = booksTable.NewRow();
+      var row = booksTable.NewRow();
       row.ItemArray = new object[] { null, "Война и мир", 200 };
       booksTable.Rows.Add(row); // добавляем первую строку
       booksTable.Rows.Add(new object[] { null, "Отцы и дети", 170 });

@@ -23,13 +23,13 @@ namespace Task_4
     /// <returns>Время конкатенации.</returns>
     public static string TestConcatStringSpeed()
     {
-      Stopwatch stopWatch = new Stopwatch();
-      string str = string.Empty;
+      var stopWatch = new Stopwatch();
+      var str = string.Empty;
       stopWatch.Start();
       for (int i = 0; i < СycleCount; i++)
-        str += i;
+        str += "1";
       stopWatch.Stop();
-      TimeSpan ts = stopWatch.Elapsed;
+      var ts = stopWatch.Elapsed;
       return ts.TotalMilliseconds.ToString() + " ms";
     }
 
@@ -39,13 +39,13 @@ namespace Task_4
     /// <returns>Время конкатенации.</returns>
     public static string TestConcatStringBuilderSpeed()
     {
-      Stopwatch stopWatch = new Stopwatch();
-      StringBuilder str = new StringBuilder();
+      var stopWatch = new Stopwatch();
+      var str = new StringBuilder();
       stopWatch.Start();
       for (int i = 0; i < СycleCount; i++)
-        str.Append(i);
+        str.Append("1");
       stopWatch.Stop();
-      TimeSpan ts = stopWatch.Elapsed;
+      var ts = stopWatch.Elapsed;
       return ts.TotalMilliseconds.ToString() + " ms";
     }
   }

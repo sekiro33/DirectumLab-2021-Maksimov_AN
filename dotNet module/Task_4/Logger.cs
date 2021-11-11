@@ -15,12 +15,12 @@ namespace Task_4
     /// <summary>
     /// Файл логов.
     /// </summary>
-    private FileStream logFile;
+    private readonly FileStream logFile;
 
     /// <summary>
     /// Писатель в лог.
     /// </summary>
-    private StreamWriter logWriter;
+    private readonly StreamWriter logWriter;
 
     /// <summary>
     /// Создать объект.
