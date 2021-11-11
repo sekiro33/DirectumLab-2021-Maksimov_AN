@@ -22,19 +22,15 @@ namespace Task_5
     public double Im { get; set; }
 
     /// <summary>
+    /// Модуль комплексного числа.
+    /// </summary>
+    public double Module => Math.Sqrt((this.Re * this.Re) + (this.Im * this.Im));
+
+    /// <summary>
     /// Создать экземпляр класса Complex.
     /// </summary>
     public Complex()
     {
-    }
-
-    /// <summary>
-    /// Рассчитать модуль комплексного числа.
-    /// </summary>
-    /// <returns>Модуль комплексного числа.</returns>
-    public double GetModule()
-    {
-      return Math.Sqrt((this.Re * this.Re) + (this.Im * this.Im));
     }
 
     /// <summary>
@@ -46,27 +42,15 @@ namespace Task_5
       return $"Re = {this.Re}, Im = {this.Im}";
     }
 
-    /// <summary>
-    /// Сравнивает по модулю данное комплексное число с заданным и возвращает значение, указывающее, как соотносятся их значения.
-    /// </summary>
-    /// <param name="obj">Комплексное число для сравнения.</param>
-    /// <returns>Больше нуля - это комплексное число по модулю больше чем obj.
-    /// Меньше нуля - это комплексное число меньше по модулю чем obj.
-    /// Ноль - эти комплексные числа равны по модулю.
-    /// </returns>
+    /// <inheritdoc/>
     public int CompareTo(object obj)
     {
-      Complex castObj = (Complex)obj;
+      Complex comparedComplex = (Complex)obj;
 
-      double thisModule = this.GetModule();
-      double compareObjModule = castObj.GetModule();
+      double thisModule = this.Module;
+      double comparedModule = comparedComplex.Module;
 
-      if (thisModule > compareObjModule)
-        return 1;
-      else if (thisModule < compareObjModule)
-        return -1;
-      else
-        return 0;
+      return (int)(thisModule - comparedModule);
     }
   }
 }
