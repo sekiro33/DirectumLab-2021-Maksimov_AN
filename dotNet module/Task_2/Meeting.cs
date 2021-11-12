@@ -29,6 +29,7 @@ namespace Task_2
           this.startDate = value;
           return;
         }
+
         if (this.endDate != null)
         {
           if (value <= this.endDate)
@@ -55,6 +56,7 @@ namespace Task_2
           this.endDate = value;
           return;
         }
+
         if (this.startDate != null)
         {
           if (value >= this.startDate)

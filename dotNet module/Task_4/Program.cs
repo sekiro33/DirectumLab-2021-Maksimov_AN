@@ -8,15 +8,66 @@ namespace Task_4
   /// Program.
   /// </summary>
   public class Program
-  {
+  { 
     /// <summary>
     /// Точка входа в программу.
     /// </summary>
     /// <param name="args">Аргументы.</param>
-    static void Main(string[] args)
+    private static void Main(string[] args)
     {
-      Console.WriteLine(ParseDataSet(GetStandartDataSet(), "\n", "\t"));
+      using (Logger logger = new Logger("log.txt"))
+      {
+        logger.WriteString("Hello, Directum!");
+      }
+      Console.Write(GetAllowsRights(AccessRights.Run | AccessRights.View));
       Console.ReadKey();
+    }
+
+    /// <summary>
+    /// Получить перечень действий, разрешенных правами.
+    /// </summary>
+    /// <param name="accessRights">Тип прав доступа.</param>
+    /// <returns>Строка с перечнем действий.</returns>
+    private static string GetAllowsRights(AccessRights accessRights)
+    {
+      if (accessRights.HasFlag(AccessRights.AccessDenied))
+      {
+        return AccessRights.AccessDenied.ToString();
+      }
+      else
+      {
+        var allowsRights = new StringBuilder();
+        foreach (AccessRights r in Enum.GetValues(typeof(AccessRights)))
+        {
+          if (accessRights.HasFlag(r))
+            allowsRights.AppendLine(r.ToString());
+        }
+        return allowsRights.ToString();
+      }
+    }
+
+    /// <summary>
+    /// Замер скорости конкатенации строк.
+    /// </summary>
+    private static void TestSpeedConcat()
+    {
+      /*
+       * Исходя из результатов тестирования, можно сказать, что на 100'000 итераций
+       * обычная конкатенация уже выполняется довольно долго. При увеличении ещё в 10 раз
+       * приходится ждать очень долго.
+       * Конкатенация средствами StringBuilder при этих же количествах итерации выполняется
+       * гораздо быстрее.
+       */
+      Console.WriteLine("Замер скорости конкатенации строк:");
+      for (int i = 1; i < 7; i++)
+      {
+        int countCycles = (int)Math.Pow(10, i);
+        SpeedComprasionTest.СycleCount = countCycles;
+        Console.WriteLine("Количество итераций: " + countCycles);
+        Console.WriteLine("Средствами класса String: " + SpeedComprasionTest.TestConcatStringSpeed());
+        Console.WriteLine("Средствами класса StringBuilder: " + SpeedComprasionTest.TestConcatStringBuilderSpeed());
+        Console.WriteLine();
+      }
     }
 
     /// <summary>
@@ -26,9 +77,9 @@ namespace Task_4
     /// <param name="rowDelimeter">Разделитель записей.</param>
     /// <param name="columnDelimeter">Разделитель колонок.</param>
     /// <returns>Набор данных в виде одной строки.</returns>
-    public static string ParseDataSet(DataSet dataSet, String rowDelimeter, String columnDelimeter)
+    private static string ParseDataSet(DataSet dataSet, string rowDelimeter, string columnDelimeter)
     {
-      StringBuilder parseResult = new StringBuilder();
+      var parseResult = new StringBuilder();
       foreach (DataTable dt in dataSet.Tables)
       {
         foreach (DataRow row in dt.Rows)
@@ -39,6 +90,7 @@ namespace Task_4
           parseResult.Append(rowDelimeter);
         }
       }
+
       return parseResult.ToString();
     }
 
@@ -46,23 +98,23 @@ namespace Task_4
     /// Получить тестовый набор для метода.
     /// </summary>
     /// <returns>Тестовый набор.</returns>
-    public static DataSet GetStandartDataSet()
+    private static DataSet GetStandartDataSet()
     {
-      DataSet bookStore = new DataSet("BookStore");
-      DataTable booksTable = new DataTable("Books");
+      var bookStore = new DataSet("BookStore");
+      var booksTable = new DataTable("Books");
       bookStore.Tables.Add(booksTable);
 
-      DataColumn idColumn = new DataColumn("Id", Type.GetType("System.Int32"));
+      var idColumn = new DataColumn("Id", Type.GetType("System.Int32"));
       idColumn.Unique = true;
       idColumn.AllowDBNull = false;
       idColumn.AutoIncrement = true;
       idColumn.AutoIncrementSeed = 1;
       idColumn.AutoIncrementStep = 1;
 
-      DataColumn nameColumn = new DataColumn("Name", Type.GetType("System.String"));
-      DataColumn priceColumn = new DataColumn("Price", Type.GetType("System.Decimal"));
+      var nameColumn = new DataColumn("Name", Type.GetType("System.String"));
+      var priceColumn = new DataColumn("Price", Type.GetType("System.Decimal"));
       priceColumn.DefaultValue = 100;
-      DataColumn discountColumn = new DataColumn("Discount", Type.GetType("System.Decimal"));
+      var discountColumn = new DataColumn("Discount", Type.GetType("System.Decimal"));
       discountColumn.Expression = "Price * 0.2";
 
       booksTable.Columns.Add(idColumn);
@@ -71,7 +123,7 @@ namespace Task_4
       booksTable.Columns.Add(discountColumn);
       booksTable.PrimaryKey = new DataColumn[] { booksTable.Columns["Id"] };
 
-      DataRow row = booksTable.NewRow();
+      var row = booksTable.NewRow();
       row.ItemArray = new object[] { null, "Война и мир", 200 };
       booksTable.Rows.Add(row); // добавляем первую строку
       booksTable.Rows.Add(new object[] { null, "Отцы и дети", 170 });
