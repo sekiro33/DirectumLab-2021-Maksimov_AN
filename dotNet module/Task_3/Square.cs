@@ -1,52 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Task_3
 {
   /// <summary>
   /// Квадрат.
   /// </summary>
-  public class Square : Shape
+  public class Square : Rectangle
   {
-    private double side;
+    /// <summary>
+    /// Высота квадрата.
+    /// </summary>
+    public override double Height => base.Height;
 
     /// <summary>
-    /// Сторона квадрата.
+    /// Ширина квадрата.
     /// </summary>
-    public double Side { get => this.side; set => this.side = value; }
-
-    /// <summary>
-    /// Координата нижней левой вершины квадрата по оси абсцисс.
-    /// </summary>
-    public override double X { get => this.x; set => this.x = value; }
-
-    /// <summary>
-    /// Координата нижней левой вершины квадрата по оси ординат.
-    /// </summary>
-    public override double Y { get => this.y; set => this.y = value; }
+    public override double Width => base.Width;
 
     /// <summary>
     /// Периметр квадрата.
     /// </summary>
-    public override double Perimeter => this.side * 4;
+    public override double Perimeter => base.Width * 4;
 
     /// <summary>
     /// Площадь квадрата.
     /// </summary>
-    public override double Area => this.side * this.side;
+    public override double Area => base.Width * base.Width;
 
     /// <summary>
     /// Создать квадрат на основе длины его стороны.
     /// </summary>
+    /// <param name="location">Расположение левой нижней вершины квадрата.</param>
     /// <param name="side">Длина стороны квадрата.</param>
-    public Square(double side)
+    public Square(Point location, double side) : base(location, side, side)
     {
-      this.side = side;
-      this.x = 0;
-      this.y = 0;
     }
   }
 }

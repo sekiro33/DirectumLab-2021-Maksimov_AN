@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Task_3
 {
@@ -17,22 +13,12 @@ namespace Task_3
     /// <summary>
     /// Ширина прямоугольника.
     /// </summary>
-    public double Width { get => this.width; set => this.width = value; }
+    public virtual double Width => this.width;
 
     /// <summary>
     /// Высота прямоугольника.
     /// </summary>
-    public double Height { get => this.height; set => this.height = value; }
-
-    /// <summary>
-    /// Координата нижней левой вершины прямоугольника по оси абсцисс.
-    /// </summary>
-    public override double X { get => this.x; set => this.x = value; }
-
-    /// <summary>
-    /// Координата нижней левой вершины прямоугольника по оси ординат.
-    /// </summary>
-    public override double Y { get => this.y; set => this.y = value; }
+    public virtual double Height => this.height;
 
     /// <summary>
     /// Периметр прямоугольника.
@@ -47,14 +33,13 @@ namespace Task_3
     /// <summary>
     /// Создать прямоугольник на основе высоты и ширины его сторон.
     /// </summary>
+    /// <param name="location">Расположение левой нижней вершины прямоугольника.</param>
     /// <param name="width">Ширина прямоугольника.</param>
     /// <param name="height">Высота прямоугольника.</param>
-    public Rectangle(double width, double height)
+    public Rectangle(Point location, double width, double height) : base(location)
     {
       this.width = width;
       this.height = height;
-      this.x = 0;
-      this.y = 0;
     }
   }
 }

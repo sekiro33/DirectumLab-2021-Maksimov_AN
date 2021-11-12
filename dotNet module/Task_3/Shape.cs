@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Task_3
 {
@@ -11,18 +8,21 @@ namespace Task_3
   /// </summary>
   public abstract class Shape
   {
-    protected double x;
-    protected double y;
+    /// <summary>
+    /// Положение фигруы.
+    /// </summary>
+    public Point Location { get; set; }
 
     /// <summary>
-    /// Координата расположения фигуры по оси абсцисс.
+    /// Вычисление расстояния между точками.
     /// </summary>
-    public abstract double X { get; set; }
-
-    /// <summary>
-    /// Координата расположения фигуры по оси ординат.
-    /// </summary>
-    public abstract double Y { get; set; }
+    /// <param name="point1">Первая точка.</param>
+    /// <param name="point2">Вторая точка.</param>
+    /// <returns>Расстояние между точками.</returns>
+    public double Distance(Point point1, Point point2)
+    {
+      return Math.Sqrt(Math.Pow(point1.X - point2.X, 2) + Math.Pow(point1.Y - point2.Y, 2));
+    }
 
     /// <summary>
     /// Периметр фигуры.
@@ -33,5 +33,14 @@ namespace Task_3
     /// Площадь фигуры.
     /// </summary>
     public abstract double Area { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="location">Расположение фигуры.</param>
+    protected Shape(Point location)
+    {
+      this.Location = location;
+    }
   }
 }

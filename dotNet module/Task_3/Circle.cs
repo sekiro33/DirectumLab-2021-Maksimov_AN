@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Task_3
 {
@@ -11,25 +8,12 @@ namespace Task_3
   /// </summary>
   public class Circle : Shape
   {
-    /// <summary>
-    /// Радиус окружности.
-    /// </summary>
     private double radius;
 
     /// <summary>
-    /// Координата центр-окружности по оси абсцисс.
-    /// </summary>
-    public override double X { get => this.x; set => this.x = value; }
-
-    /// <summary>
-    /// Координата центр-окружности по оси ординат.
-    /// </summary>
-    public override double Y { get => this.y; set => this.y = value; }
-
-    /// <summary>
     /// Радиус окружности.
     /// </summary>
-    protected double Radius { get => this.radius; set => this.radius = value >= 0 ? value : this.radius; }
+    protected double Radius => this.radius;
 
     /// <summary>
     /// Длина окружности.
@@ -39,17 +23,16 @@ namespace Task_3
     /// <summary>
     /// Площадь окружности.
     /// </summary>
-    public override double Area { get => 0; }
+    public override double Area => 0;
 
     /// <summary>
     /// Создать окружность.
     /// </summary>
+    /// <param name="location">Расположение центра окружности.</param>
     /// <param name="radius">Радиус.</param>
-    public Circle(double radius)
+    public Circle(Point location, double radius) : base(location)
     {
       this.radius = radius;
-      this.x = 0;
-      this.y = 0;
     }
   }
 }

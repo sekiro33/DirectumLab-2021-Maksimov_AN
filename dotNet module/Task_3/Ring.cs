@@ -1,57 +1,47 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Task_3
 {
   /// <summary>
   /// Кольцо.
   /// </summary>
-  public class Ring : Shape
+  public class Ring : Circle
   {
-    private double outerRaidus;
     private double innerRadius;
 
     /// <summary>
     /// Радиус внутренней окружности.
     /// </summary>
-    public double InnerRadius { get => this.innerRadius; set => this.innerRadius = value; }
+    public double InnerRadius => this.innerRadius;
 
     /// <summary>
     /// Радиус внешней окружности.
     /// </summary>
-    public double OuterRadius { get => this.outerRaidus; set => this.outerRaidus = value; }
+    public double OuterRadius => this.Radius;
 
     /// <summary>
-    /// Координата центр-кольца по оси абсцисс.
+    /// Периметр кольца.
     /// </summary>
-    public override double X { get => this.x; set => this.x = value; }
-
-    /// <summary>
-    /// Координата центр-кольца по оси ординат.
-    /// </summary>
-    public override double Y { get => this.y; set => this.y = value; }
-
-    public override double Perimeter => throw new NotImplementedException();
+    public override double Perimeter => 0;
 
     /// <summary>
     /// Площадь кольца.
     /// </summary>
-    public override double Area => Math.PI * ((this.outerRaidus * this.outerRaidus) - (this.innerRadius * this.innerRadius));
+    public override double Area => Math.PI * ((this.Radius * this.Radius) - (this.innerRadius * this.innerRadius));
 
     /// <summary>
     /// Создать кольцо.
     /// </summary>
+    /// <param name="location">Расположение центра кольца.</param>
     /// <param name="innerRadius">Радиус внутренней окружности.</param>
     /// <param name="outerRaidus">Радиус внешней окружности.</param>
-    public Ring(double innerRadius, double outerRaidus)
+    public Ring(Point location, double innerRadius, double outerRaidus) : base(location, outerRaidus)
     {
+      if (innerRadius > outerRaidus)
+        throw new Exception("Радиус внутренней окружности больше радиуса внешней.");
       this.innerRadius = innerRadius;
-      this.outerRaidus = outerRaidus;
-      this.x = 0;
-      this.y = 0;
+      this.Location = location;
     }
   }
 }

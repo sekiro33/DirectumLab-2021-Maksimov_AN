@@ -1,8 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Task_3
 {
@@ -18,27 +15,17 @@ namespace Task_3
     /// <summary>
     /// Первая сторона треугольника.
     /// </summary>
-    public double SideA { get => this.sideA; set => this.sideA = value > 0 ? value : this.sideA; }
+    public double SideA => this.sideA;
 
     /// <summary>
     /// Вторая сторона треугольника.
     /// </summary>
-    public double SideB { get => this.sideB; set => this.sideB = value > 0 ? value : this.sideB; }
+    public double SideB => this.sideB;
 
     /// <summary>
     /// Третья сторона треугольника.
     /// </summary>
-    public double SideC { get => this.sideC; set => this.sideC = value > 0 ? value : this.sideC; }
-
-    /// <summary>
-    /// Координата нижней левой вершины треугольника по оси абсцисс.
-    /// </summary>
-    public override double X { get => this.x; set => this.x = value; }
-
-    /// <summary>
-    /// Координата нижней левой вершины треугольника по оси ординат.
-    /// </summary>
-    public override double Y { get => this.y; set => this.y = value; }
+    public double SideC => this.sideC;
 
     /// <summary>
     /// Периметр треугольника.
@@ -51,18 +38,16 @@ namespace Task_3
     public override double Area => Math.Sqrt(this.Perimeter / 2 * (this.Perimeter / 2 - this.sideA) * (this.Perimeter / 2 - this.sideB) * (this.Perimeter / 2 - this.sideC));
 
     /// <summary>
-    /// Создать треугольник на основе длин его сторон.
+    /// Создать треугольник на основе его вершин. Первая вершина так же задёт расположение треугольника.
     /// </summary>
-    /// <param name="sideA">Первая сторона.</param>
-    /// <param name="sideB">Вторая сторона.</param>
-    /// <param name="sideC">Третья сторона.</param>
-    public Triangle(double sideA, double sideB, double sideC)
+    /// <param name="apex1">Первая вершина.</param>
+    /// <param name="apex2">Вторая вершина.</param>
+    /// <param name="apex3">Третья вершина.</param>
+    public Triangle(Point apex1, Point apex2, Point apex3) : base(apex1)
     {
-      this.sideA = sideA;
-      this.sideB = sideB;
-      this.sideC = sideC;
-      this.x = 0;
-      this.y = 0;
+      this.sideA = this.Distance(apex1, apex2);
+      this.sideB = this.Distance(apex2, apex3);
+      this.sideC = this.Distance(apex1, apex2);
     }
   }
 }
