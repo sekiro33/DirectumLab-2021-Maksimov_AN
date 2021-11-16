@@ -41,7 +41,6 @@ namespace Task_3
       if (innerRadius > outerRaidus)
         throw new Exception("Радиус внутренней окружности больше радиуса внешней.");
       this.innerRadius = innerRadius;
-      this.Location = location;
     }
   }
 }

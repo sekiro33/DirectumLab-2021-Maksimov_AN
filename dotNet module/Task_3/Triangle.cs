@@ -45,9 +45,9 @@ namespace Task_3
     /// <param name="apex3">Третья вершина.</param>
     public Triangle(Point apex1, Point apex2, Point apex3) : base(apex1)
     {
-      this.sideA = this.Distance(apex1, apex2);
-      this.sideB = this.Distance(apex2, apex3);
-      this.sideC = this.Distance(apex1, apex2);
+      this.sideA = apex1.Distance(apex2);
+      this.sideB = apex2.Distance(apex3);
+      this.sideC = apex1.Distance(apex3);
     }
   }
 }
