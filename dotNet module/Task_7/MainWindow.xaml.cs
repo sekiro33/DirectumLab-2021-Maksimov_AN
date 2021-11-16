@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System.IO;
 using System.Windows;
 
 namespace Task_7
@@ -30,6 +31,11 @@ namespace Task_7
       {
         AbsolutePathTextField.Text = openFileDialog.FileName;
       }
+    }
+
+    private void ReadFile(string path)
+    {
+    
     }
   }
 }
