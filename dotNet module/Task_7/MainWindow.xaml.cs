@@ -44,8 +44,8 @@ namespace Task_7
     {
       TextRange range = new TextRange(RichTextBox.Document.ContentStart, RichTextBox.Document.ContentEnd);
       using (var inputFile = File.OpenRead(path))
-      using (var tinyStream = new GZipStream(inputFile, CompressionMode.Decompress))
-      range.Load(tinyStream, DataFormats.Rtf);
+      using (var gZipStream = new GZipStream(inputFile, CompressionMode.Decompress))
+      range.Load(gZipStream, DataFormats.Rtf);
     }
   }
 }
