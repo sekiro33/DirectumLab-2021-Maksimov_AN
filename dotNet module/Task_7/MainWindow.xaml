@@ -5,14 +5,14 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Task_7"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="Практическая работа №7" Height="450" Width="800">
     <Grid>
-        <TextBox x:Name="AbsolutePathTextField" HorizontalAlignment="Left" Margin="10,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="693" Height="20"/>
-        <Button x:Name="BrowseButton" Content="Обзор" Margin="709,10,10,0" VerticalAlignment="Top" Click="BrowseButton_Click"/>
+        <TextBox x:Name="AbsolutePathTextField" Margin="10,10,97,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="20"/>
+        <Button x:Name="BrowseButton" Content="Обзор" Margin="0,10,10,0" VerticalAlignment="Top" Click="BrowseButton_Click" HorizontalAlignment="Right" Height="20" Width="80"/>
         <RichTextBox x:Name="RichTextBox" Margin="10,38,10,10">
             <FlowDocument>
                 <Paragraph>
-                    <Run Text="RichTextBox"/>
+                    <Run Text=""/>
                 </Paragraph>
             </FlowDocument>
         </RichTextBox>

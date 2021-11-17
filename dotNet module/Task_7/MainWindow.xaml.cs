@@ -1,6 +1,8 @@
 ﻿using Microsoft.Win32;
 using System.IO;
+using System.IO.Compression;
 using System.Windows;
+using System.Windows.Documents;
 
 namespace Task_7
 {
@@ -30,12 +32,20 @@ namespace Task_7
       if (openFileDialog.ShowDialog() == true)
       {
         AbsolutePathTextField.Text = openFileDialog.FileName;
+        ReadFile(AbsolutePathTextField.Text);
       }
     }
 
+    /// <summary>
+    /// Прочитать файл по пути path и добавить текст в RichTextBox.
+    /// </summary>
+    /// <param name="path">Путь к файлу.</param>
     private void ReadFile(string path)
     {
-    
+      TextRange range = new TextRange(RichTextBox.Document.ContentStart, RichTextBox.Document.ContentEnd);
+      using (var inputFile = File.OpenRead(path))
+      using (var tinyStream = new GZipStream(inputFile, CompressionMode.Decompress))
+      range.Load(tinyStream, DataFormats.Rtf);
     }
   }
 }
