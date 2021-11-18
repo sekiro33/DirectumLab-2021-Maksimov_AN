@@ -1,20 +1,35 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Drawing;
 
 namespace Task_3
 {
+  /// <summary>
+  /// Абстрактная фигура.
+  /// </summary>
   public abstract class Shape
   {
-    private double x;
-    private double y;
+    /// <summary>
+    /// Положение фигруы.
+    /// </summary>
+    public Point Location { get; set; }
 
-    public double X { get { return x; } set { x = value; } }
-    public double Y { get { return y; } set { y = value; } }
+    /// <summary>
+    /// Периметр фигуры.
+    /// </summary>
+    public abstract double Perimeter { get; }
 
-    public abstract double GetArea();
-    public abstract double GetPerimeter();
+    /// <summary>
+    /// Площадь фигуры.
+    /// </summary>
+    public abstract double Area { get; }
+
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="location">Расположение фигуры.</param>
+    protected Shape(Point location)
+    {
+      this.Location = location;
+    }
   }
 }
