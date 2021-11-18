@@ -7,23 +7,23 @@ using System.Windows.Documents;
 namespace Task_7
 {
   /// <summary>
-  /// Interaction logic for MainWindow.xaml
+  /// Interaction logic for MainWindow.xaml.
   /// </summary>
   public partial class MainWindow : Window
   {
     /// <summary>
-    /// 
+    /// Создать окно для MainWindow.xaml.
     /// </summary>
     public MainWindow()
     {
-      InitializeComponent();
+      this.InitializeComponent();
     }
 
     /// <summary>
     /// Обработчик нажатия на кнопку "Обзор".
     /// </summary>
-    /// <param name="sender"></param>
-    /// <param name="e"></param>
+    /// <param name="sender">Объект, который вызвал событие.</param>
+    /// <param name="e">Объект, относящийся к обрабатываемому событию.</param>
     private void BrowseButton_Click(object sender, RoutedEventArgs e)
     {
       var openFileDialog = new OpenFileDialog();
@@ -32,7 +32,7 @@ namespace Task_7
       if (openFileDialog.ShowDialog() == true)
       {
         AbsolutePathTextField.Text = openFileDialog.FileName;
-        ReadFile(AbsolutePathTextField.Text);
+        this.ReadFile(AbsolutePathTextField.Text);
       }
     }
 
@@ -44,8 +44,8 @@ namespace Task_7
     {
       TextRange range = new TextRange(RichTextBox.Document.ContentStart, RichTextBox.Document.ContentEnd);
       using (var inputFile = File.OpenRead(path))
-      using (var gZipStream = new GZipStream(inputFile, CompressionMode.Decompress))
-      range.Load(gZipStream, DataFormats.Rtf);
+      using (var zipStream = new GZipStream(inputFile, CompressionMode.Decompress))
+        range.Load(zipStream, DataFormats.Rtf);
     }
   }
 }
