@@ -31,23 +31,14 @@ namespace Task_9
     /// <returns>Отфильтрованные строки.</returns>
     public static List<string> SortRecords(string file, DateTime date)
     {
-      /*#region Вариант1
       var records = new StreamReaderEnumerable(file);
 
       return records
-        .Where(record => date.Date == GetDateTimeFromRecord(record).Date)
-        .OrderBy(record => GetDateTimeFromRecord(record).TimeOfDay)
+        .Select(record => (record, dateTime:GetDateTimeFromRecord(record)))
+        .Where(tuple => tuple.dateTime.HasValue && date.Date == tuple.dateTime.Value.Date)
+        .OrderBy(tuple => tuple.dateTime.Value.TimeOfDay)
+        .Select(tuple => tuple.record)
         .ToList();
-      #endregion*/
-
-      #region Вариант2
-      return 
-        (from record in new StreamReaderEnumerable(file) 
-         where date.Date == GetDateTimeFromRecord(record).Date 
-         select record)
-        .OrderBy(record => GetDateTimeFromRecord(record).TimeOfDay)
-        .ToList();
-      #endregion
     }
 
     /// <summary>
@@ -55,7 +46,7 @@ namespace Task_9
     /// </summary>
     /// <param name="record">Строка из которой извлекается дата и время.</param>
     /// <returns>Дата и время.</returns>
-    private static DateTime GetDateTimeFromRecord(string record)
+    private static DateTime? GetDateTimeFromRecord(string record)
     {
       var formatInfo = new DateTimeFormatInfo();
       var splitter = new Regex("[0-9]{2}.[0-9]{2}.[0-9]{4}\t[0-9]{2}:[0-9]{2}:[0-9]{2}");
@@ -68,7 +59,7 @@ namespace Task_9
         }
       }
 
-      return new DateTime();
+      return null;
     }
   }
 }
