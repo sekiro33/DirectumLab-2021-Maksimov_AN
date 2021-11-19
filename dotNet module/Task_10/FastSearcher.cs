@@ -49,42 +49,54 @@ namespace Task_10
           throw new ArgumentException(value.ToString());
       }
     }
+    
+    public FastSearcher()
+    {
+      this.maxParallelTasks = 6;
+      this.minProcessedValues = 3;
+    }
 
     /// <summary>
     /// Поиск значения в колллекции.
     /// </summary>
     /// <param name="collection">Коллекция.</param>
     /// <param name="value">Искомое значение.</param>
-    public void SearchValue(IEnumerable<T> collection, Predicate<T> comparator)
+    public List<T> SearchValue(IEnumerable<T> collection, Predicate<T> comparator)
     {
-      this.InitializeThreads(collection.Count() > this.maxParallelTasks ? this.maxParallelTasks : collection.Count());
+      this.InitializeThreads(collection.Count());
 
-      int sizeProcessedValues = collection.Count() / this.tasks.Length;
+      int stepSize = collection.Count() / tasks.Length;
+
+      //int startIndex = 0;
+
+      var results = new List<T>();
+
+      int offset = 0;
+
+      for (int i = 0; i < tasks.Length; i++)
+      {
+        tasks[i] = Task.Factory.StartNew(() => this.Search(collection.Skip(offset).Take(stepSize), comparator, results));
+        offset += stepSize;
+      }
+
+      Task.WaitAll(tasks);
+
+      return results;
     }
 
     private void InitializeThreads(int collectionSize)
     {
-      int taskSize = collectionSize > this.minProcessedValues
-        ? (collectionSize % this.maxParallelTasks == 0 ? this.maxParallelTasks : this.maxParallelTasks + 1)
-        : 1;
-      this.tasks = new Task[taskSize];
+      int tasksSize = Math.Max(collectionSize / this.minProcessedValues, this.maxParallelTasks);
+      this.tasks = new Task[tasksSize];
     }
 
-    private int CalcCountOfTasks(int collectionSize)
+    private void Search(IEnumerable<T> collection,  Predicate<T> comparator, List<T> results)
     {
-      return this.minProcessedValues < collectionSize / this.MaxParrallelTasks ? collectionSize / this.MaxParrallelTasks : 
-    }
-
-    private List<T> Search(IEnumerable<T> collection,  int startIndex, int endIndex, Predicate<T> comparator)
-    {
-      var results = new List<T>();
-      for (int i = startIndex; i < endIndex; i++)
+      foreach (var elem in collection)
       {
-        if (comparator(collection.ElementAt(i)))
-          results.Add(collection.ElementAt(i));
+        if (comparator(elem))
+          results.Add(elem);
       }
-
-      return results;
     }
   }
 }
