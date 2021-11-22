@@ -4,26 +4,10 @@ using System.Collections.Generic;
 using System.IO;
 
 namespace Task_8
-{ 
-  public class StreamReaderEnumerable : IEnumerable<string>
-  {
-    private string filePath;
-    public StreamReaderEnumerable(string filePath)
-    {
-      this.filePath = filePath;
-    }
-
-    public IEnumerator<string> GetEnumerator()
-    {
-      return new StreamReaderEnumerator(this.filePath);
-    }
-
-    IEnumerator IEnumerable.GetEnumerator()
-    {
-      return this.GetEnumerator();
-    }
-  }
-
+{
+  /// <summary>
+  /// Реализация <see cref="IEnumerator"/>.
+  /// </summary>
   public class StreamReaderEnumerator : IEnumerator<string>
   {
     private StreamReader sr;
@@ -35,6 +19,9 @@ namespace Task_8
 
     private string current;
 
+    /// <summary>
+    /// Текущая строка.
+    /// </summary>
     public string Current
     {
       get
@@ -83,13 +70,8 @@ namespace Task_8
     public void Dispose()
     {
       this.Dispose(disposing: true);
-      GC.SuppressFinalize(this);
     }
 
-    /// <summary>
-    /// Освобождение ресурсов.
-    /// </summary>
-    /// <param name="disposing"></param>
     protected virtual void Dispose(bool disposing)
     {
       if (!this.disposedValue)
