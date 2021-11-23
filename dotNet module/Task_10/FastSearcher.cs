@@ -1,8 +1,7 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Task_10
@@ -16,7 +15,7 @@ namespace Task_10
 
     private int minProcessedValues;
 
-    private Task[] tasks;
+    private Task<IEnumerable<T>>[] tasks;
 
     /// <summary>
     /// Максимальное количество параллельных задач.
@@ -30,12 +29,12 @@ namespace Task_10
         if (value >= 1)
           this.maxParallelTasks = value;
         else
-          throw new ArgumentException(value.ToString());
+          throw new ArgumentException("Количество параллельных задач не может быть меньше 1. Устанавливаемое значение: " + value.ToString());
       }
     }
 
     /// <summary>
-    /// Минимальное количество значений обрабатываемых в одном потоке.
+    /// Минимальное количество значений обрабатываемых в одной задаче.
     /// </summary>
     public int MinProcessedValues
     {
@@ -46,10 +45,13 @@ namespace Task_10
         if (value >= 1)
           this.minProcessedValues = value;
         else
-          throw new ArgumentException(value.ToString());
+          throw new ArgumentException("Количество значений обрабатываемых в одном потоке не может быть меньше 1. Устанавливаемое значение: " + value.ToString());
       }
     }
     
+    /// <summary>
+    /// Создаёт экземпляр класса со стандартными значениями минимального количества обрабатываемых значений в одном потоке и максимального количества паралелльных задач.
+    /// </summary>
     public FastSearcher()
     {
       this.maxParallelTasks = 6;
@@ -57,46 +59,47 @@ namespace Task_10
     }
 
     /// <summary>
+    /// Создаёт экземпляр класса с переданными значениями минимального количества обрабатываемых значений в одном потоке и максимальным количеством паралелльных задач.
+    /// </summary>
+    /// <param name="maxParallelTasks">Максимальное количество параллельных задач.</param>
+    /// <param name="minProcessedValues">Минимальное количество обрабатываемых значений в одном потоке.</param>
+    public FastSearcher(int maxParallelTasks, int minProcessedValues)
+    {
+      this.MaxParrallelTasks = maxParallelTasks;
+      this.MinProcessedValues = minProcessedValues;
+    }
+
+    /// <summary>
     /// Поиск значения в колллекции.
     /// </summary>
     /// <param name="collection">Коллекция.</param>
-    /// <param name="value">Искомое значение.</param>
-    public List<T> SearchValue(IEnumerable<T> collection, Predicate<T> comparator)
+    /// <param name="comparator">Условие сравнения.</param>
+    public async Task<IEnumerable<T>> SearchValue(IEnumerable<T> collection, Predicate<T> comparator)
     {
-      this.InitializeThreads(collection.Count());
+      this.InitializeTasks(collection.Count());
 
-      int stepSize = collection.Count() / tasks.Length;
-
-      //int startIndex = 0;
-
-      var results = new List<T>();
-
+      int stepSize = collection.Count() / this.tasks.Length;
       int offset = 0;
 
-      for (int i = 0; i < tasks.Length; i++)
+      for (int i = 0; i < this.tasks.Length; i++)
       {
-        tasks[i] = Task.Factory.StartNew(() => this.Search(collection.Skip(offset).Take(stepSize), comparator, results));
+        var currentCollection = collection.Skip(offset).Take(stepSize);
+        this.tasks[i] = this.Search(currentCollection, comparator);
         offset += stepSize;
       }
 
-      Task.WaitAll(tasks);
-
-      return results;
+      return await Task.WhenAll(this.tasks).ContinueWith((task) => task.Result.SelectMany(part => part).ToArray());
     }
 
-    private void InitializeThreads(int collectionSize)
+    private void InitializeTasks(int collectionSize)
     {
-      int tasksSize = Math.Max(collectionSize / this.minProcessedValues, this.maxParallelTasks);
-      this.tasks = new Task[tasksSize];
+      int tasksSize = collectionSize / this.minProcessedValues > 1 ? Math.Max(collectionSize / this.minProcessedValues, this.maxParallelTasks) : 1;
+      this.tasks = new Task<IEnumerable<T>>[tasksSize];
     }
 
-    private void Search(IEnumerable<T> collection,  Predicate<T> comparator, List<T> results)
+    private async Task<IEnumerable<T>> Search(IEnumerable<T> collection,  Predicate<T> comparator)
     {
-      foreach (var elem in collection)
-      {
-        if (comparator(elem))
-          results.Add(elem);
-      }
+      return await Task.Run(() => collection.Where((item) => comparator(item)).ToArray());
     }
   }
 }
