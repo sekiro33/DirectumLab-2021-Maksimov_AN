@@ -7,19 +7,28 @@ using System.Threading.Tasks;
 
 namespace Task_12
 {
+  /// <summary>
+  /// Человек.
+  /// </summary>
   public class Person
   {
     private string name;
     private int age;
-
+    private DateTime birthDate;
+    
+    /// <summary>
+    /// Имя.
+    /// </summary>
     [Obsolete]
-    public string Name 
-    { 
-      get => this.name; 
-      set => this.name = value; 
+    public string Name
+    {
+      get => this.name;
+      set => this.name = value;
     }
 
-    [Display(Name = "How much cost book")]
+    /// <summary>
+    /// Возраст.
+    /// </summary>
     public int Age
     {
       get => this.age; 
@@ -29,6 +38,21 @@ namespace Task_12
         if (this.age >= 0)
           this.age = value;
       }
+    }
+
+    /// <summary>
+    /// Дата рождения.
+    /// </summary>
+    public DateTime BirthDate => this.birthDate;
+
+    /// <summary>
+    /// Создаёт экземпляр класса Человек со стандартными значениями полей.
+    /// </summary>
+    public Person()
+    {
+      this.name = "Noname";
+      this.age = 0;
+      this.birthDate = new DateTime();
     }
   }
 }
