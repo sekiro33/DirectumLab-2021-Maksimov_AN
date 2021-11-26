@@ -10,11 +10,11 @@ namespace Task_8
   /// </summary>
   public class StreamReaderEnumerator : IEnumerator<string>
   {
-    private StreamReader sr;
+    private StreamReader streamReader;
 
     public StreamReaderEnumerator(string filePath)
     {
-      this.sr = new StreamReader(filePath);
+      this.streamReader = new StreamReader(filePath);
     }
 
     private string current;
@@ -26,7 +26,7 @@ namespace Task_8
     {
       get
       {
-        if (this.sr == null || this.current == null)
+        if (this.streamReader == null || this.current == null)
         {
           throw new InvalidOperationException();
         }
@@ -46,7 +46,7 @@ namespace Task_8
     /// <returns></returns>
     public bool MoveNext()
     {
-      this.current = this.sr.ReadLine();
+      this.current = this.streamReader.ReadLine();
       if (this.current == null)
         return false;
       return true;
@@ -57,8 +57,8 @@ namespace Task_8
     /// </summary>
     public void Reset()
     {
-      this.sr.DiscardBufferedData();
-      this.sr.BaseStream.Seek(0, SeekOrigin.Begin);
+      this.streamReader.DiscardBufferedData();
+      this.streamReader.BaseStream.Seek(0, SeekOrigin.Begin);
       this.current = null;
     }
 
@@ -77,10 +77,10 @@ namespace Task_8
       if (!this.disposedValue)
       {
         this.current = null;
-        if (this.sr != null)
+        if (this.streamReader != null)
         {
-          this.sr.Close();
-          this.sr.Dispose();
+          this.streamReader.Close();
+          this.streamReader.Dispose();
         }
       }
 
