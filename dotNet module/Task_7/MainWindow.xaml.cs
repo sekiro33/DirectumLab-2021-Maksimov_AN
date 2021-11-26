@@ -1,4 +1,5 @@
 ﻿using Microsoft.Win32;
+using System;
 using System.IO;
 using System.IO.Compression;
 using System.Windows;
@@ -32,7 +33,14 @@ namespace Task_7
       if (openFileDialog.ShowDialog() == true)
       {
         AbsolutePathTextField.Text = openFileDialog.FileName;
-        this.ReadFile(AbsolutePathTextField.Text);
+        try
+        {
+          this.ReadFile(AbsolutePathTextField.Text);
+        }
+        catch (FileLoadException ex)
+        {
+          MessageBox.Show(ex.Message);
+        }
       }
     }
 
@@ -43,9 +51,20 @@ namespace Task_7
     private void ReadFile(string path)
     {
       TextRange range = new TextRange(RichTextBox.Document.ContentStart, RichTextBox.Document.ContentEnd);
-      using (var inputFile = File.OpenRead(path))
-      using (var zipStream = new GZipStream(inputFile, CompressionMode.Decompress))
-        range.Load(zipStream, DataFormats.Rtf);
+      try
+      {
+        using (var inputFile = File.OpenRead(path))
+        using (var zipStream = new GZipStream(inputFile, CompressionMode.Decompress))
+          range.Load(zipStream, DataFormats.Rtf);
+      }
+      catch (FileNotFoundException e)
+      {
+        throw new FileLoadException(e.Message);
+      }
+      catch (UnauthorizedAccessException e)
+      {
+        throw new FileLoadException(e.Message);
+      }
     }
   }
 }
