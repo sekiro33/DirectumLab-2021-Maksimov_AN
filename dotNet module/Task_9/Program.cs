@@ -17,7 +17,7 @@ namespace Task_9
     /// <param name="args">Аргументы.</param>
     public static void Main(string[] args)
     {
-      foreach (var record in SortRecords("ClientConnectionLog.log", new DateTime(2007, 12, 04)))
+      foreach (var record in GetRecordsByDate("ClientConnectionLog.log", new DateTime(2007, 12, 04)))
       {
         Console.WriteLine(record);
       }
@@ -29,12 +29,12 @@ namespace Task_9
     /// <param name="file">Путь к файлу.</param>
     /// <param name="date">Дата, по которой делается выборка.</param>
     /// <returns>Отфильтрованные строки.</returns>
-    public static List<string> SortRecords(string file, DateTime date)
+    public static IEnumerable<string> GetRecordsByDate(string file, DateTime date)
     {
       var records = new StreamReaderEnumerable(file);
 
       return records
-        .Select(record => (record, dateTime:GetDateTimeFromRecord(record)))
+        .Select(record => (record, dateTime : GetDateTimeFromRecord(record)))
         .Where(tuple => tuple.dateTime.HasValue && date.Date == tuple.dateTime.Value.Date)
         .OrderBy(tuple => tuple.dateTime.Value.TimeOfDay)
         .Select(tuple => tuple.record)

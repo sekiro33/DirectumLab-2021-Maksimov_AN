@@ -5,10 +5,17 @@ using System.IO;
 
 namespace Task_9
 {
+  /// <summary>
+  /// StreamReaderEnumerator.
+  /// </summary>
   public class StreamReaderEnumerator : IEnumerator<string>
   {
     private StreamReader sr;
 
+    /// <summary>
+    /// Создать перечислитель, выполняющий перебор строк в файле.
+    /// </summary>
+    /// <param name="filePath">Путь к файлу.</param>
     public StreamReaderEnumerator(string filePath)
     {
       this.sr = new StreamReader(filePath);
@@ -16,6 +23,9 @@ namespace Task_9
 
     private string current;
 
+    /// <summary>
+    /// Текущая строка.
+    /// </summary>
     public string Current
     {
       get
@@ -34,10 +44,7 @@ namespace Task_9
       get { return this.Current; }
     }
 
-    /// <summary>
     /// <inheritdoc/>
-    /// </summary>
-    /// <returns></returns>
     public bool MoveNext()
     {
       this.current = this.sr.ReadLine();
@@ -46,9 +53,7 @@ namespace Task_9
       return true;
     }
 
-    /// <summary>
     /// <inheritdoc/>
-    /// </summary>
     public void Reset()
     {
       this.sr.DiscardBufferedData();
@@ -58,20 +63,8 @@ namespace Task_9
 
     private bool disposedValue = false;
 
-    /// <summary>
     /// <inheritdoc/>
-    /// </summary>
     public void Dispose()
-    {
-      this.Dispose(disposing: true);
-      GC.SuppressFinalize(this);
-    }
-
-    /// <summary>
-    /// Освобождение ресурсов.
-    /// </summary>
-    /// <param name="disposing"></param>
-    protected virtual void Dispose(bool disposing)
     {
       if (!this.disposedValue)
       {
@@ -84,11 +77,12 @@ namespace Task_9
       }
 
       this.disposedValue = true;
+      GC.SuppressFinalize(this);
     }
 
     ~StreamReaderEnumerator()
     {
-      this.Dispose(disposing: false);
+      this.Dispose();
     }
   }
 }
