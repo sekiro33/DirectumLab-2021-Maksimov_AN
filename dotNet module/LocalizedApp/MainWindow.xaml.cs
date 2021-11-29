@@ -1,17 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Reflection;
+using System.Resources;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace LocalizedApp
 {
@@ -27,7 +17,13 @@ namespace LocalizedApp
 
     private void HelloButton_Click(object sender, RoutedEventArgs e)
     {
-      MessageBox.Show("Hello, World!");
+      MessageBox.Show(TextMessages.HelloMessage);
+    }
+
+    private void Window_Initialized(object sender, EventArgs e)
+    {
+      var resMan = new ResourceManager("LocalizedApp.TextMessages", Assembly.GetExecutingAssembly());
+      MessageBox.Show(resMan.GetString("HelloMessage", new System.Globalization.CultureInfo("en")));
     }
   }
 }
