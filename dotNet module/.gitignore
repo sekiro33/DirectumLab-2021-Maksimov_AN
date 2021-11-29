@@ -135,5 +135,8 @@ _NCrunch*
 # Visual Studio temp something
 .vs/
 
+!PersonAssembly1.dll
+!PersonAssembly2.dll
+
 !ClientConnectionLog.log
 bin/**/ClientConnectionLog.log
