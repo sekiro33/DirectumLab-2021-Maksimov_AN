@@ -54,7 +54,7 @@ namespace Task_12
     public static Dictionary<string, string> GetAllReadWriteProperties(object obj)
     {
       return obj.GetType().GetProperties().Where(p => p.CanWrite && p.CanRead)
-        .ToDictionary(p => $"{p.Name} with value: {p.GetValue(obj).ToString()}", p => p.PropertyType.Name);
+        .ToDictionary(p => p.Name, p => p.PropertyType.Name);
     }
 
     /// <summary>
@@ -79,7 +79,7 @@ namespace Task_12
     {
       return obj.GetType().GetProperties()
          .Where(p => p.CanWrite && p.CanRead && p.GetCustomAttribute(typeof(ObsoleteAttribute)) is null)
-         .ToDictionary(p => $"{p.Name} with value: {p.GetValue(obj).ToString()}", p => p.PropertyType.Name);
+         .ToDictionary(p => p.Name, p => p.PropertyType.Name);
     }
 
     private static void PrintCollection(IEnumerable collection)
