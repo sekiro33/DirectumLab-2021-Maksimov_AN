@@ -22,6 +22,7 @@ namespace PlanPoker.Domain.Services
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="userRepository">Репозиторий пользователей.</param>
+    /// <param name="httpContextAccessor"></param>
     public UserService(IRepository<User> userRepository, IHttpContextAccessor httpContextAccessor)
     {
       this.httpContextAccessor = httpContextAccessor;
@@ -29,7 +30,7 @@ namespace PlanPoker.Domain.Services
     }
 
     /// <summary>
-    /// Аутентификая пользователя.
+    /// Аутентификация пользователя.
     /// </summary>
     /// <param name="name">Имя пользователя.</param>
     /// <returns>Пользователь.</returns>
@@ -38,11 +39,15 @@ namespace PlanPoker.Domain.Services
       var user = this.userRepository.GetAll().Where(user => user.Name.Equals(name, StringComparison.Ordinal)).FirstOrDefault();
       if (user is null)
         user = this.CreateUser(name);
-      this.authorizedUserRepository.Save(user);
       this.Login(name);
       return user;
     }
 
+    /// <summary>
+    /// Вход в систему.
+    /// </summary>
+    /// <param name="name">Имя пользователя.</param>
+    /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public Task Login(string name)
     {
       var claim = new Claim(ClaimsIdentity.DefaultNameClaimType, name);

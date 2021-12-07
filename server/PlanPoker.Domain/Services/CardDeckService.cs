@@ -1,8 +1,5 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PlanPoker.Domain.Entities;
 using PlanPoker.Domain.Repositories;
 
@@ -14,15 +11,16 @@ namespace PlanPoker.Domain.Services
   public class CardDeckService
   {
     private readonly IRepository<CardDeck> cardDeckRepository;
+    private readonly IRepository<Card> cardRepository;
 
     /// <summary>
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="cardDeckRepository">Репозиторий колод с картами.</param>
-    public CardDeckService(IRepository<CardDeck> cardDeckRepository)
+    public CardDeckService(IRepository<CardDeck> cardDeckRepository, IRepository<Card> cardRepository)
     {
       this.cardDeckRepository = cardDeckRepository;
-      this.cardDeckRepository.Save(this.GetStandarCardDeck());
+      this.cardRepository = cardRepository;
     }
 
     /// <summary>
@@ -31,7 +29,10 @@ namespace PlanPoker.Domain.Services
     /// <returns>Стандартная колода карт.</returns>
     public CardDeck GetCardDeck()
     {
-      return this.GetStandarCardDeck();
+      var cardDeck = new CardDeck("Стандартная колода карт");
+      var standartCards = this.cardRepository.GetAll();
+      standartCards.ToList().ForEach(card => cardDeck.AddCard(card));
+      return cardDeck;
     }
 
     /// <summary>
@@ -42,25 +43,6 @@ namespace PlanPoker.Domain.Services
     public CardDeck GetCardDeck(Guid cardDeckId)
     {
       return this.cardDeckRepository.Get(cardDeckId);
-    }
-
-    /// <summary>
-    /// Создать стандартную колоду с картами.
-    /// </summary>
-    /// <returns>Колода с картами.</returns>
-    private CardDeck GetStandarCardDeck()
-    {
-      var cardDeck = new CardDeck("Стандартная колода");
-      cardDeck.AddCard(new Card(0));
-      cardDeck.AddCard(new Card(1));
-      cardDeck.AddCard(new Card(2));
-      cardDeck.AddCard(new Card(3));
-      cardDeck.AddCard(new Card(5));
-      cardDeck.AddCard(new Card(8));
-      cardDeck.AddCard(new Card(13));
-      cardDeck.AddCard(new Card(21));
-      cardDeck.AddCard(new Card(34));
-      return cardDeck;
     }
   }
 }

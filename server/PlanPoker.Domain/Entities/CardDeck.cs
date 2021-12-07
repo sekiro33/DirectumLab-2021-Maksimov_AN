@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlanPoker.Domain.Entities
 {
@@ -12,30 +9,22 @@ namespace PlanPoker.Domain.Entities
   public class CardDeck : IEntity
   {
     private Guid id;
+    private ICollection<Card> cards;
 
     /// <summary>
     /// Идентификатор колоды.
     /// </summary>
     public Guid Id => this.id;
 
-    private string name;
-
     /// <summary>
     /// Название колоды.
     /// </summary>
-    public string Name
-    {
-      get => this.name;
-
-      set => this.name = value;
-    }
-
-    private List<Card> cards;
+    public string Name { get; set; }
 
     /// <summary>
     /// Карты в колоде.
     /// </summary>
-    public List<Card> Cards => this.cards;
+    public IEnumerable<Card> Cards => this.cards;
 
     /// <summary>
     /// Конструктор колоды карт.
@@ -44,7 +33,7 @@ namespace PlanPoker.Domain.Entities
     public CardDeck(string name)
     {
       this.id = Guid.NewGuid();
-      this.name = name;
+      this.Name = name;
       this.cards = new List<Card>();
     }
 

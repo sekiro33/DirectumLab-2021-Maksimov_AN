@@ -1,7 +1,9 @@
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlanPoker.Domain.Services;
+using PlanPoker.DTO;
 
 namespace PlanPoker.Controllers
 {
@@ -29,10 +31,10 @@ namespace PlanPoker.Controllers
     /// <param name="name">Имя пользователя.</param>
     /// <returns>Данные о пользователе.</returns>
     [HttpPost]
-    public string SignIn(string name)
+    public UserDTO SignIn(string name)
     {
       var user = this.userService.Authenticate(name);
-      return JsonSerializer.Serialize(user);
+      return ConverterDTO.ConvertUser(user);
     }
 
     /// <summary>
@@ -40,6 +42,7 @@ namespace PlanPoker.Controllers
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     [HttpPost]
+    [Authorize]
     public Task Logout()
     {
       return this.userService.Logout();

@@ -1,8 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace PlanPoker.Domain.Entities
 {
@@ -12,15 +9,18 @@ namespace PlanPoker.Domain.Entities
   public class Discussion : IEntity
   {
     private Guid id;
-    private string name;
-    private Dictionary<Guid, Card> grades;
-    private DateTime startDateTime;
-    private DateTime endDateTime;
+    private Guid roomId;
+    private Dictionary<Guid, Guid> grades;
 
     /// <summary>
     /// Идентификатор обсуждения.
     /// </summary>
     public Guid Id => this.id;
+
+    /// <summary>
+    /// Идентификатор комнаты, в которой происходит обсуждение.
+    /// </summary>
+    public Guid RoomId => this.roomId;
 
     /// <summary>
     /// Статус обсуждения.
@@ -30,58 +30,48 @@ namespace PlanPoker.Domain.Entities
     /// <summary>
     /// Тема обсуждения.
     /// </summary>
-    public string Name
-    {
-      get => this.name;
-
-      set => this.name = value;
-    }
+    public string Name { get; set; }
 
     /// <summary>
     /// Оценки по теме обсуждения.
     /// </summary>
-    public Dictionary<Guid, Card> Grades => this.grades;
+    public IDictionary<Guid, Guid> Grades => this.grades;
 
     /// <summary>
     /// Дата-время начала обсуждения.
     /// </summary>
-    public DateTime StarDateTime => this.startDateTime;
+    public DateTime? StarDateTime { get; set; }
 
     /// <summary>
     /// Дата-время окончания обсуждения.
     /// </summary>
-    public DateTime EndDateTime => this.endDateTime;
+    public DateTime? EndDateTime { get; set; }
 
     /// <summary>
     /// Конструктор обсуждения.
     /// </summary>
     /// <param name="name">Тема обсуждения.</param>
-    public Discussion(string name)
+    /// <param name="roomId">Идентификатор комнаты в которой происходит обсуждение.</param>
+    public Discussion(string name, Guid roomId)
     {
       this.id = Guid.NewGuid();
-      this.name = name;
+      this.grades = new Dictionary<Guid, Guid>();
+      this.roomId = roomId;
+      this.Name = name;
+      this.StarDateTime = DateTime.Now;
     }
 
     /// <summary>
     /// Добавить оценку.
     /// </summary>
     /// <param name="userId">Id пользователя.</param>
-    /// <param name="card">Оценка.</param>
-    public void AddGrade(Guid userId, Card card)
+    /// <param name="cardId">Id карты с оценкой.</param>
+    public void AddGrade(Guid userId, Guid cardId)
     {
       if (!this.grades.ContainsKey(userId))
-        this.grades.Add(userId, card);
+        this.grades.Add(userId, cardId);
       else
-        this.grades[userId] = card;
-    }
-
-    /// <summary>
-    /// Начать обсуждение.
-    /// </summary>
-    public void StartDiscussion()
-    {
-      if (this.IsOver != true)
-        this.startDateTime = DateTime.Now;
+        this.grades[userId] = cardId;
     }
 
     /// <summary>
@@ -90,7 +80,7 @@ namespace PlanPoker.Domain.Entities
     public void EndDiscussion()
     {
       this.IsOver = true;
-      this.endDateTime = DateTime.Now;
+      this.EndDateTime = DateTime.Now;
     }
   }
 }

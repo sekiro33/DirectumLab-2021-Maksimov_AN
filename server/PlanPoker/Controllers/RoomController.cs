@@ -2,8 +2,8 @@ using System;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using PlanPoker.Domain.Entities;
 using PlanPoker.Domain.Services;
+using PlanPoker.DTO;
 
 namespace PlanPoker.Controllers
 {
@@ -17,16 +17,19 @@ namespace PlanPoker.Controllers
   {
     private readonly RoomService roomService;
     private readonly CardDeckService cardDeckService;
+    private readonly DiscussionService discussionService;
 
     /// <summary>
     /// Конструктор контроллера комнат.
     /// </summary>
     /// <param name="roomService">Сервис комнат.</param>
     /// <param name="cardDeckService">Сервис для работы с колодами карт.</param>
-    public RoomController(RoomService roomService, CardDeckService cardDeckService)
+    /// <param name="discussionService">Сервис для работы обсуждениями.</param>
+    public RoomController(RoomService roomService, CardDeckService cardDeckService, DiscussionService discussionService)
     {
       this.roomService = roomService;
       this.cardDeckService = cardDeckService;
+      this.discussionService = discussionService;
     }
 
     /// <summary>
@@ -36,10 +39,11 @@ namespace PlanPoker.Controllers
     /// <param name="userId">Пользователь, который создаёт комнату.</param>
     /// <returns>Созданная комната.</returns>
     [HttpPost]
-    public Room CreateRoom(string roomName, Guid userId)
+    public RoomDTO CreateRoom(string roomName, Guid userId)
     {
       var cardDeck = this.cardDeckService.GetCardDeck();
-      return this.roomService.CreateRoom(roomName, cardDeck, userId);
+      var room = this.roomService.CreateRoom(roomName, cardDeck, userId);
+      return ConverterDTO.ConvertRoom(room);
     }
 
     /// <summary>
@@ -48,20 +52,22 @@ namespace PlanPoker.Controllers
     /// <param name="roomId">Id комнаты.</param>
     /// <returns>Список пользователей.</returns>
     [HttpGet]
-    public string GetAllUsersInRoom(string roomId)
+    public string GetAllUsersInRoom(Guid roomId)
     {
-      return JsonSerializer.Serialize(this.roomService.GetAllUser(Guid.Parse(roomId)));
+      return JsonSerializer.Serialize(this.roomService.GetAllUser(roomId));
     }
 
     /// <summary>
-    /// Добавить пользователя в комнату.
+    /// Войти в комнату.
     /// </summary>
     /// <param name="roomId">Id комнаты.</param>
     /// <param name="userId">Id пользователя.</param>
+    /// <returns>Информация о комнате.</returns>
     [HttpPost]
-    public void AddUser(string roomId, string userId)
+    public RoomDTO Connect(Guid roomId, Guid userId)
     {
-      this.roomService.AddUser(Guid.Parse(roomId), Guid.Parse(userId));
+      this.roomService.AddUser(roomId, userId);
+      return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId));
     }
 
     /// <summary>
@@ -70,9 +76,9 @@ namespace PlanPoker.Controllers
     /// <param name="roomId">Id комнаты.</param>
     /// <param name="userId">Id пользователя.</param>
     [HttpPost]
-    public void KickUser(string roomId, string userId)
+    public void KickUser(Guid roomId, Guid userId)
     {
-      this.roomService.KickUser(Guid.Parse(roomId), Guid.Parse(userId));
+      this.roomService.KickUser(roomId, userId);
     }
 
     /// <summary>
@@ -83,19 +89,10 @@ namespace PlanPoker.Controllers
     /// <returns>Обсуждение.</returns>
     /// Объединить с началом
     [HttpPost]
-    public string CreateDiscussion(string roomId, string name)
+    public DiscussionDTO CreateDiscussion(Guid roomId, string name)
     {
-      return JsonSerializer.Serialize(this.roomService.CreateDiscussion(Guid.Parse(roomId), name));
-    }
-
-    /// <summary>
-    /// Начать обсуждение.
-    /// </summary>
-    /// <param name="discussionId">Id обсуждения.</param>
-    [HttpPost]
-    public void StartDiscussion(string discussionId)
-    {
-      this.roomService.StartDiscussion(Guid.Parse(discussionId));
+      var discussion = this.discussionService.CreateDiscussion(roomId, name);
+      return ConverterDTO.ConvertDiscussion(discussion);
     }
 
     /// <summary>
@@ -103,9 +100,9 @@ namespace PlanPoker.Controllers
     /// </summary>
     /// <param name="discussionId">Id обсуждения.</param>
     [HttpPost]
-    public void EndDiscussion(string discussionId)
+    public void EndDiscussion(Guid discussionId)
     {
-      this.roomService.EndDiscussion(Guid.Parse(discussionId));
+      this.discussionService.EndDiscussion(discussionId);
     }
 
     /// <summary>
@@ -114,9 +111,21 @@ namespace PlanPoker.Controllers
     /// <param name="roomId">Id комнаты.</param>
     /// <returns>Список обсуждений.</returns>
     [HttpGet]
-    public string GetAllDiscussion(string roomId)
+    public string GetAllDiscussion(Guid roomId)
     {
-      return JsonSerializer.Serialize(this.roomService.GetAllDiscussion(Guid.Parse(roomId)));
+      return JsonSerializer.Serialize(this.discussionService.GetAllDiscussion(roomId));
+    }
+
+    /// <summary>
+    /// Проголосовать.
+    /// </summary>
+    /// <param name="discussionId">Id обсуждения.</param>
+    /// <param name="userId">Id пользователя.</param>
+    /// <param name="cardId">Id карты.</param>
+    [HttpPost]
+    public void Vote(Guid discussionId, Guid userId, Guid cardId)
+    {
+      this.discussionService.AddGrade(discussionId, userId, cardId);
     }
   }
 }

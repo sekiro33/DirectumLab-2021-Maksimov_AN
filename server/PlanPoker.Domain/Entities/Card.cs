@@ -21,13 +21,13 @@ namespace PlanPoker.Domain.Entities
     /// <summary>
     /// Значение карты.
     /// </summary>
-    public int Value { get; set; }
+    public double? Value { get; set; }
 
     /// <summary>
     /// Конструктор карты.
     /// </summary>
     /// <param name="value">Значение карты.</param>
-    public Card(int value)
+    public Card(double? value)
     {
       this.id = Guid.NewGuid();
       this.Value = value;

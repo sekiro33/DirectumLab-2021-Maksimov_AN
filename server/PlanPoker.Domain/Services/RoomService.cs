@@ -1,8 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using PlanPoker.Domain.Entities;
 using PlanPoker.Domain.Repositories;
 
@@ -14,17 +12,15 @@ namespace PlanPoker.Domain.Services
   public class RoomService
   {
     private readonly IRepository<Room> roomRepository;
-    private readonly IRepository<Discussion> discussionRepository;
 
     /// <summary>
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="roomRepository">Репозиторий комнат.</param>
     /// <param name="discussionRepository">Репозиторий обсуждений.</param>
-    public RoomService(IRepository<Room> roomRepository, IRepository<Discussion> discussionRepository)
+    public RoomService(IRepository<Room> roomRepository)
     {
       this.roomRepository = roomRepository;
-      this.discussionRepository = discussionRepository;
     }
 
     /// <summary>
@@ -34,7 +30,7 @@ namespace PlanPoker.Domain.Services
     /// <param name="userId">Id пользователя.</param>
     public void AddUser(Guid roomId, Guid userId)
     {
-      this.roomRepository.Get(roomId).AddUser(userId);
+      this.roomRepository.Get(roomId).Users.Add(userId);
     }
 
     /// <summary>
@@ -44,7 +40,7 @@ namespace PlanPoker.Domain.Services
     /// <param name="userId">Id пользователя.</param>
     public void KickUser(Guid roomId, Guid userId)
     {
-      this.roomRepository.Get(roomId).KickUser(userId);
+      this.roomRepository.Get(roomId).Users.Remove(userId);
     }
 
     /// <summary>
@@ -52,9 +48,19 @@ namespace PlanPoker.Domain.Services
     /// </summary>
     /// <param name="roomId">Id комнаты.</param>
     /// <returns>Список пользователей.</returns>
-    public IQueryable GetAllUser(Guid roomId)
+    public IEnumerable<Guid> GetAllUser(Guid roomId)
     {
-      return this.roomRepository.Get(roomId).Users.AsQueryable();
+      return this.roomRepository.Get(roomId).Users.AsEnumerable();
+    }
+
+    /// <summary>
+    /// Получить информацию о комнате.
+    /// </summary>
+    /// <param name="roomId">Id комнаты.</param>
+    /// <returns>Комната.</returns>
+    public Room GetRoom(Guid roomId)
+    {
+      return this.roomRepository.Get(roomId);
     }
 
     /// <summary>
@@ -72,45 +78,13 @@ namespace PlanPoker.Domain.Services
     }
 
     /// <summary>
-    /// Создать обсуждение.
+    /// Получить колоду карт, используемую в комнате.
     /// </summary>
     /// <param name="roomId">Id комнаты.</param>
-    /// <param name="name">Название обсуждения.</param>
-    /// <returns>Обсуждение.</returns>
-    public Discussion CreateDiscussion(Guid roomId, string name)
+    /// <returns>Колода карт.</returns>
+    public CardDeck GetCardDeck(Guid roomId)
     {
-      var discussion = new Discussion(name);
-      this.discussionRepository.Save(discussion);
-      this.roomRepository.Get(roomId).AddDiscussion(discussion);
-      return discussion;
-    }
-
-    /// <summary>
-    /// Начать обсуждение.
-    /// </summary>
-    /// <param name="discussionId">Id обсуждения.</param>
-    public void StartDiscussion(Guid discussionId)
-    {
-      this.discussionRepository.Get(discussionId).StartDiscussion();
-    }
-
-    /// <summary>
-    /// Закончить обсуждение.
-    /// </summary>
-    /// <param name="discussionId">Id обсуждения.</param>
-    public void EndDiscussion(Guid discussionId)
-    {
-      this.discussionRepository.Get(discussionId).EndDiscussion();
-    }
-
-    /// <summary>
-    /// Получить все обсуждения в комнате.
-    /// </summary>
-    /// <param name="roomId">Id комнаты.</param>
-    /// <returns>Список обсуждений.</returns>
-    public IQueryable GetAllDiscussion(Guid roomId)
-    {
-      return this.roomRepository.Get(roomId).GetAllDiscussion();
+      return this.roomRepository.Get(roomId).CardDeck;
     }
   }
 }

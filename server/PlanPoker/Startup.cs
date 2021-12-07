@@ -31,13 +31,13 @@ namespace PlanPoker
       });
 
       services
-        .AddSingleton<IRepository<ExampleEntity>, ExampleRepository>()
-        .AddTransient<ExampleService>()
         .AddSingleton<IRepository<Discussion>, DiscussionRepository>()
+        .AddTransient<DiscussionService>()
         .AddSingleton<IRepository<User>, UserRepository>()
+        .AddTransient<UserService>()
         .AddSingleton<IRepository<Room>, RoomRepository>()
         .AddTransient<RoomService>()
-        .AddTransient<UserService>()
+        .AddSingleton<IRepository<Card>, CardRepository>()
         .AddSingleton<IRepository<CardDeck>, CardDeckRepository>()
         .AddTransient<CardDeckService>()
         .AddSwaggerGen();
