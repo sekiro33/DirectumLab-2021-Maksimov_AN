@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Task_7
+namespace Task_8
 {
   /// <summary>
   /// Класс для выполнения сравнения.
@@ -22,7 +22,7 @@ namespace Task_7
           var maxValue = values[0];
           for (int i = 1; i < values.Length; i++)
           {
-            if (maxValue.CompareTo(values[i]) > 0)
+            if (maxValue.CompareTo(values[i]) < 0)
               maxValue = values[i];
           }
 

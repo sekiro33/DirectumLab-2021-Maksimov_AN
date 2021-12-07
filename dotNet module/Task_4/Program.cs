@@ -15,11 +15,12 @@ namespace Task_4
     /// <param name="args">Аргументы.</param>
     private static void Main(string[] args)
     {
-      using (Logger logger = new Logger("log.txt"))
+      /*using (Logger logger = new Logger("log.txt"))
       {
         logger.WriteString("Hello, Directum!");
       }
-      Console.Write(GetAllowsRights(AccessRights.Run | AccessRights.View));
+      Console.Write(GetAllowsRights(AccessRights.Run | AccessRights.View));*/
+      Console.WriteLine(ParseDataSet(GetStandartDataSet(), "\n", " "));
       Console.ReadKey();
     }
 
@@ -28,7 +29,7 @@ namespace Task_4
     /// </summary>
     /// <param name="accessRights">Тип прав доступа.</param>
     /// <returns>Строка с перечнем действий.</returns>
-    private static string GetAllowsRights(AccessRights accessRights)
+    public static string GetAllowsRights(AccessRights accessRights)
     {
       if (accessRights.HasFlag(AccessRights.AccessDenied))
       {
@@ -77,7 +78,7 @@ namespace Task_4
     /// <param name="rowDelimeter">Разделитель записей.</param>
     /// <param name="columnDelimeter">Разделитель колонок.</param>
     /// <returns>Набор данных в виде одной строки.</returns>
-    private static string ParseDataSet(DataSet dataSet, string rowDelimeter, string columnDelimeter)
+    public static string ParseDataSet(DataSet dataSet, string rowDelimeter, string columnDelimeter)
     {
       var parseResult = new StringBuilder();
       foreach (DataTable dt in dataSet.Tables)
