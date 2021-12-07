@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -31,7 +32,20 @@ namespace PlanPoker
 
       services
         .AddSingleton<IRepository<ExampleEntity>, ExampleRepository>()
-        .AddTransient<ExampleService>();
+        .AddTransient<ExampleService>()
+        .AddSingleton<IRepository<Discussion>, DiscussionRepository>()
+        .AddSingleton<IRepository<User>, UserRepository>()
+        .AddSingleton<IRepository<Room>, RoomRepository>()
+        .AddTransient<RoomService>()
+        .AddTransient<UserService>()
+        .AddSingleton<IRepository<CardDeck>, CardDeckRepository>()
+        .AddTransient<CardDeckService>()
+        .AddSwaggerGen();
+
+      services
+        .AddHttpContextAccessor()
+        .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+          .AddCookie(options => options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/api/Login"));
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -39,9 +53,18 @@ namespace PlanPoker
       if (env.IsDevelopment())
       {
         app.UseDeveloperExceptionPage();
+        app.UseSwaggerUI(x =>
+        {
+          x.SwaggerEndpoint("/swagger/v1/swagger.json", "PlanPoker");
+          x.RoutePrefix = "swagger";
+        });
       }
 
+      app.UseSwagger();
       app.UseRouting();
+      app.UseAuthentication();
+      app.UseAuthorization();
+
 
       app.UseEndpoints(endpoints =>
       {
