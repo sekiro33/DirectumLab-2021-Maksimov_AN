@@ -8,20 +8,15 @@ namespace PlanPoker.Domain.Entities
   /// </summary>
   public class Room : IEntity
   {
-    private Guid id;
-    private CardDeck cardDeck;
-    private ICollection<Guid> users;
-    private Guid creator;
-
     /// <summary>
     /// Идентификатор комнаты.
     /// </summary>
-    public Guid Id => this.id;
+    public Guid Id { get; }
 
     /// <summary>
     /// Колода карт используемая для обсуждений.
     /// </summary>
-    public CardDeck CardDeck => this.cardDeck;
+    public CardDeck CardDeck { get; }
 
     /// <summary>
     /// Имя комнаты.
@@ -31,12 +26,12 @@ namespace PlanPoker.Domain.Entities
     /// <summary>
     /// Список участников в комнате.
     /// </summary>
-    public ICollection<Guid> Users => this.users;
+    public ICollection<Guid> Users { get; }
 
     /// <summary>
     /// Создатель комнаты.
     /// </summary>
-    public Guid Creator => this.creator;
+    public Guid Creator { get; }
 
     /// <summary>
     /// Конструктор комнаты.
@@ -46,12 +41,12 @@ namespace PlanPoker.Domain.Entities
     /// <param name="creator">Создатель комнаты.</param>
     public Room(string name, CardDeck cardDeck, Guid creator)
     {
-      this.users = new List<Guid>();
-      this.users.Add(creator);
-      this.id = Guid.NewGuid();
+      this.Users = new List<Guid>();
+      this.Users.Add(creator);
+      this.Id = Guid.NewGuid();
       this.Name = name;
-      this.cardDeck = cardDeck;
-      this.creator = creator;
+      this.CardDeck = cardDeck;
+      this.Creator = creator;
     }
   }
 }

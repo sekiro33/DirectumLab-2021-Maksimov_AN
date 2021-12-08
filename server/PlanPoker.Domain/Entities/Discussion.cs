@@ -8,19 +8,15 @@ namespace PlanPoker.Domain.Entities
   /// </summary>
   public class Discussion : IEntity
   {
-    private Guid id;
-    private Guid roomId;
-    private Dictionary<Guid, Guid> grades;
-
     /// <summary>
     /// Идентификатор обсуждения.
     /// </summary>
-    public Guid Id => this.id;
+    public Guid Id { get; }
 
     /// <summary>
     /// Идентификатор комнаты, в которой происходит обсуждение.
     /// </summary>
-    public Guid RoomId => this.roomId;
+    public Guid RoomId { get; }
 
     /// <summary>
     /// Тема обсуждения.
@@ -30,7 +26,7 @@ namespace PlanPoker.Domain.Entities
     /// <summary>
     /// Оценки по теме обсуждения.
     /// </summary>
-    public IDictionary<Guid, Guid> Grades => this.grades;
+    public IDictionary<Guid, Guid> Grades { get; }
 
     /// <summary>
     /// Дата-время начала обсуждения.
@@ -49,9 +45,9 @@ namespace PlanPoker.Domain.Entities
     /// <param name="roomId">Идентификатор комнаты в которой происходит обсуждение.</param>
     public Discussion(string name, Guid roomId)
     {
-      this.id = Guid.NewGuid();
-      this.grades = new Dictionary<Guid, Guid>();
-      this.roomId = roomId;
+      this.Id = Guid.NewGuid();
+      this.Grades = new Dictionary<Guid, Guid>();
+      this.RoomId = roomId;
       this.Name = name;
       this.StarDateTime = DateTime.Now;
     }
@@ -63,10 +59,10 @@ namespace PlanPoker.Domain.Entities
     /// <param name="cardId">Id карты с оценкой.</param>
     public void AddGrade(Guid userId, Guid cardId)
     {
-      if (!this.grades.ContainsKey(userId))
-        this.grades.Add(userId, cardId);
+      if (!this.Grades.ContainsKey(userId))
+        this.Grades.Add(userId, cardId);
       else
-        this.grades[userId] = cardId;
+        this.Grades[userId] = cardId;
     }
   }
 }
