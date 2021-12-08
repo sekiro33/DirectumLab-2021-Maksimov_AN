@@ -17,7 +17,6 @@ namespace PlanPoker.Controllers
   {
     private readonly RoomService roomService;
     private readonly CardDeckService cardDeckService;
-    private readonly DiscussionService discussionService;
 
     /// <summary>
     /// Конструктор контроллера комнат.
@@ -25,11 +24,10 @@ namespace PlanPoker.Controllers
     /// <param name="roomService">Сервис комнат.</param>
     /// <param name="cardDeckService">Сервис для работы с колодами карт.</param>
     /// <param name="discussionService">Сервис для работы обсуждениями.</param>
-    public RoomController(RoomService roomService, CardDeckService cardDeckService, DiscussionService discussionService)
+    public RoomController(RoomService roomService, CardDeckService cardDeckService)
     {
       this.roomService = roomService;
       this.cardDeckService = cardDeckService;
-      this.discussionService = discussionService;
     }
 
     /// <summary>
@@ -82,50 +80,14 @@ namespace PlanPoker.Controllers
     }
 
     /// <summary>
-    /// Создать обсуждение.
+    /// Получить информацию о комнате.
     /// </summary>
     /// <param name="roomId">Id комнаты.</param>
-    /// <param name="name">Название обсуждения.</param>
-    /// <returns>Обсуждение.</returns>
-    /// Объединить с началом
-    [HttpPost]
-    public DiscussionDTO CreateDiscussion(Guid roomId, string name)
-    {
-      var discussion = this.discussionService.CreateDiscussion(roomId, name);
-      return ConverterDTO.ConvertDiscussion(discussion);
-    }
-
-    /// <summary>
-    /// Закончить обсуждение.
-    /// </summary>
-    /// <param name="discussionId">Id обсуждения.</param>
-    [HttpPost]
-    public void EndDiscussion(Guid discussionId)
-    {
-      this.discussionService.EndDiscussion(discussionId);
-    }
-
-    /// <summary>
-    /// Получить список всех обсуждений в комнате.
-    /// </summary>
-    /// <param name="roomId">Id комнаты.</param>
-    /// <returns>Список обсуждений.</returns>
+    /// <returns>Комната.</returns>
     [HttpGet]
-    public string GetAllDiscussion(Guid roomId)
+    public RoomDTO GetRoomInfo(Guid roomId)
     {
-      return JsonSerializer.Serialize(this.discussionService.GetAllDiscussion(roomId));
-    }
-
-    /// <summary>
-    /// Проголосовать.
-    /// </summary>
-    /// <param name="discussionId">Id обсуждения.</param>
-    /// <param name="userId">Id пользователя.</param>
-    /// <param name="cardId">Id карты.</param>
-    [HttpPost]
-    public void Vote(Guid discussionId, Guid userId, Guid cardId)
-    {
-      this.discussionService.AddGrade(discussionId, userId, cardId);
+      return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId));
     }
   }
 }
