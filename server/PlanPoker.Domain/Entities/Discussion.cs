@@ -23,11 +23,6 @@ namespace PlanPoker.Domain.Entities
     public Guid RoomId => this.roomId;
 
     /// <summary>
-    /// Статус обсуждения.
-    /// </summary>
-    public bool IsOver { get; set; }
-
-    /// <summary>
     /// Тема обсуждения.
     /// </summary>
     public string Name { get; set; }
@@ -72,15 +67,6 @@ namespace PlanPoker.Domain.Entities
         this.grades.Add(userId, cardId);
       else
         this.grades[userId] = cardId;
-    }
-
-    /// <summary>
-    /// Завершить обсуждение.
-    /// </summary>
-    public void EndDiscussion()
-    {
-      this.IsOver = true;
-      this.EndDateTime = DateTime.Now;
     }
   }
 }

@@ -28,8 +28,9 @@ namespace PlanPoker.Infrastructure.Repositories
     /// <returns>Удаленный пользователь.</returns>
     public User Delete(Guid id)
     {
+      var user = this.users[id];
       this.users.Remove(id);
-      return null;
+      return user;
     }
 
     /// <summary>
@@ -62,7 +63,7 @@ namespace PlanPoker.Infrastructure.Repositories
     {
       if (!this.users.ContainsKey(entity.Id))
         this.users.Add(entity.Id, entity);
-      return null;
+      return entity;
     }
   }
 }

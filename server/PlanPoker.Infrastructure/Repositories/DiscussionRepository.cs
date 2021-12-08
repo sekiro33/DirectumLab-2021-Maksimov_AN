@@ -31,7 +31,7 @@ namespace PlanPoker.Infrastructure.Repositories
       var discussion = this.Get(id);
       if (discussion is not null)
         this.discussions.Remove(discussion);
-      return null;
+      return discussion;
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public Discussion Save(Discussion entity)
     {
       this.discussions.Add(entity);
-      return null;
+      return entity;
     }
   }
 }

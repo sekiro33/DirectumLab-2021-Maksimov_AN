@@ -31,7 +31,7 @@ namespace PlanPoker.Infrastructure.Repositories
       var room = this.Get(id);
       if (room is not null)
         this.rooms.Remove(room);
-      return null;
+      return room;
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public Room Save(Room entity)
     {
       this.rooms.Add(entity);
-      return null;
+      return entity;
     }
   }
 }

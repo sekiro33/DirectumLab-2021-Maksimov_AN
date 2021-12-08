@@ -32,7 +32,7 @@ namespace PlanPoker.Infrastructure.Repositories
       var card = this.Get(id);
       if (card is not null)
         this.cards.Remove(card);
-      return null;
+      return card;
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public Card Save(Card entity)
     {
       this.cards.Add(entity);
-      return null;
+      return entity;
     }
 
     /// <summary>
