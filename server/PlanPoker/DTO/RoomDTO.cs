@@ -1,7 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PlanPoker.DTO
 {
@@ -24,6 +22,16 @@ namespace PlanPoker.DTO
     /// Создатель комнаты.
     /// </summary>
     public Guid Creator { get; set; }
+
+    /// <summary>
+    /// Список обсуждений в комнате.
+    /// </summary>
+    public IEnumerable<DiscussionDTO> Discussion { get; set; }
+
+    /// <summary>
+    /// Список пользователей в комнате.
+    /// </summary>
+    public IEnumerable<UserDTO> Users { get; set; }
 
     /// <summary>
     /// Колода карт.

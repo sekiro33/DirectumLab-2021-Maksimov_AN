@@ -1,7 +1,5 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using PlanPoker.Domain.Entities;
 
 namespace PlanPoker.DTO
@@ -37,14 +35,16 @@ namespace PlanPoker.DTO
       };
     }
 
-    public static RoomDTO ConvertRoom(Room room)
+    public static RoomDTO ConvertRoom(Room room, IEnumerable<UserDTO> users, IEnumerable<DiscussionDTO> discussions)
     {
       return new RoomDTO
       {
         Id = room.Id,
         Name = room.Name,
         Creator = room.Creator,
-        CardDeck = ConvertCardDeck(room.CardDeck)
+        CardDeck = ConvertCardDeck(room.CardDeck),
+        Users = users,
+        Discussion = discussions
       };
     }
 

@@ -1,5 +1,6 @@
 using System;
-using System.Text.Json;
+using System.Collections.Generic;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlanPoker.Domain.Services;
@@ -56,9 +57,9 @@ namespace PlanPoker.Controllers
     /// <param name="roomId">Id комнаты.</param>
     /// <returns>Список обсуждений.</returns>
     [HttpGet]
-    public string GetAllDiscussion(Guid roomId)
+    public IEnumerable<DiscussionDTO> GetAllDiscussion(Guid roomId)
     {
-      return JsonSerializer.Serialize(this.discussionService.GetAllDiscussion(roomId));
+      return this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
     }
 
     /// <summary>
