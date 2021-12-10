@@ -31,7 +31,7 @@ namespace PlanPoker.Infrastructure.Repositories
       var cardDeck = this.Get(id);
       if (cardDeck is not null)
         this.cardDecks.Remove(cardDeck);
-      return null;
+      return cardDeck;
     }
 
     /// <summary>
@@ -61,7 +61,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public CardDeck Save(CardDeck entity)
     {
       this.cardDecks.Add(entity);
-      return null;
+      return entity;
     }
   }
 }

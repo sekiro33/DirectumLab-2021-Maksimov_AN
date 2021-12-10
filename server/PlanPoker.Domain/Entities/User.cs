@@ -7,12 +7,10 @@ namespace PlanPoker.Domain.Entities
   /// </summary>
   public class User : IEntity
   {
-    private Guid id;
-
     /// <summary>
     /// Идентификатор пользователя.
     /// </summary>
-    public Guid Id => this.id;
+    public Guid Id { get; }
 
     /// <summary>
     /// Имя пользователя.
@@ -26,7 +24,7 @@ namespace PlanPoker.Domain.Entities
     public User(string name)
     {
       this.Name = name;
-      this.id = Guid.NewGuid();
+      this.Id = Guid.NewGuid();
     }
   }
 }

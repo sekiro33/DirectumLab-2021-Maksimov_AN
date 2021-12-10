@@ -12,15 +12,18 @@ namespace PlanPoker.Domain.Services
   public class RoomService
   {
     private readonly IRepository<Room> roomRepository;
+    private readonly IRepository<User> userRepository;
 
     /// <summary>
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="roomRepository">Репозиторий комнат.</param>
     /// <param name="discussionRepository">Репозиторий обсуждений.</param>
-    public RoomService(IRepository<Room> roomRepository)
+    /// <param name="userRepository">Репозиторий пользователей.</param>
+    public RoomService(IRepository<Room> roomRepository, IRepository<User> userRepository)
     {
       this.roomRepository = roomRepository;
+      this.userRepository = userRepository;
     }
 
     /// <summary>
@@ -30,7 +33,11 @@ namespace PlanPoker.Domain.Services
     /// <param name="userId">Id пользователя.</param>
     public void AddUser(Guid roomId, Guid userId)
     {
-      this.roomRepository.Get(roomId).Users.Add(userId);
+      var users = this.roomRepository.Get(roomId).Users;
+      if (!users.Contains(userId))
+        users.Add(userId);
+      else
+        throw new Exception("Пользователь уже есть в комнате.");
     }
 
     /// <summary>
@@ -40,7 +47,11 @@ namespace PlanPoker.Domain.Services
     /// <param name="userId">Id пользователя.</param>
     public void KickUser(Guid roomId, Guid userId)
     {
-      this.roomRepository.Get(roomId).Users.Remove(userId);
+      var users = this.roomRepository.Get(roomId).Users;
+      if (users.Contains(userId))
+        users.Remove(userId);
+      else
+        throw new Exception("Такого пользователя нет в комнате.");
     }
 
     /// <summary>
@@ -48,9 +59,10 @@ namespace PlanPoker.Domain.Services
     /// </summary>
     /// <param name="roomId">Id комнаты.</param>
     /// <returns>Список пользователей.</returns>
-    public IEnumerable<Guid> GetAllUser(Guid roomId)
+    public IEnumerable<User> GetAllUser(Guid roomId)
     {
-      return this.roomRepository.Get(roomId).Users.AsEnumerable();
+      var userId = this.roomRepository.Get(roomId).Users;
+      return userId.Select(userId => this.userRepository.Get(userId));
     }
 
     /// <summary>

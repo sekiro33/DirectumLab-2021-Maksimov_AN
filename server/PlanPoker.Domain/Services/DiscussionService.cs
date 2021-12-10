@@ -12,14 +12,16 @@ namespace PlanPoker.Domain.Services
   public class DiscussionService
   {
     private readonly IRepository<Discussion> discussionRepository;
+    private readonly IRepository<Room> roomRepository;
 
     /// <summary>
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="discussionRepository">Репозиторий обсуждений.</param>
-    public DiscussionService(IRepository<Discussion> discussionRepository)
+    public DiscussionService(IRepository<Discussion> discussionRepository, IRepository<Room> roomRepository)
     {
       this.discussionRepository = discussionRepository;
+      this.roomRepository = roomRepository;
     }
 
     /// <summary>
@@ -31,7 +33,10 @@ namespace PlanPoker.Domain.Services
     public void AddGrade(Guid discussionId, Guid userId, Guid cardId)
     {
       var discussion = this.discussionRepository.Get(discussionId);
-      discussion.AddGrade(userId, cardId);
+      var room = this.roomRepository.Get(discussion.RoomId);
+      var users = room.Users;
+      if (users.Contains(userId) && !discussion.EndDateTime.HasValue)
+        discussion.AddGrade(userId, cardId);
     }
 
     /// <summary>
@@ -40,7 +45,11 @@ namespace PlanPoker.Domain.Services
     /// <param name="discussionId">Id обсуждения.</param>
     public void EndDiscussion(Guid discussionId)
     {
-      this.discussionRepository.Get(discussionId).EndDiscussion();
+      var discussion = this.discussionRepository.Get(discussionId);
+      if (!discussion.EndDateTime.HasValue)
+        this.discussionRepository.Get(discussionId).EndDateTime = DateTime.Now;
+      else
+        throw new Exception("Обсуждение уже завершено.");
     }
 
     /// <summary>

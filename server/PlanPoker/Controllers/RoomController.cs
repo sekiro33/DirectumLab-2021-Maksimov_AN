@@ -1,5 +1,5 @@
 using System;
-using System.Text.Json;
+using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlanPoker.Domain.Services;
@@ -43,18 +43,9 @@ namespace PlanPoker.Controllers
     {
       var cardDeck = this.cardDeckService.GetCardDeck();
       var room = this.roomService.CreateRoom(roomName, cardDeck, userId);
-      return ConverterDTO.ConvertRoom(room);
-    }
-
-    /// <summary>
-    /// Получить список пользоватлей в комнате.
-    /// </summary>
-    /// <param name="roomId">Id комнаты.</param>
-    /// <returns>Список пользователей.</returns>
-    [HttpGet]
-    public string GetAllUsersInRoom(Guid roomId)
-    {
-      return JsonSerializer.Serialize(this.roomService.GetAllUser(roomId));
+      var users = this.roomService.GetAllUser(room.Id).Select(user => ConverterDTO.ConvertUser(user));
+      var discussion = this.discussionService.GetAllDiscussion(room.Id).Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+      return ConverterDTO.ConvertRoom(room, users, discussion);
     }
 
     /// <summary>
@@ -67,7 +58,9 @@ namespace PlanPoker.Controllers
     public RoomDTO Connect(Guid roomId, Guid userId)
     {
       this.roomService.AddUser(roomId, userId);
-      return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId));
+      var users = this.roomService.GetAllUser(roomId).Select(user => ConverterDTO.ConvertUser(user));
+      var discussion = this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+      return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId), users, discussion);
     }
 
     /// <summary>
@@ -82,50 +75,16 @@ namespace PlanPoker.Controllers
     }
 
     /// <summary>
-    /// Создать обсуждение.
+    /// Получить информацию о комнате.
     /// </summary>
     /// <param name="roomId">Id комнаты.</param>
-    /// <param name="name">Название обсуждения.</param>
-    /// <returns>Обсуждение.</returns>
-    /// Объединить с началом
-    [HttpPost]
-    public DiscussionDTO CreateDiscussion(Guid roomId, string name)
-    {
-      var discussion = this.discussionService.CreateDiscussion(roomId, name);
-      return ConverterDTO.ConvertDiscussion(discussion);
-    }
-
-    /// <summary>
-    /// Закончить обсуждение.
-    /// </summary>
-    /// <param name="discussionId">Id обсуждения.</param>
-    [HttpPost]
-    public void EndDiscussion(Guid discussionId)
-    {
-      this.discussionService.EndDiscussion(discussionId);
-    }
-
-    /// <summary>
-    /// Получить список всех обсуждений в комнате.
-    /// </summary>
-    /// <param name="roomId">Id комнаты.</param>
-    /// <returns>Список обсуждений.</returns>
+    /// <returns>Комната.</returns>
     [HttpGet]
-    public string GetAllDiscussion(Guid roomId)
+    public RoomDTO GetRoomInfo(Guid roomId)
     {
-      return JsonSerializer.Serialize(this.discussionService.GetAllDiscussion(roomId));
-    }
-
-    /// <summary>
-    /// Проголосовать.
-    /// </summary>
-    /// <param name="discussionId">Id обсуждения.</param>
-    /// <param name="userId">Id пользователя.</param>
-    /// <param name="cardId">Id карты.</param>
-    [HttpPost]
-    public void Vote(Guid discussionId, Guid userId, Guid cardId)
-    {
-      this.discussionService.AddGrade(discussionId, userId, cardId);
+      var users = this.roomService.GetAllUser(roomId).Select(user => ConverterDTO.ConvertUser(user));
+      var discussion = this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+      return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId), users, discussion);
     }
   }
 }

@@ -8,13 +8,12 @@ namespace PlanPoker.Domain.Entities
   /// </summary>
   public class CardDeck : IEntity
   {
-    private Guid id;
     private ICollection<Card> cards;
 
     /// <summary>
     /// Идентификатор колоды.
     /// </summary>
-    public Guid Id => this.id;
+    public Guid Id { get; }
 
     /// <summary>
     /// Название колоды.
@@ -32,7 +31,7 @@ namespace PlanPoker.Domain.Entities
     /// <param name="name">Название колоды.</param>
     public CardDeck(string name)
     {
-      this.id = Guid.NewGuid();
+      this.Id = Guid.NewGuid();
       this.Name = name;
       this.cards = new List<Card>();
     }

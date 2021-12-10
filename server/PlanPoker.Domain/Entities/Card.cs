@@ -11,12 +11,10 @@ namespace PlanPoker.Domain.Entities
   /// </summary>
   public class Card : IEntity
   {
-    private Guid id;
-
     /// <summary>
     /// Идентификатор карты.
     /// </summary>
-    public Guid Id => this.id;
+    public Guid Id { get; }
 
     /// <summary>
     /// Значение карты.
@@ -29,7 +27,7 @@ namespace PlanPoker.Domain.Entities
     /// <param name="value">Значение карты.</param>
     public Card(double? value)
     {
-      this.id = Guid.NewGuid();
+      this.Id = Guid.NewGuid();
       this.Value = value;
     }
   }
