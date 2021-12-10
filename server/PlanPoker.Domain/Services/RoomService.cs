@@ -18,7 +18,6 @@ namespace PlanPoker.Domain.Services
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="roomRepository">Репозиторий комнат.</param>
-    /// <param name="discussionRepository">Репозиторий обсуждений.</param>
     /// <param name="userRepository">Репозиторий пользователей.</param>
     public RoomService(IRepository<Room> roomRepository, IRepository<User> userRepository)
     {

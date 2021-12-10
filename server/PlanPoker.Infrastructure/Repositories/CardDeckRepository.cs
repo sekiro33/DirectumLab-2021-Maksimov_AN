@@ -29,7 +29,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public CardDeck Delete(Guid id)
     {
       var cardDeck = this.Get(id);
-      if (cardDeck is not null)
+      if (cardDeck != null)
         this.cardDecks.Remove(cardDeck);
       return cardDeck;
     }

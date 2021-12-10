@@ -30,7 +30,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public Card Delete(Guid id)
     {
       var card = this.Get(id);
-      if (card is not null)
+      if (card != null)
         this.cards.Remove(card);
       return card;
     }

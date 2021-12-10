@@ -29,7 +29,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public Discussion Delete(Guid id)
     {
       var discussion = this.Get(id);
-      if (discussion is not null)
+      if (discussion != null)
         this.discussions.Remove(discussion);
       return discussion;
     }

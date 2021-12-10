@@ -17,6 +17,7 @@ namespace PlanPoker.Domain.Services
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="cardDeckRepository">Репозиторий колод с картами.</param>
+    /// <param name="cardRepository">Репозиторий карт.</param>
     public CardDeckService(IRepository<CardDeck> cardDeckRepository, IRepository<Card> cardRepository)
     {
       this.cardDeckRepository = cardDeckRepository;

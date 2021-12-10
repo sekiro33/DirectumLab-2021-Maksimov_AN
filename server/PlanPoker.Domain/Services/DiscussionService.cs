@@ -18,6 +18,7 @@ namespace PlanPoker.Domain.Services
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="discussionRepository">Репозиторий обсуждений.</param>
+    /// <param name="roomRepository">Репозиторий комнат.</param>
     public DiscussionService(IRepository<Discussion> discussionRepository, IRepository<Room> roomRepository)
     {
       this.discussionRepository = discussionRepository;
