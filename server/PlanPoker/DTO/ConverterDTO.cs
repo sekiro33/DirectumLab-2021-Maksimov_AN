@@ -4,8 +4,16 @@ using PlanPoker.Domain.Entities;
 
 namespace PlanPoker.DTO
 {
-  public class ConverterDTO
+  /// <summary>
+  /// Конвертер сущностей в DTO.
+  /// </summary>
+  public static class ConverterDTO
   {
+    /// <summary>
+    /// Конвертировать сущность пользователя в DTO.
+    /// </summary>
+    /// <param name="user">Пользователь.</param>
+    /// <returns>Представление пользователя в DTO.</returns>
     public static UserDTO ConvertUser(User user)
     {
       return new UserDTO
@@ -15,6 +23,11 @@ namespace PlanPoker.DTO
       };
     }
 
+    /// <summary>
+    /// Конвертировать сущность карты в DTO.
+    /// </summary>
+    /// <param name="card">Карта.</param>
+    /// <returns>Представление карты в DTO.</returns>
     public static CardDTO ConvertCard(Card card)
     {
       return new CardDTO
@@ -24,6 +37,11 @@ namespace PlanPoker.DTO
       };
     }
 
+    /// <summary>
+    /// Конвертировать сущность колоды карт в DTO.
+    /// </summary>
+    /// <param name="cardDeck">Колода карт.</param>
+    /// <returns>Представление колоды карт в DTO.</returns>
     public static CardDeckDTO ConvertCardDeck(CardDeck cardDeck)
     {
       var cards = cardDeck.Cards.Select(card => ConvertCard(card));
@@ -35,6 +53,13 @@ namespace PlanPoker.DTO
       };
     }
 
+    /// <summary>
+    /// Конвертировать сущность комнаты в DTO.
+    /// </summary>
+    /// <param name="room">Комната.</param>
+    /// <param name="users">Пользователи комнаты.</param>
+    /// <param name="discussions">Обсуждения в комнате.</param>
+    /// <returns>Представление пользователя в DTO.</returns>
     public static RoomDTO ConvertRoom(Room room, IEnumerable<UserDTO> users, IEnumerable<DiscussionDTO> discussions)
     {
       return new RoomDTO
@@ -48,6 +73,11 @@ namespace PlanPoker.DTO
       };
     }
 
+    /// <summary>
+    /// Конвертировать сущность обсуждения в DTO.
+    /// </summary>
+    /// <param name="discussion">Обсуждение.</param>
+    /// <returns>Представление обсуждения в DTO.</returns>
     public static DiscussionDTO ConvertDiscussion(Discussion discussion)
     {
       return new DiscussionDTO

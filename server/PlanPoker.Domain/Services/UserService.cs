@@ -58,7 +58,6 @@ namespace PlanPoker.Domain.Services
     /// <summary>
     /// Выход из системы.
     /// </summary>
-    /// <param name="userId">Id пользователя.</param>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
     public Task Logout()
     {

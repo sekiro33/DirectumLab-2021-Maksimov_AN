@@ -29,7 +29,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public Room Delete(Guid id)
     {
       var room = this.Get(id);
-      if (room is not null)
+      if (room != null)
         this.rooms.Remove(room);
       return room;
     }
