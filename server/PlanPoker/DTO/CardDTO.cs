@@ -16,5 +16,10 @@ namespace PlanPoker.DTO
     /// Значение карты.
     /// </summary>
     public double? Value { get; set; }
+
+    /// <summary>
+    /// Строковое представление карты.
+    /// </summary>
+    public string Text { get; set; }
   }
 }

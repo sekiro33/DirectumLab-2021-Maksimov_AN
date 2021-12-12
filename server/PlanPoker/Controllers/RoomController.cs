@@ -44,7 +44,7 @@ namespace PlanPoker.Controllers
       var cardDeck = this.cardDeckService.GetCardDeck();
       var room = this.roomService.CreateRoom(roomName, cardDeck, userId);
       var users = this.roomService.GetAllUser(room.Id).Select(user => ConverterDTO.ConvertUser(user));
-      var discussion = this.discussionService.GetAllDiscussion(room.Id).Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+      var discussion = this.discussionService.GetAllDiscussion(room.Id).Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
       return ConverterDTO.ConvertRoom(room, users, discussion);
     }
 
@@ -58,8 +58,9 @@ namespace PlanPoker.Controllers
     public RoomDTO Connect(Guid roomId, Guid userId)
     {
       this.roomService.AddUser(roomId, userId);
+      var cardDeck = this.roomService.GetCardDeck(roomId);
       var users = this.roomService.GetAllUser(roomId).Select(user => ConverterDTO.ConvertUser(user));
-      var discussion = this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+      var discussion = this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
       return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId), users, discussion);
     }
 
@@ -83,7 +84,8 @@ namespace PlanPoker.Controllers
     public RoomDTO GetRoomInfo(Guid roomId)
     {
       var users = this.roomService.GetAllUser(roomId).Select(user => ConverterDTO.ConvertUser(user));
-      var discussion = this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+      var cardDeck = this.roomService.GetCardDeck(roomId);
+      var discussion = this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
       return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId), users, discussion);
     }
   }

@@ -33,7 +33,8 @@ namespace PlanPoker.DTO
       return new CardDTO
       {
         Id = card.Id,
-        Value = card.Value
+        Value = card.Value,
+        Text = card.Text
       };
     }
 
@@ -77,16 +78,39 @@ namespace PlanPoker.DTO
     /// Конвертировать сущность обсуждения в DTO.
     /// </summary>
     /// <param name="discussion">Обсуждение.</param>
+    /// <param name="users">Пользователи.</param>
+    /// <param name="cardDeck">Колода карт.</param>
     /// <returns>Представление обсуждения в DTO.</returns>
-    public static DiscussionDTO ConvertDiscussion(Discussion discussion)
+    public static DiscussionDTO ConvertDiscussion(Discussion discussion, IEnumerable<UserDTO> users, CardDeck cardDeck)
     {
+      double average = 0;
+      int count = 0;
+      var grades = new Dictionary<string, string>();
+      foreach (var grade in discussion.Grades)
+      {
+        var userName = users.Where(user => user.Id == grade.Key).FirstOrDefault();
+        var userGrade = cardDeck.Cards.Where(card => card.Id == discussion.Grades[grade.Key]).FirstOrDefault();
+
+        if (userGrade.Value.HasValue)
+        {
+          average += userGrade.Value.Value;
+          count++;
+        }
+
+        grades.Add(userName.Name, userGrade.Text);
+      }
+
+      if (count != 0)
+        average = average / count;
+
       return new DiscussionDTO
       {
         Id = discussion.Id,
         Name = discussion.Name,
         StartDateTime = discussion.StarDateTime,
         EndDateTime = discussion.EndDateTime,
-        Grades = null
+        Grades = grades,
+        Average = average
       };
     }
   }
