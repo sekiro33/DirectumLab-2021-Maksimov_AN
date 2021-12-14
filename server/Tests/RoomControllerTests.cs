@@ -35,14 +35,8 @@ namespace Tests
     [Test]
     public void GetRoomInfoTest()
     {
-      var expected = new RoomDTO
+      var users = new List<UserDTO>()
       {
-        Id = this.roomRepository.Get(Guid.Empty).Id,
-        Name = "TestRoom",
-        CardDeck = ConverterDTO.ConvertCardDeck(this.room.CardDeck),
-        Creator = this.creator.Id,
-        Users = new List<UserDTO>
-        {
           new UserDTO()
           {
             Id = this.creator.Id,
@@ -53,11 +47,19 @@ namespace Tests
             Id = this.newUser.Id,
             Name = this.newUser.Name
           }
-        },
+      };
+
+      var expected = new RoomDTO
+      {
+        Id = this.roomRepository.Get(Guid.Empty).Id,
+        Name = "TestRoom",
+        CardDeck = ConverterDTO.ConvertCardDeck(this.room.CardDeck),
+        Creator = this.creator.Id,
+        Users = users,
         Discussion = this.discussionRepository
         .GetAll()
         .Where(discussion => discussion.RoomId == this.room.Id)
-        .Select(discussion => ConverterDTO.ConvertDiscussion(discussion))
+        .Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, this.room.CardDeck))
       };
 
       var roomController = new RoomController(this.roomService, this.cardDeckService, this.discussionService);
@@ -74,14 +76,8 @@ namespace Tests
     {
       var room = this.roomRepository.Get(Guid.Empty);
 
-      var expected = new RoomDTO
+      var users = new List<UserDTO>()
       {
-        Id = this.roomRepository.Get(Guid.Empty).Id,
-        Name = "TestRoom",
-        CardDeck = ConverterDTO.ConvertCardDeck(room.CardDeck),
-        Creator = this.creator.Id,
-        Users = new List<UserDTO>
-        {
           new UserDTO()
           {
             Id = this.creator.Id,
@@ -92,11 +88,19 @@ namespace Tests
             Id = this.newUser.Id,
             Name = this.newUser.Name
           }
-        },
+      };
+
+      var expected = new RoomDTO
+      {
+        Id = this.roomRepository.Get(Guid.Empty).Id,
+        Name = "TestRoom",
+        CardDeck = ConverterDTO.ConvertCardDeck(room.CardDeck),
+        Creator = this.creator.Id,
+        Users = users,
         Discussion = this.discussionRepository
         .GetAll()
         .Where(discussion => discussion.RoomId == room.Id)
-        .Select(discussion => ConverterDTO.ConvertDiscussion(discussion))
+        .Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, this.room.CardDeck))
       };
 
       var roomController = new RoomController(this.roomService, this.cardDeckService, this.discussionService);

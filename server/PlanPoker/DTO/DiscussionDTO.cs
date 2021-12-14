@@ -21,7 +21,12 @@ namespace PlanPoker.DTO
     /// <summary>
     /// Оценки по обсуждению.
     /// </summary>
-    public IEnumerable<double> Grades { get; set; }
+    public IDictionary<string, string> Grades { get; set; }
+
+    /// <summary>
+    /// Средняя оценка.
+    /// </summary>
+    public double Average { get; set; }
 
     /// <summary>
     /// Время начала обсуждения.

@@ -20,8 +20,10 @@ namespace Tests
   {
     private DiscussionService discussionService;
     private IRepository<Discussion> discussionRepository;
-
+    private IRepository<Room> roomRepository;
+    private RoomService roomService;
     private Discussion currentDiscussion;
+    private User creator;
 
     /// <summary>
     /// Подготовка данных для тестов.
@@ -33,17 +35,22 @@ namespace Tests
       var cardRepositoryMock = new Mock<IRepository<Card>>();
       var cardDeckService = new CardDeckService(cardDeckRepositoryMock.Object, cardRepositoryMock.Object);
 
-      var creator = new User("Creator");
+      this.creator = new User("Creator");
+      var userRepositoryMock = new Mock<IRepository<User>>();
+      userRepositoryMock.Setup(repository => repository.Get(It.IsAny<Guid>())).Returns(this.creator);
 
       var roomRepositoryMock = new Mock<IRepository<Room>>();
-      roomRepositoryMock.Setup(repository => repository.Get(Guid.Empty)).Returns(new Room("TestRoom", cardDeckService.GetCardDeck(), creator.Id));
+      roomRepositoryMock.Setup(repository => repository.Get(Guid.Empty)).Returns(new Room("TestRoom", cardDeckService.GetCardDeck(), this.creator.Id));
+      this.roomRepository = roomRepositoryMock.Object;
 
       var discussionRepositroyMock = new Mock<IRepository<Discussion>>();
       discussionRepositroyMock.Setup(repository => repository.GetAll()).Returns(this.GetTestDiscussions());
       discussionRepositroyMock.Setup(repository => repository.Get(It.IsAny<Guid>())).Returns(this.currentDiscussion);
       this.discussionRepository = discussionRepositroyMock.Object;
 
-      this.discussionService = new DiscussionService(this.discussionRepository, roomRepositoryMock.Object);
+      this.discussionService = new DiscussionService(this.discussionRepository, this.roomRepository);
+
+      this.roomService = new RoomService(this.roomRepository, userRepositoryMock.Object);
     }
 
     private IQueryable<Discussion> GetTestDiscussions()
@@ -71,9 +78,18 @@ namespace Tests
     public void GetAllDiscussionTest()
     {
       var discussions = this.discussionRepository.GetAll().Where(discussion => discussion.RoomId == Guid.Empty).AsEnumerable();
-      var expected = discussions.Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+      var users = new List<UserDTO>()
+      {
+        new UserDTO
+        {
+          Id = this.creator.Id,
+          Name = this.creator.Name
+        }
+      };
+      var cardDeck = this.roomService.GetCardDeck(Guid.Empty);
+      var expected = discussions.Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
 
-      var discussionController = new DiscussionController(this.discussionService);
+      var discussionController = new DiscussionController(this.discussionService, this.roomService);
       var actual = discussionController.GetAllDiscussion(Guid.Empty);
 
       Assert.AreEqual(JsonSerializer.Serialize(expected), JsonSerializer.Serialize(actual));
@@ -86,13 +102,21 @@ namespace Tests
     public void SaveDiscussionTest()
     {
       this.discussionService.EndDiscussion(this.currentDiscussion.Id);
-
+      var users = new List<UserDTO>()
+      {
+        new UserDTO
+        {
+          Id = this.creator.Id,
+          Name = this.creator.Name
+        }
+      };
+      var cardDeck = this.roomService.GetCardDeck(Guid.Empty);
       var expected = this.discussionRepository
         .GetAll()
         .Where(discussion => discussion.RoomId == Guid.Empty)
-        .Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+        .Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
 
-      var discussionController = new DiscussionController(this.discussionService);
+      var discussionController = new DiscussionController(this.discussionService, this.roomService);
       var actual = discussionController.GetAllDiscussion(Guid.Empty);
 
       Assert.AreEqual(JsonSerializer.Serialize(expected), JsonSerializer.Serialize(actual));

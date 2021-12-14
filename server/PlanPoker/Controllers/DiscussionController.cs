@@ -17,13 +17,15 @@ namespace PlanPoker.Controllers
   public class DiscussionController : ControllerBase
   {
     private readonly DiscussionService discussionService;
+    private readonly RoomService roomService;
 
     /// <summary>
     /// Конструктор контроллера.
     /// </summary>
     /// <param name="discussionService">Сервис для работы с обсуждениями.</param>
-    public DiscussionController(DiscussionService discussionService)
+    public DiscussionController(DiscussionService discussionService, RoomService roomService)
     {
+      this.roomService = roomService;
       this.discussionService = discussionService;
     }
 
@@ -38,7 +40,9 @@ namespace PlanPoker.Controllers
     public DiscussionDTO CreateDiscussion(Guid roomId, string name)
     {
       var discussion = this.discussionService.CreateDiscussion(roomId, name);
-      return ConverterDTO.ConvertDiscussion(discussion);
+      var users = this.roomService.GetAllUser(roomId).Select(user => ConverterDTO.ConvertUser(user));
+      var cardDeck = this.roomService.GetCardDeck(roomId);
+      return ConverterDTO.ConvertDiscussion(discussion, users, cardDeck);
     }
 
     /// <summary>
@@ -59,7 +63,9 @@ namespace PlanPoker.Controllers
     [HttpGet]
     public IEnumerable<DiscussionDTO> GetAllDiscussion(Guid roomId)
     {
-      return this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion));
+      var users = this.roomService.GetAllUser(roomId).Select(user => ConverterDTO.ConvertUser(user));
+      var cardDeck = this.roomService.GetCardDeck(roomId);
+      return this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
     }
 
     /// <summary>
