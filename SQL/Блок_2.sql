@@ -54,15 +54,12 @@ CREATE TRIGGER AddOrders
 	AFTER INSERT
 	AS
 BEGIN
-	DECLARE @count INT
-	DECLARE @count1 INT
-	SET @count = (SELECT COUNT(*) FROM inserted)
-	SET @count1 = (SELECT COUNT(*) FROM inserted
-				   JOIN dbo.Customers ON dbo.Customers.Id = inserted.Customer
-				   JOIN dbo.Sellers ON dbo.Sellers.Id = inserted.Seller
-				   WHERE dbo.Customers.City = dbo.Sellers.City)
-	/*Если количество добавляемых записей равно количество записей после проверки - то всё ОК*/
-	IF (@count = @count1)
+	if (NOT EXISTS (
+			SELECT * FROM inserted
+			JOIN dbo.Customers ON dbo.Customers.Id = inserted.Customer
+			JOIN dbo.Sellers ON dbo.Sellers.Id = inserted.Seller
+			WHERE dbo.Customers.City != dbo.Sellers.City)
+			)
 	INSERT INTO	dbo.OrderHistory(OrderId, Action, ChangedAt, OrderedAt, Customer, Seller)
 		(SELECT Id, 'INSERT', GETDATE(), CreatedAt, Customer, Seller FROM inserted) 
 	ELSE
@@ -76,7 +73,7 @@ AFTER UPDATE
 AS
 BEGIN
 	INSERT INTO	dbo.OrderHistory(OrderId, Action, ChangedAt, OrderedAt, Customer, Seller)
-		SELECT Id, 'UPDATE', GETDATE(), CreatedAt, Customer, Seller FROM deleted 
+		SELECT Id, 'UPDATE', GETDATE(), CreatedAt, Customer, Seller FROM inserted 
 END
 
 /*Триггер на удаление данных из таблицы Заказы*/
@@ -90,7 +87,7 @@ BEGIN
 END
 
 /*Реализация представления возвращающее выборку по продавцам*/
-CREATE VIEW GetSellersInfo
+CREATE VIEW SellersInfo
 AS
 SELECT
 	dbo.Sellers.Id,
