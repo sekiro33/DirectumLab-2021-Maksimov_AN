@@ -24,7 +24,6 @@ from
   SalesLT.SalesOrderHeader
   join SalesLT.Customer on SalesLT.SalesOrderHeader.CustomerID = SalesLT.Customer.CustomerID
 group by
-  SalesLT.SalesOrderHeader.CustomerID,
   SalesLT.Customer.CompanyName
 having
   sum(SalesLT.SalesOrderHeader.TotalDue) > 50000
@@ -38,8 +37,8 @@ from
   join SalesLT.Product on SalesLT.SalesOrderDetail.ProductID = SalesLT.Product.ProductID
   join SalesLT.ProductModel on SalesLT.Product.ProductModelID = SalesLT.ProductModel.ProductModelID
   join SalesLT.Customer on SalesLT.SalesOrderHeader.CustomerID = SalesLT.Customer.CustomerID
-  where 
-    SalesLT.ProductModel.Name = 'Racing Socks'
+where 
+  SalesLT.ProductModel.Name = 'Racing Socks'
 
 /*5. Отобразить 25 товаров с наибольшим суммарным чеком (количество * стоимость товара)*/
 select top(25)
@@ -49,26 +48,24 @@ select top(25)
 from 
   SalesLT.SalesOrderDetail
   join SalesLT.Product on SalesLT.Product.ProductID = SalesLT.SalesOrderDetail.ProductID
-order by
-  Total
-desc
+order by Total desc
 
 /*6. Сгруппировать заказы по диапазону стоимости: 0..99, 100..999, 1000..9999, свыше 10000.
 Для каждого диапазона отобразить количество заказов и общую стоимость.*/
 select 
-  case when SalesLT.SalesOrderDetail.LineTotal <= 99 then '0..99'
-	   when SalesLT.SalesOrderDetail.LineTotal <= 999 then '100..999'
-	   when SalesLT.SalesOrderDetail.LineTotal <= 9999 then '1000..9999'
+  case when SalesLT.SalesOrderHeader.TotalDue <= 99 then '0..99'
+	   when SalesLT.SalesOrderHeader.TotalDue <= 999 then '100..999'
+	   when SalesLT.SalesOrderHeader.TotalDue <= 9999 then '1000..9999'
 	   else 'More 10000'
   end as Cost,
-  sum(SalesLT.SalesOrderDetail.OrderQty) as Count,
-  sum(SalesLT.SalesOrderDetail.LineTotal) as TotalCost
+  count(SalesLT.SalesOrderHeader.TotalDue) as Count,
+  sum(SalesLT.SalesOrderHeader.TotalDue) as TotalCost
 from
-  SalesLT.SalesOrderDetail
+  SalesLT.SalesOrderHeader
 group by
-  case when SalesLT.SalesOrderDetail.LineTotal <= 99 then '0..99'
-	   when SalesLT.SalesOrderDetail.LineTotal <= 999 then '100..999'
-	   when SalesLT.SalesOrderDetail.LineTotal <= 9999 then '1000..9999'
+  case when SalesLT.SalesOrderHeader.TotalDue <= 99 then '0..99'
+	   when SalesLT.SalesOrderHeader.TotalDue <= 999 then '100..999'
+	   when SalesLT.SalesOrderHeader.TotalDue <= 9999 then '1000..9999'
 	   else 'More 10000'
   end
 
@@ -84,14 +81,15 @@ order by
   charindex('cycle', SalesLT.Customer.CompanyName)
 
 /*8. Отобразить 10 наиболее важных для продаж городов.*/
-select 
-  top(10) 
+select top(10) 
   SalesLT.Address.City,
-  SalesLT.SalesOrderHeader.TotalDue
+  sum(SalesLT.SalesOrderHeader.TotalDue) as 'Sum'
 from 
   SalesLT.SalesOrderHeader 
   join SalesLT.CustomerAddress on SalesLT.SalesOrderHeader.CustomerID = SalesLT.CustomerAddress.CustomerID 
   join SalesLT.Address on SalesLT.CustomerAddress.AddressID = SalesLT.Address.AddressID 
+group by
+  SalesLT.Address.City
 order by 
-  SalesLT.SalesOrderHeader.TotalDue 
+  Sum
 desc;
