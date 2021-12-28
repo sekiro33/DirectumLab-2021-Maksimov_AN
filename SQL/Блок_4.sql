@@ -42,12 +42,13 @@ where
 
 /*5. Отобразить 25 товаров с наибольшим суммарным чеком (количество * стоимость товара)*/
 select top(25)
-  SalesLT.Product.ProductID,
   SalesLT.Product.Name,
-  SalesLT.SalesOrderDetail.OrderQty * SalesLT.SalesOrderDetail.UnitPrice as Total
+  sum(SalesLT.SalesOrderDetail.OrderQty * SalesLT.SalesOrderDetail.UnitPrice) as Total
 from 
   SalesLT.SalesOrderDetail
   join SalesLT.Product on SalesLT.Product.ProductID = SalesLT.SalesOrderDetail.ProductID
+group by
+  SalesLT.Product.Name
 order by Total desc
 
 /*6. Сгруппировать заказы по диапазону стоимости: 0..99, 100..999, 1000..9999, свыше 10000.
