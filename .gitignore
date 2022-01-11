@@ -25,3 +25,4 @@ yarn-error.log*
 
 # Visual Studio temp something
 .vs/
+client/src/.vscode/settings.json
