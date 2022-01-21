@@ -6,129 +6,172 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Room</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
 </head>
 
-<body>
-  <header>
-    <a href="start-page.html">
-      <img src="#" alt="logo" />
-      <h1>Plan Poker</h1>
-    </a>
-    <span>test</span>
-    <button><img src="#" alt="avatar" /></button>
-    <button>Sign Out</button>
+<body class="page">
+  <header class="header">
+    <div class="container header__content">
+      <a class="logo" href="start-page.html">
+        <img class="logo__icon" src="../images/logo.svg" alt="logo" />
+        <h1 class="logo__text">Plan Poker</h1>
+      </a>
+      <details class="user-info">
+        <summary class="user-info__summary">
+          test
+          <img class="user-info__icon" src="../images/user_icon.svg" alt="avatar">
+        </summary>
+        <div class="dropdown dropdown__corner">
+          <div class="dropdown__menu">
+            <a class="dropdown__content" href="#">Sign Out</a>
+          </div>
+        </div>
+      </details>
+    </div>
   </header>
 
-  <main>
-    <p>Story</p>
-    <ul>
-      <li><button>0</button></li>
-      <li><button>0.5</button></li>
-      <li><button>1</button></li>
-      <li><button>2</button></li>
-      <li><button>3</button></li>
-      <li><button>5</button></li>
-      <li><button>8</button></li>
-      <li><button>13</button></li>
-      <li><button>20</button></li>
-      <li><button>40</button></li>
-      <li><button>100</button></li>
-      <li><button>?</button></li>
-      <li><button>&#9749;</button></li>
-    </ul>
+  <main class="main">
+    <div class="container main__content">
+      <div class="title">Story</div>
+      <div class="column-container">
+        <div class="left-column">
+          <ul class="list card-list">
+            <li class="card-list__item"><button class="card-list__button">0</button></li>
+            <li class="card-list__item"><button class="card-list__button">0.5</button></li>
+            <li class="card-list__item"><button class="card-list__button">1</button></li>
+            <li class="card-list__item"><button class="card-list__button">2</button></li>
+            <li class="card-list__item"><button class="card-list__button selected">3</button></li>
+            <li class="card-list__item"><button class="card-list__button">5</button></li>
+            <li class="card-list__item"><button class="card-list__button">8</button></li>
+            <li class="card-list__item"><button class="card-list__button">13</button></li>
+            <li class="card-list__item"><button class="card-list__button">20</button></li>
+            <li class="card-list__item"><button class="card-list__button">40</button></li>
+            <li class="card-list__item"><button class="card-list__button">100</button></li>
+            <li class="card-list__item"><button class="card-list__button">?</button></li>
+            <li class="card-list__item"><button class="card-list__button">&#9749;</button></li>
+          </ul>
 
-    <div>
-      <p>Story voting completed</p>
-      <button>Finish Voting</button>
-      <p>Player (1/2)</p>
-      <ul>
-        <li>
-          <img src="#" alt="avatar">
-          <span>test</span>
-          <div>
-            <img src="#" alt="voted">
+          <div class="history">
+            <header class="history__header">
+              <div class="history__title">
+                <p>Completed Stories
+                <div class="header__mark">3</div>
+                </p>
+              </div>
+              <button class="history__button">
+                <img class="history__icon" src="../images/download_icon.svg" alt="Download" />
+                <span class="visual-hidden">Download</span>
+              </button>
+            </header>
+            <table class="table history__table">
+              <tbody>
+                <tr class="table__tr history__tr">
+                  <td class="history__name">Story</td>
+                  <td class="history__average">14</td>
+                  <td class="history__remove">
+                    <button class="history__delete-button">
+                      <img class="history__delete-icon" src="../images/delete_icon.svg" alt="Remove" />
+                      <span class="visual-hidden">Remove</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr tr class="table__tr history__tr">
+                  <td class="history__name">Story</td>
+                  <td class="history__average">14</td>
+                  <td class="history__remove">
+                    <button class="history__delete-button">
+                      <img class="history__delete-icon" src="../images/delete_icon.svg" alt="Remove" />
+                      <span class="visual-hidden">Remove</span>
+                    </button>
+                  </td>
+                </tr>
+                <tr tr class="table__tr history__tr">
+                  <td class="history__name">Story</td>
+                  <td class="history__average">14</td>
+                  <td class="history__remove">
+                    <button class="history__delete-button">
+                      <img class="history__delete-icon" src="../images/delete_icon.svg" alt="Remove" />
+                      <span class="visual-hidden">Remove</span>
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        </li>
-        <li>
-          <img src="#" alt="avatar">
-          <span>test2</span>
-          <div>
-            <img src="#" alt="voted">
+        </div>
+        <div class="right-column">
+          <div class="right-column">
+            <div class="players-container">
+              <header class="players-container__header">
+                <p class="players-container__title">Story voting completed</p>
+              </header>
+
+              <div class="story-creator">
+                <button class="button button-finish">Finish Voting</button>
+              </div>
+
+              <p class="players__text">Player (1/2)</p>
+
+              <ul class="list players__list">
+                <li class="list__item players-list__item">
+                  <div class="players__info">
+                    <img class="players-list__avatar" src="../images/user_icon.svg" alt="avatar">
+                    <p class="players-list__text">testesfesafesafesafesafesafesafesafesafesafesafesaf</p>
+                  </div>
+                  <div class="players-list__status">
+                    <img src="../images/check_circle.svg" alt="voted">
+                  </div>
+                </li>
+                <li class="list__item players-list__item">
+                  <div class="players__info">
+                    <img class="players-list__avatar" src="../images/user_icon.svg" alt="avatar">
+                    <p class="players-list__text">test 2</p>
+                  </div>
+                  <div class="players-list__status">
+                    <img src="../images/check_circle.svg" alt="voted">
+                  </div>
+                </li>
+              </ul>
+
+              <label class="players__label">Invite a teammate
+                <input class="input players__input" type="text" value="https://www.planitpoker.com/board" readonly />
+              </label>
+            </div>
           </div>
-        </li>
-      </ul>
-      <label>Invite a teammate
-        <input type="text" value="https://www.planitpoker.com/board" readonly />
-      </label>
+        </div>
+      </div>
+      <div class="modal">
+        <header class="modal__header">
+          <p class="modal__header__title">Story Details</p>
+        </header>
+        <p class="modal__title">Players:</p>
+        <ul class="list modal__list">
+          <li class="modal__item">
+            <div class="modal__user-info">
+              <img class="modal__item__icon" src="../images/user_icon.svg" alt="avatar">
+              <p class="modal__item__text">test</p>
+            </div>
+            <span class="modal__item__grade">3</span>
+          </li>
+          <li class="modal__item">
+            <div class="modal__user-info">
+              <img class="modal__item__icon" src="../images/user_icon.svg" alt="avatar">
+              <p class="modal__item__text">test</p>
+            </div>
+            <span class="modal__item__grade">8</span>
+          </li>
+        </ul>
+        <div class="modal_button-container">
+          <button class="button modal__button">Close</button>
+        </div>
+      </div>
     </div>
-
-    <div>
-      <header>
-        <p>Completed Story <span>3</span></p>
-        <button>
-          <img src="#" alt="Download" />
-          <span>Download</span>
-        </button>
-      </header>
-      <table>
-        <tbody>
-          <tr>
-            <td>Story</td>
-            <td>14</td>
-            <td>
-              <button>
-                <img src="#" alt="Remove" />
-                <span>Remove</span>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Story</td>
-            <td>14</td>
-            <td>
-              <button>
-                <img src="#" alt="Remove" />
-                <span>Remove</span>
-              </button>
-            </td>
-          </tr>
-          <tr>
-            <td>Story</td>
-            <td>14</td>
-            <td>
-              <button>
-                <img src="#" alt="Remove" />
-                <span>Remove</span>
-              </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </div>
-
-    <div>
-      <header>
-        <p>Story Details</p>
-      </header>
-      <p>Players:</p>
-      <ul>
-        <li>
-          <img src="#" alt="avatar">
-          <span>test</span>
-          <span>3</span>
-        </li>
-        <li>
-          <img src="#" alt="avatar">
-          <span>test2</span>
-          <span>3</span>
-        </li>
-      </ul>
-      <button>Close</button>
-    </div>
-    
   </main>
 
-  <footer>
+  <footer class="footer">
     <p>Copyright 2021 <a href="start-page.html">Plan Poker</a></p>
   </footer>
 </body>

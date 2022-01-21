@@ -5,50 +5,85 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <title>Room</title>
 </head>
 
-<body>
-  <header>
-    <a href="start-page.html">
-      <img src="#" alt="logo" />
-      <h1>Plan Poker</h1>
-    </a>
-    <span>test</span>
-    <button><img src="#" alt="avatar" /></button>
-    <button>Sign Out</button>
+<body class="page">
+  <header class="header">
+    <div class="container header__content">
+      <a class="logo" href="start-page.html">
+        <img class="logo__icon" src="../images/logo.svg" alt="logo" />
+        <h1 class="logo__text">Plan Poker</h1>
+      </a>
+
+      <details class="user-info">
+        <summary class="user-info__summary">
+          test
+          <img class="user-info__icon" src="../images/user_icon.svg" alt="avatar">
+        </summary>
+        <div class="dropdown dropdown__corner">
+          <div class="dropdown__menu">
+            <a class="dropdown__content" href="#">Sign Out</a>
+          </div>
+        </div>
+      </details>
+
   </header>
 
-  <main>
-    <div>
-      <p>Create new story</p>
-    </div>
+  <main class="main">
+    <div class="containter main__content">
+      <div class="title"></div>
+      <div class="column-container">
+        <div class="left-column">
+          <div class="story-container">
+            <p class="story-container__text">Create new story</p>
+          </div>
+        </div>
 
-    <div>
-      <p>Story voting completed</p>
-      <input type="text" name="discussionName" required />
-      <button>Go</button>
-      <p>Player (2/2)</p>
-      <ul>
-        <li>
-          <img src="#" alt="avatar">
-          <span>test</span>
-          <div></div>
-        </li>
-        <li>
-          <img src="#" alt="avatar">
-          <span>test 2</span>
-          <div></div>
-        </li>
-      </ul>
-      <label>Invite a teammate
-        <input type="text" value="https://www.planitpoker.com/board" readonly />
-      </label>
-    </div>
+        <div class="right-column">
+          <div class="players-container">
+            <header class="players-container__header">
+              <p class="players-container__title">Story voting completed</p>
+            </header>
 
+            <div class="story-creator">
+              <input class="input story-creator__input" type="text" name="discussionName" required />
+              <button class="button story-creator__button">Go</button>
+            </div>
+
+            <p class="players__text">Player (2/2)</p>
+
+            <ul class="list players__list">
+              <li class="list__item players-list__item">
+                <div class="players__info">
+                  <img class="players-list__avatar" src="../images/user_icon.svg" alt="avatar">
+                  <p class="players-list__text">test</p>
+                </div>
+                <div class="players-list__status"></div>
+              </li>
+              <li class="list__item players-list__item">
+                <div class="players__info">
+                  <img class="players-list__avatar" src="../images/user_icon.svg" alt="avatar">
+                  <p class="players-list__text">test 2</p>
+                </div>
+                <div class="players-list__status"></div>
+              </li>
+            </ul>
+
+            <label class="players__label">Invite a teammate
+              <input class="input players__input" type="text" value="https://www.planitpoker.com/board" readonly />
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
 
-  <footer>
+  <footer class="footer">
     <p>Copyright 2021 <a href="start-page.html">Plan Poker</a></p>
   </footer>
 </body>
