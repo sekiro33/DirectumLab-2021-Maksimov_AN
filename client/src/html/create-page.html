@@ -5,32 +5,42 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
   <title>Create Room</title>
 </head>
 
-<body>
-  <header>
-    <a href="start-page.html">
-      <img src="#" alt="logo" />
-      <h1>Plan Poker</h1>
-    </a>
+<body class="page">
+  <header class="header">
+    <div class="container header__content">
+      <a class="logo" href="start-page.html">
+        <img class="logo__icon" src="../images/logo.svg" alt="logo" />
+        <h1 class="logo__text">Plan Poker</h1>
+      </a>
+    </div>
   </header>
 
-  <main>
-    <form>
-      <p>Let's Start!</p>
-      <h2>Create the room:</h2>
-      <label>User name
-        <input type="text" name="userName" placeholder="Enter your name" required />
-      </label>
-      <label>Room name
-        <input type="text" name="roomName" placeholder="Enter room name" required />
-      </label>
-      <button type="submit">Enter</button>
-    </form>
+  <main class="main">
+    <div class="containter main__content">
+      <div class="column-container">
+        <form class="form">
+          <p class="form__text">Let's Start!</p>
+          <h2 class="form__title">Create the room:</h2>
+          <label class="form__label">User name
+            <input class="form__input" type="text" name="userName" placeholder="Enter your name" required />
+          </label>
+          <label class="form__label">Room name
+            <input class="form__input" type="text" name="roomName" placeholder="Enter room name" required />
+          </label>
+          <button class="button form__button" type="submit">Enter</button>
+        </form>
+      </div>
+    </div>
   </main>
 
-  <footer>
+  <footer class="footer">
     <p>Copyright 2021 <a href="start-page.html">Plan Poker</a></p>
   </footer>
 </body>
