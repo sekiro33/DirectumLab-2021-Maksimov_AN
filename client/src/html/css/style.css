@@ -240,8 +240,11 @@ body {
 }
 
 .players-container {
+  box-sizing: border-box;
   width: 328px;
   min-height: 457px;
+
+  padding-bottom: 24px;
 
   background-color: white;
 }
@@ -326,9 +329,12 @@ body {
 
 .players-list__text {
   margin-left: 18px;
+  overflow: hidden;
 
   font-size: 18px;
   line-height: 21px;
+
+  text-overflow: ellipsis;
 }
 
 .players-list__status {
