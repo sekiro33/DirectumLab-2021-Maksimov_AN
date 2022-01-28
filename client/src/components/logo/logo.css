@@ -1,0 +1,20 @@
+.logo {
+  display: flex;
+
+  text-decoration: none;
+}
+
+.logo__icon {
+  width: 58px;
+  height: 58px;
+  margin-right: 16px;
+}
+
+.logo__text {
+  margin: 0;
+
+  color: white;
+
+  font-weight: 400;
+  font-size: 48px;
+}

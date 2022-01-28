@@ -1,0 +1,9 @@
+.results {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 676px;
+  min-height: 433px;
+
+  background-color: white;
+}

@@ -1,0 +1,28 @@
+.card-list__item {
+  margin-bottom: 12px;
+  margin-left: 12px;
+}
+
+.card-list__button {
+  width: 125px;
+  height: 174px;
+  padding: 10px;
+
+  font-size: 46px;
+  line-height: 54px;
+  text-align: center;
+
+  background-color: white;
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 0 6px 1px rgba(1, 1, 1, 0.05);
+}
+
+.card-list__button:hover {
+  box-shadow: 0 0 6px 3px rgba(1, 1, 1, 0.25);
+}
+
+.card-cafe {
+  width: 42px;
+  height: 44px;
+}
