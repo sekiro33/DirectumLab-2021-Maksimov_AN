@@ -5,10 +5,9 @@ import Input from '../input/input';
 import { RoomState } from '../planing-page/planing-page';
 import './players-container.css';
 
-interface IUser {
+export interface IUser {
   name: string;
-  voted: boolean;
-  vote: number;
+  vote?: number;
 }
 
 interface IProps {
@@ -17,17 +16,17 @@ interface IProps {
   isOwner: boolean;
 }
 
-const getVotedUsersCount = (users: IUser[]) => {
-  let count = 0;
-  users.forEach((user) => {
-    if (user.voted == true) {
-      count++;
-    }
-  });
-  return count;
-}
-
 const PlayersContainer: React.FC<IProps> = (props) => {
+  const getVotedUsersCount = (users: IUser[]) => {
+    let count = 0;
+    users.forEach((user) => {
+      if (user.vote === null) {
+        count++;
+      }
+    });
+    return count;
+  }
+  
   return (
     <div className="players-container">
       <header className="players-container__header">

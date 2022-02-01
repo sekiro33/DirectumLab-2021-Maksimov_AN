@@ -54,10 +54,28 @@ const standardCardDeck = [{
 
 const testHistroy = [{
   storyName: 'Story',
+  votes:
+    [{
+      name: 'test',
+      value: 4
+    },
+    {
+      name: 'test2',
+      value: 5
+    }],
   average: 14
 },
 {
   storyName: 'Story',
+  votes:
+    [{
+      name: 'test',
+      value: 4
+    },
+    {
+      name: 'test2',
+      value: 5
+    }],
   average: 14
 }];
 
@@ -84,55 +102,25 @@ class PlaningPage extends React.Component<IProps, IState> {
     super(props);
 
     this.state = { roomState: RoomState.START };
+
+    this.renderContentRoom.bind(this);
   }
 
-  contentRoom = () => {
+  public renderContentRoom() {
     switch (this.state.roomState) {
       case RoomState.START:
         return (
-          <div className="container main__content">
-            <div className="column-container">
-              <div className="left-column">
-                <StoryPlaceholder />
-              </div>
-              <div className="right-column">
-                <PlayersContainer roomState={this.state.roomState} isOwner={this.props.isOwner} users={testUsers} />
-              </div>
-            </div>
-          </div>
+          <StoryPlaceholder />
         );
 
       case RoomState.VOTE:
         return (
-          <div className="container main__content">
-            <div className="title">Story</div>
-            <div className="column-container">
-              <div className="left-column">
-                <CardDeck cards={standardCardDeck} />
-                <History history={testHistroy} isOwner={this.props.isOwner} />
-              </div>
-              <div className="right-column">
-                <PlayersContainer roomState={this.state.roomState} isOwner={this.props.isOwner} users={testUsers} />
-              </div>
-            </div>
-          </div>
+          <CardDeck cards={standardCardDeck} />
         );
 
       case RoomState.VOTED:
         return (
-          <div className="container main__content">
-            <div className="title">Story</div>
-            <div className="column-container">
-              <div className="left-column">
-                <Results playersCount={2} average={4} votes={[{ grade: 3, count: 1 }, { grade: 5, count: 1 }]} />
-                <History history={testHistroy} isOwner={this.props.isOwner} />
-                <Modal votes={testVotes} />
-              </div>
-              <div className="right-column">
-                <PlayersContainer roomState={this.state.roomState} isOwner={this.props.isOwner} users={testUsers} />
-              </div>
-            </div>
-          </div>
+          <Results playersCount={2} average={4} votes={[{ grade: 3, count: 1 }, { grade: 5, count: 1 }]} />
         );
 
       default:
@@ -145,7 +133,18 @@ class PlaningPage extends React.Component<IProps, IState> {
       <div className='page'>
         <Header user={{ name: this.props.userName }} />
         <main className="main">
-          {this.contentRoom()}
+          <div className="container main__content">
+            <div className="title">Story</div>
+            <div className="column-container">
+              <div className="left-column">
+                {this.renderContentRoom()}
+                {testHistroy.length > 0 && <History history={testHistroy} isOwner={this.props.isOwner} />}
+              </div>
+              <div className="right-column">
+                <PlayersContainer roomState={this.state.roomState} isOwner={this.props.isOwner} users={testUsers} />
+              </div>
+            </div>
+          </div>
         </main>
         <Footer />
       </div>

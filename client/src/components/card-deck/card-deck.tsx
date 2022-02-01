@@ -10,15 +10,15 @@ interface IProps {
   cards: ICard[];
 }
 
-const createCardDeck = (cards: ICard[]) => {
-  return (
-    cards.map((card) => {
-      return <Card key={card.value} value={card.value} />
-    })
-  );
-}
-
 const CardDeck: React.FC<IProps> = (props) => {
+  const createCardDeck = (cards: ICard[]) => {
+    return (
+      cards.map((card) => {
+        return <Card key={card.value} value={card.value} />
+      })
+    );
+  }
+  
   return (
     <ul className="list card-list">
       {createCardDeck(props.cards)}

@@ -1,13 +1,8 @@
 import * as React from 'react';
 import avatar from '../../images/user_icon.svg';
 import { RoomState } from '../planing-page/planing-page';
+import { IUser } from '../players-container/players-container';
 import './players-list.css';
-
-interface IUser {
-  name: string;
-  voted: boolean;
-  vote: number;
-}
 
 interface IProps {
   users: IUser[];
