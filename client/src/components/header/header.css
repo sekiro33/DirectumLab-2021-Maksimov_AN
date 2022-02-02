@@ -1,0 +1,19 @@
+.header {
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  min-height: 93px;
+  padding: 17px 0;
+
+  background-color: #13406d;
+}
+
+.header__content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.container {
+  width: 1024px;
+}

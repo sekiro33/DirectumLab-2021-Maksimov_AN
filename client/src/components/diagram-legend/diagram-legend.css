@@ -1,0 +1,91 @@
+.results {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 676px;
+  min-height: 433px;
+
+  background-color: white;
+}
+
+.cafe-icon {
+  width: 19px;
+  height: 20px;
+}
+
+.grade {
+  display: flex;
+  align-items: center;
+}
+
+.grade__marker {
+  width: 10px;
+  height: 10px;
+
+  background-color: red;
+  border-radius: 50px;
+}
+
+.grade__0 {
+  background: #06b8a6;
+}
+
+.grade__0.5 {
+  background: #ffc4bf;
+}
+
+.grade__1 {
+  background: #80e8ff;
+}
+
+.grade__2 {
+  background: #34a853;
+}
+
+.grade__3 {
+  background: #dc493a;
+}
+
+.grade__5 {
+  background: #fff49b;
+}
+
+.grade__8 {
+  background: #d7b2ff;
+}
+
+.grade__13 {
+  background: #b7ffbe;
+}
+
+.grade__20 {
+  background: #f0bc8c;
+}
+
+.grade__40 {
+  background: #4392f1;
+}
+
+.grade__100 {
+  background: #12599b;
+}
+
+.grade__question {
+  background: #cacccc;
+}
+
+.grade__cafe {
+  background: #7a7a7a;
+}
+
+.grade__text {
+  margin-left: 10px;
+
+  font-size: 20px;
+  line-height: 23px;
+}
+
+.result__text {
+  font-size: 14px;
+  line-height: 16px;
+}

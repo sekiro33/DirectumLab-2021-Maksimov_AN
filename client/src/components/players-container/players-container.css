@@ -1,0 +1,55 @@
+.players__label {
+  margin-left: 27px;
+
+  font-size: 20px;
+  line-height: 23px;
+}
+
+.players__input {
+  width: 280px;
+  height: 39px;
+  margin-top: 10px;
+  margin-left: 27px;
+}
+
+.players__info {
+  display: flex;
+  align-items: center;
+  margin: 12px 0 12px 26px;
+  overflow: hidden;
+
+  white-space: nowrap;
+}
+
+.players__text {
+  margin-left: 27px;
+
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.players-container {
+  box-sizing: border-box;
+  width: 328px;
+  min-height: 457px;
+
+  padding-bottom: 24px;
+
+  background-color: white;
+}
+
+.players-container__header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 60px;
+
+  background-color: #13406d;
+  border-radius: 4px 4px 0 0;
+}
+
+.players-container__title {
+  color: white;
+  font-weight: 400;
+  font-size: 18px;
+}

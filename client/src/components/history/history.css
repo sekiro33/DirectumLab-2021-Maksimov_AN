@@ -1,0 +1,110 @@
+.visual-hidden {
+  position: absolute;
+
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+
+  border: 0 none;
+
+  clip-path: inset(100%);
+}
+
+.history {
+  width: 676px;
+  min-height: 261px;
+  margin-top: 33px;
+
+  background-color: white;
+}
+
+.header__mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-left: 12px;
+
+  color: black;
+  font-size: 10px;
+  line-height: 12px;
+  text-align: center;
+
+  background-color: white;
+  border-radius: 10px;
+}
+
+.history__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: 60px;
+
+  background: #13406d;
+  border-radius: 4px 4px 0 0;
+}
+
+.history__title {
+  display: flex;
+  align-items: center;
+  margin-left: 20px;
+
+  color: white;
+  font-size: 18px;
+  line-height: 21px;
+}
+
+.history__button {
+  background-color: #13406d;
+  border: none;
+  cursor: pointer;
+}
+
+.history__icon {
+  width: 13px;
+  height: 18px;
+  margin-right: 20px;
+}
+
+.history__table {
+  width: 100%;
+
+  border-spacing: 0;
+}
+
+.history__tr {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  height: 67px;
+
+  font-size: 18px;
+  line-height: 21px;
+
+  border: 1px solid #f2f3f4;
+}
+
+.history__name {
+  width: 462px;
+  margin-left: 20px;
+  overflow: hidden;
+
+  white-space: nowrap;
+}
+
+.history__delete-icon {
+  width: 22px;
+  height: 24px;
+}
+
+.history__delete-button {
+  margin-right: 12px;
+
+  background: none;
+  border: none;
+  cursor: pointer;
+}

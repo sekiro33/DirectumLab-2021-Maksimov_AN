@@ -1,0 +1,47 @@
+.story-creator {
+  display: flex;
+  justify-content: center;
+  margin-top: 24px;
+}
+
+.story-creator__input {
+  width: 212px;
+  height: 39px;
+  padding: 12px 16px;
+
+  border-radius: 4px 0 0 4px;
+}
+
+.story-creator__button {
+  width: 68px;
+  height: 39px;
+
+  border-radius: 0 4px 4px 0;
+}
+
+.input {
+  box-sizing: border-box;
+  padding: 12px 16px;
+
+  border: 1px solid #d5d9de;
+  border-radius: 4px;
+}
+
+.button {
+  padding: 12px;
+
+  color: white;
+
+  background-color: #13406d;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #123d68;
+}
+
+.button:active {
+  background-color: #0f3458;
+}

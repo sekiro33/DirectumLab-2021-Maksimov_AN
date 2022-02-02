@@ -1,0 +1,14 @@
+.story-placeholder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 676px;
+  height: 457px;
+
+  background-color: white;
+}
+
+.story-placeholder__text {
+  font-weight: 400;
+  font-size: 26px;
+}

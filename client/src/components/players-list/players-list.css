@@ -1,0 +1,49 @@
+.players-list__item {
+  justify-content: space-between;
+}
+
+.players-list__avatar {
+  width: 42px;
+  height: 42px;
+}
+
+.players-list__text {
+  margin-left: 18px;
+  overflow: hidden;
+
+  font-size: 18px;
+  line-height: 21px;
+
+  text-overflow: ellipsis;
+}
+
+.players-list__status {
+  margin-right: 25px;
+}
+
+.players__info {
+  display: flex;
+  align-items: center;
+  margin: 12px 0 12px 26px;
+  overflow: hidden;
+
+  white-space: nowrap;
+}
+
+.players-list__grade {
+  font-size: 20px;
+  line-height: 23px;
+}
+
+.list {
+  list-style-type: none;
+  padding-inline-start: 0;
+}
+
+.list__item {
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+
+  border: 1px solid #f2f3f4;
+}
