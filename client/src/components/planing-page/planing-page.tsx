@@ -8,8 +8,14 @@ import PlayersContainer from '../players-container/players-container';
 import Modal from '../modal/modal';
 import CardDeck from '../card-deck/card-deck';
 import './planing-page.css';
+import { RouteComponentProps } from 'react-router-dom';
+import { loadRoom } from '../../api/api';
 
-interface IProps {
+interface IMatchParams {
+  roomId: string;
+}
+
+interface IProps extends RouteComponentProps<IMatchParams> {
   userName: string;
   isOwner: boolean;
 }
@@ -104,6 +110,10 @@ class PlaningPage extends React.Component<IProps, IState> {
     this.state = { roomState: RoomState.START };
 
     this.renderContentRoom.bind(this);
+  }
+
+  public async componentDidMount() {
+      await loadRoom(this.props.match.params.roomId);
   }
 
   public renderContentRoom() {

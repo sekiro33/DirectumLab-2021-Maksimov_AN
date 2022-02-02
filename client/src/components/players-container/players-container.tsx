@@ -35,7 +35,7 @@ const PlayersContainer: React.FC<IProps> = (props) => {
       {props.isOwner === true && <StoryCreator />}
       <p className="players__text">Player ({getVotedUsersCount(props.users)}/{props.users.length})</p>
       <PlayersList roomState={props.roomState} users={props.users} />
-      <Input labelClassName='players__label' inputClassName='input players__input' label="Invite a teammate" value={'https://www.planitpoker.com/board'} readonly={true} />
+      <Input labelClassName='players__label' inputClassName='input players__input' label="Invite a teammate" value={document.location.href} readonly={true} />
     </div>
   );
 }

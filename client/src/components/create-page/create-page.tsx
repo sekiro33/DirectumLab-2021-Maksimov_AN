@@ -1,11 +1,19 @@
 import * as React from 'react';
+import { withRouter } from 'react-router-dom';
+import { RouteComponentProps } from 'react-router-dom';
+import { RoutePath } from '../../routes';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import Button from '../button/button';
 import Input from '../input/input';
 import './create-page.css';
 
-const CreatePage: React.FC = () => {
+const CreatePage: React.FC<RouteComponentProps> = (props) => {
+  const handleClick = () => {
+    const roomId = Math.round(Math.random() * (100 - 1) + 1);
+    props.history.push(`${RoutePath.ROOM}/${roomId}`);
+  }
+
   return <div className={'page'}>
     <Header user={null} />
     <main className="main">
@@ -16,7 +24,7 @@ const CreatePage: React.FC = () => {
             <h2 className="form__title">Create the room:</h2>
             <Input label='User name' labelClassName='form__label' inputClassName='form__input' name='userName' placeholder='Enter your name' required={true} />
             <Input label='Room name' labelClassName='form__label' inputClassName='form__input' name='roomName' placeholder='Enter room name' required={true} />
-            <Button className={'form__button'} title={'Enter'} />
+            <Button onClick={handleClick} className={'form__button'} type="submit" title={'Enter'} />
           </form>
         </div>
       </div>
@@ -25,4 +33,4 @@ const CreatePage: React.FC = () => {
   </div>
 };
 
-export default CreatePage;
+export default withRouter(CreatePage);
