@@ -26,3 +26,9 @@
   width: 42px;
   height: 44px;
 }
+
+.selected {
+  color: white;
+
+  background: #13406d;
+}

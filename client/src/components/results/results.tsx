@@ -2,16 +2,12 @@ import * as React from 'react';
 import ResultsDiagram from '../results-diagram/results-diagram';
 import DiagramLegend from '../diagram-legend/diagram-legend';
 import './results.css';
-
-interface IVote {
-  grade: number;
-  count: number;
-}
+import { ICard, UserId } from '../../store/types';
 
 interface IProps {
   playersCount: number;
-  average: number;
-  votes: IVote[];
+  average: number | null;
+  votes: Record<UserId, ICard>;
 }
 
 const Results: React.FC<IProps> = (props) => {

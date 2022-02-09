@@ -19,7 +19,7 @@ const InvitePage: React.FC<RouteComponentProps<IMatchParams>> = (props) => {
   }
 
   return <div className='page'>
-    <Header user={null} />
+    <Header />
     <main className="main">
       <div className="containter main__content">
         <form className="form">
