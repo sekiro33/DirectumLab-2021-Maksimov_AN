@@ -2,12 +2,12 @@ import * as React from 'react';
 import Input from '../input/input';
 import Button from '../button/button';
 import { createStory, finishStory } from '../../api/api';
-import './story-creator.css';
 import { ICard, IRoom, IRootState, UserId } from '../../store/types';
 import { updateRoom } from '../../store/room/room-action-creators';
 import { Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { roomSelector } from '../../store/room/room-selector';
+import './story-creator.css';
 
 interface IProps {
   updateRoom: (room: IRoom) => void;

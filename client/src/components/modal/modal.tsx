@@ -1,6 +1,6 @@
 import * as React from 'react';
 import avatar from '../../images/user_icon.svg';
-import { ICard, UserId } from '../../store/types';
+import { ICard, IUser, UserId } from '../../store/types';
 import './modal.css';
 
 export interface IVote {
@@ -9,20 +9,26 @@ export interface IVote {
 }
 
 interface IProps {
+  users: IUser[];
   votes: Record<UserId, ICard>;
   onClose(): void;
 }
 
 const Modal: React.FC<IProps> = (props) => {
+  const getUserName = (userId: UserId) => {
+    return props.users.find((user) => user.id == userId);
+  }
+
   const getUserList = (votes: Record<UserId, ICard>) => {
     const gradeList = [];
     for (const key in votes) {
+      const user = getUserName(key);
       gradeList.push(
         (
-          <li className="modal__item">
+          <li key={key} className="modal__item">
             <div className="modal__user-info">
               <img className="modal__item__icon" src={avatar} alt="avatar" />
-              <p className="modal__item__text">{key}</p>
+              <p className="modal__item__text">{user && user.name || 'Unknown'}</p>
             </div>
             <span className="modal__item__grade">{votes[key].value}</span>
           </li>

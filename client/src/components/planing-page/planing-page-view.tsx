@@ -4,13 +4,13 @@ import Header from '../header/header';
 import Footer from '../footer/footer';
 import CardDeck from '../card-deck/card-deck';
 import Results from '../results/results';
-import './planing-page.css';
 import StoryPlaceholder from '../story-placeholder/story-placeholder';
 import PlayersContainer from '../players-container/players-container';
 import { RouteComponentProps } from 'react-router-dom';
 import { loadRoom } from '../../api/api';
-import { room } from '../../store/mock';
 import History from '../history/history';
+import './planing-page.css';
+
 
 interface IMatchParams {
   roomId: string;
@@ -67,62 +67,54 @@ class PlaningPageView extends React.Component<IProps, any> {
     return null;
   }
 
-  private renderResults() {
-    if (this.props.room) {
-      const { users } = this.props.room;
-      const story = this.props.room.stories[this.props.room.stories.length - 1];
-      return (
-        <Results playersCount={users.length} average={story.average} votes={story.votes} />
-      );
-    } else {
-      return null;
-    }
+  private renderResults(room: IRoom) {
+    const { users } = room;
+    const story = room.stories[room.stories.length - 1];
+    return (
+      <Results playersCount={users.length} average={story.average} votes={story.votes} />
+    );
   }
 
-  private renderHistory(user: IUser | null) {
-    if (this.props.room && user) {
-      if (this.props.room.stories.length > 0 && this.props.room.stories[0].average != null) {
-        const isOwner = user.id == room.ownerId;
-        return (
-          <History isOwner={isOwner} stories={this.props.room.stories} />
-        );
-      }
-    }
-    return null;
-  }
-
-  private renderContent(room: IRoom | null) {
-    if (room == null) {
-      return null;
-    }
-    else {
-      const currentStory = this.getCurrentStory(room);
-      if (currentStory == null) {
-        return this.renderPlaceholder();
-      }
-      else if (currentStory.average == null) {
-        return this.renderCardDeck(room.cards, this.getSelectedCard(currentStory));
-      }
-      else {
-        return this.renderResults();
-      }
-    }
-  }
-
-  private renderPlayersContainer(room: IRoom | null, user: IUser | null) {
-    if (room == null || user == null) {
-      return null;
-    } else {
-      let votes = null;
-      const currentStory = this.getCurrentStory(room);
-      if (currentStory != null) {
-        votes = currentStory.votes;
-      }
+  private renderHistory(user: IUser, room: IRoom) {
+    if (room.stories.length > 0 && room.stories[0].average != null) {
       const isOwner = user.id == room.ownerId;
       return (
-        <PlayersContainer users={room.users} votes={votes} isOwner={isOwner} roomState={false} />
+        <History users={room.users} isOwner={isOwner} stories={room.stories} />
       );
     }
+  }
+
+  private renderContent(room: IRoom) {
+    const currentStory = this.getCurrentStory(room);
+    if (currentStory == null) {
+      return this.renderPlaceholder();
+    }
+    else if (currentStory.average == null) {
+      return this.renderCardDeck(room.cards, this.getSelectedCard(currentStory));
+    }
+    else {
+      return this.renderResults(room);
+    }
+  }
+
+  private renderTitle(room: IRoom) {
+    const story = this.getCurrentStory(room);
+    if (story != null)
+      return (<div className="title">{story.name}</div>)
+    else
+      return (<div className="title"></div>)
+  }
+
+  private renderPlayersContainer(room: IRoom, user: IUser) {
+    let votes = null;
+    const currentStory = this.getCurrentStory(room);
+    if (currentStory != null) {
+      votes = currentStory.votes;
+    }
+    const isOwner = user.id == room.ownerId;
+    return (
+      <PlayersContainer users={room.users} votes={votes} isOwner={isOwner} roomState={false} />
+    );
   }
 
   public render() {
@@ -133,14 +125,14 @@ class PlaningPageView extends React.Component<IProps, any> {
         <Header />
         <main className="main">
           <div className="container main__content">
-            <div className="title"></div>
+            {room != null && this.renderTitle(room)}
             <div className="column-container">
               <div className="left-column">
-                {this.renderContent(room)}
-                {this.renderHistory(user)}
+                {room != null && this.renderContent(room)}
+                {user != null && room != null && this.renderHistory(user, room)}
               </div>
               <div className="right-column">
-                {this.renderPlayersContainer(room, user)}
+                {room != null && user != null && this.renderPlayersContainer(room, user)}
               </div>
             </div>
           </div>

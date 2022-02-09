@@ -2,7 +2,7 @@ import * as React from 'react';
 import PlayersList from '../players-list/players-list';
 import StoryCreator from '../story-creator/story-creator';
 import Input from '../input/input';
-import { ICard, IRoom, IUser, UserId } from '../../store/types'
+import { ICard, IUser, UserId } from '../../store/types'
 import './players-container.css';
 
 interface IProps {

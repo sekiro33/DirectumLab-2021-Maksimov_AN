@@ -1,8 +1,8 @@
 import * as React from 'react';
 import ResultsDiagram from '../results-diagram/results-diagram';
 import DiagramLegend from '../diagram-legend/diagram-legend';
-import './results.css';
 import { ICard, UserId } from '../../store/types';
+import './results.css';
 
 interface IProps {
   playersCount: number;

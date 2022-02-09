@@ -2,11 +2,11 @@ import * as React from 'react';
 import downloadIcon from '../../images/download_icon.svg';
 import deleteIcon from '../../images/delete_icon.svg';
 import Modal from '../modal/modal';
+import { IStory, IUser } from '../../store/types';
 import './history.css';
-import { IVote } from '../modal/modal';
-import { IStory } from '../../store/types';
 
 interface IProps {
+  users: IUser[];
   stories: IStory[];
   isOwner: boolean;
 }
@@ -80,7 +80,7 @@ class History extends React.Component<IProps, IState> {
             {this.renderHistory(this.props.stories, this.props.isOwner)}
           </tbody>
         </table>
-        {this.state.story != null && <Modal votes={this.state.story.votes} onClose={this.handleClose} />}
+        {this.state.story != null && <Modal votes={this.state.story.votes} users={this.props.users} onClose={this.handleClose} />}
       </div>
     );
   }
