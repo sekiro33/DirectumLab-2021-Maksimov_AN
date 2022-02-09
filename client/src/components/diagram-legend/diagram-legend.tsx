@@ -1,14 +1,10 @@
 import * as React from 'react';
 import cafe from '../../images/cafe.svg';
+import { ICard, UserId } from '../../store/types';
 import './diagram-legend.css';
 
-interface IVote {
-  grade: number;
-  count: number;
-}
-
 interface IProps {
-  votes: IVote[];
+  votes: Record<UserId, ICard>;
 }
 
 const DiagramLegend: React.FC<IProps> = (props) => {
@@ -18,12 +14,22 @@ const DiagramLegend: React.FC<IProps> = (props) => {
     )
   }
 
-  const getPlayersCount = (votes: IVote[]) => {
+  const getMarker = (grade: number) => {
+    if (grade == -10) {
+      return '?';
+    }
+    if (grade == -100) {
+      return cafeIcon();
+    }
+    return grade;
+  }
+
+  const getPlayersCount = (votes: Record<UserId, ICard>) => {
     let playersCount = 0;
 
-    votes.forEach((vote) => {
-      playersCount += vote.count;
-    })
+    for (const key in votes) {
+      playersCount++;
+    }
 
     return playersCount;
   }
@@ -74,24 +80,35 @@ const DiagramLegend: React.FC<IProps> = (props) => {
     }
   }
 
-  const getVoteList = (votes: IVote[]) => {
-    const playersCount = getPlayersCount(votes);
+  const getGradeCount = (votes: Record<UserId, ICard>, value: number) => {
+    let count = 0;
+    for (const key in votes) {
+      if (votes[key].value === value) {
+        count++;
+      }
+    }
+    return count;
+  }
 
-    return (
-      votes.map((vote) => {
-        const percent = vote.count * 100 / playersCount;
-        const className = ['grade__marker', getMarkerStyle(vote.grade)];
-        return (
-          <li key={vote.grade} className="result">
+  const getVoteList = (votes: Record<UserId, ICard>) => {
+    const playersCount = getPlayersCount(votes);
+    const gradeList = [];
+    for (const key in votes) {
+      const percent = getGradeCount(votes, votes[key].value) * 100 / playersCount;
+      const className = ['grade__marker', getMarkerStyle(votes[key].value)];
+      gradeList.push(
+        (
+          <li key={votes[key].value} className="result">
             <div className="grade">
               <div className={className.join(' ')}></div>
-              <span className="grade__text">{vote.grade === -100 && cafeIcon() || vote.grade}</span>
+              <span className="grade__text">{getMarker(votes[key].value)}</span>
             </div>
-            <p className="result__text">{percent}% ({vote.count} player)</p>
-          </li>
-        );
-      })
-    )
+            <p className="result__text">{percent}% ({getGradeCount(votes, votes[key].value)} player)</p>
+          </li>)
+      );
+    }
+    
+    return gradeList;
   }
 
   return (

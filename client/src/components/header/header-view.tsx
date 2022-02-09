@@ -11,7 +11,7 @@ interface IProps {
   user: IUser | null;
 }
 
-const Header: React.FC<IProps> = (props) => {
+const HeaderView: React.FC<IProps> = (props) => {
   return (
     <header className="header">
       <div className="container header__content">
@@ -22,4 +22,4 @@ const Header: React.FC<IProps> = (props) => {
   );
 }
 
-export default Header;
+export default HeaderView;

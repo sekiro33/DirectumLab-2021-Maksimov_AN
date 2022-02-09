@@ -18,8 +18,29 @@
 }
 
 .modal {
+  position: fixed; /* фиксированное положение */
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1050;
+
+  margin: 0;
+  padding: 0;
+
+  background: rgba(0, 0, 0, 0.5); /* цвет фона */
+
+  transition: opacity 200ms ease-in;
+  transition: opacity 200ms ease-in;
+  transition: opacity 200ms ease-in; /* анимация перехода */
+}
+
+.modal__dialog {
+
   width: 676px;
   min-height: 433px;
+  margin: auto;
+  margin-top: 10%;
 
   background-color: white;
 }
