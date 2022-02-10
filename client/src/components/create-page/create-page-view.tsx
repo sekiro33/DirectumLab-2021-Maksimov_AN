@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { RouteComponentProps } from 'react-router-dom';
 import { RoutePath } from '../../routes';
+import { createRoom } from '../../api/poker-api';
 import Header from '../header/header';
 import Footer from '../footer/footer';
 import Button from '../button/button';
 import Input from '../input/input';
-import { createRoom } from '../../api/api';
 import { IUser } from '../../store/types';
 import './create-page.css';
 
@@ -17,14 +17,15 @@ const CreatePageView: React.FC<IProps> = (props) => {
   const userNameRef: React.RefObject<HTMLInputElement> = React.createRef();
   const roomNameRef: React.RefObject<HTMLInputElement> = React.createRef();
   
-  const handleSubmit = (evt: React.FormEvent) => {
+  const handleSubmit = async (evt: React.FormEvent) => {
     evt.preventDefault();
     const { current: userName } = userNameRef;
     const { current: roomName } = roomNameRef;
     if (userName && roomName) {
-      const response = createRoom(userName.value, roomName.value);
+      /*const response = createRoom(userName.value, roomName.value);
       props.updateUser(response.user);
-      props.history.push(`${RoutePath.ROOM}/${response.roomId}`);
+      props.history.push(`${RoutePath.ROOM}/${response.roomId}`);*/
+      const response = await createRoom(userName.value, roomName.value);
     }
   }
 

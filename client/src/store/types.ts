@@ -30,3 +30,26 @@ export interface IRootState {
   room: IRoom | null;
   user: IUser | null;
 }
+
+export interface IServerUser {
+  id: string;
+  name: string;
+}
+
+export interface IServerRoom {
+  id: string;
+  name: string;
+  creator: string;
+  cardDeck: IServerCardDeck;
+}
+
+export interface IServerCard {
+  id: string;
+  value: number;
+}
+
+export interface IServerCardDeck {
+  id: string;
+  name: string;
+  cards: IServerCard[];
+}
