@@ -3,7 +3,7 @@ import './results-diagram.css';
 
 interface IProps {
   playersCount: number;
-  average: number;
+  average: number | null;
 }
 
 const ResultsDiagram: React.FC<IProps> = (props) => {

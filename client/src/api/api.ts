@@ -1,8 +1,3 @@
-<<<<<<< Updated upstream
-export const loadRoom = (id:string) => {
-  return null;
-};
-=======
 import { UnauthorizedError } from "./unauthorized-error";
 
 export class Api {
@@ -55,4 +50,3 @@ export class Api {
     return await this.http<T>(url, 'GET', null, headers);
   }
 }
->>>>>>> Stashed changes

@@ -2,41 +2,17 @@ import * as React from 'react';
 import cafe from '../../images/cafe.svg';
 import './diagram-legend.css';
 
-interface IVote {
-  grade: number;
-  count: number;
-}
-
 interface IProps {
-<<<<<<< Updated upstream
-  votes: IVote[];
-=======
   votes: Record<string, number>;
->>>>>>> Stashed changes
 }
 
 const DiagramLegend: React.FC<IProps> = (props) => {
-  const cafeIcon = () => {
-    return (
-      <img className='cafe-icon' src={cafe} />
-    )
-  }
-
-<<<<<<< Updated upstream
-  const getPlayersCount = (votes: IVote[]) => {
-    let playersCount = 0;
-
-    votes.forEach((vote) => {
-      playersCount += vote.count;
-    })
-
-=======
   const getMarker = (grade: number) => {
     if (grade == -10) {
       return '?';
     }
     if (grade == -100) {
-      return cafeIcon();
+      return (<img className='cafe-icon' src={cafe} />);
     }
     return grade;
   }
@@ -46,7 +22,6 @@ const DiagramLegend: React.FC<IProps> = (props) => {
     for (const key in votes) {
       playersCount++;
     }
->>>>>>> Stashed changes
     return playersCount;
   }
 
@@ -96,26 +71,6 @@ const DiagramLegend: React.FC<IProps> = (props) => {
     }
   }
 
-<<<<<<< Updated upstream
-  const getVoteList = (votes: IVote[]) => {
-    const playersCount = getPlayersCount(votes);
-
-    return (
-      votes.map((vote) => {
-        const percent = vote.count * 100 / playersCount;
-        const className = ['grade__marker', getMarkerStyle(vote.grade)];
-        return (
-          <li key={vote.grade} className="result">
-            <div className="grade">
-              <div className={className.join(' ')}></div>
-              <span className="grade__text">{vote.grade === -100 && cafeIcon() || vote.grade}</span>
-            </div>
-            <p className="result__text">{percent}% ({vote.count} player)</p>
-          </li>
-        );
-      })
-    )
-=======
   const getGradeCount = (votes: Record<string, number>, value: number) => {
     let count = 0;
     for (const key in votes) {
@@ -146,7 +101,6 @@ const DiagramLegend: React.FC<IProps> = (props) => {
         </li>
       )
     });
->>>>>>> Stashed changes
   }
 
   return (

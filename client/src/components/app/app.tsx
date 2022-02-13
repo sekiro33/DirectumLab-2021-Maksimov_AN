@@ -16,15 +16,4 @@ function App() {
   );
 }
 
-/*function App() {
-  return (
-    <Switch>
-      <Route path={RoutePath.INDEX} exact={true} component={CreatePage} />
-      <Route path={`${RoutePath.ROOM}/:roomId`} exact={true} component={PlaningPage} />
-      <Route path={`${RoutePath.INVITE}/:roomId`} exact={true} component={InvitePage} />
-      <Route component={NoMatchPage} />
-    </Switch>
-  );
-}*/
-
 export default App;
