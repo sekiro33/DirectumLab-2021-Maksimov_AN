@@ -8,7 +8,11 @@ interface IVote {
 }
 
 interface IProps {
+<<<<<<< Updated upstream
   votes: IVote[];
+=======
+  votes: Record<string, number>;
+>>>>>>> Stashed changes
 }
 
 const DiagramLegend: React.FC<IProps> = (props) => {
@@ -18,6 +22,7 @@ const DiagramLegend: React.FC<IProps> = (props) => {
     )
   }
 
+<<<<<<< Updated upstream
   const getPlayersCount = (votes: IVote[]) => {
     let playersCount = 0;
 
@@ -25,6 +30,23 @@ const DiagramLegend: React.FC<IProps> = (props) => {
       playersCount += vote.count;
     })
 
+=======
+  const getMarker = (grade: number) => {
+    if (grade == -10) {
+      return '?';
+    }
+    if (grade == -100) {
+      return cafeIcon();
+    }
+    return grade;
+  }
+
+  const getPlayersCount = (votes: Record<string, number>) => {
+    let playersCount = 0;
+    for (const key in votes) {
+      playersCount++;
+    }
+>>>>>>> Stashed changes
     return playersCount;
   }
 
@@ -74,6 +96,7 @@ const DiagramLegend: React.FC<IProps> = (props) => {
     }
   }
 
+<<<<<<< Updated upstream
   const getVoteList = (votes: IVote[]) => {
     const playersCount = getPlayersCount(votes);
 
@@ -92,6 +115,38 @@ const DiagramLegend: React.FC<IProps> = (props) => {
         );
       })
     )
+=======
+  const getGradeCount = (votes: Record<string, number>, value: number) => {
+    let count = 0;
+    for (const key in votes) {
+      if (votes[key] === value) {
+        count++;
+      }
+    }
+    return count;
+  }
+
+  const getVoteList = (votes: Record<string, number>) => {
+    const playersCount = getPlayersCount(votes);
+    const grades = [];
+    for (const key in votes) {
+      grades.push(votes[key]);
+    }
+    const result = Array.from(new Set(grades));
+    return result.map((grade) => {
+      const percent = (getGradeCount(votes, grade) * 100 / playersCount).toFixed(2);
+      const className = ['grade__marker', getMarkerStyle(grade)];
+      return (
+        <li key={grade} className="result">
+          <div className="grade">
+            <div className={className.join(' ')}></div>
+            <span className="grade__text">{getMarker(grade)}</span>
+          </div>
+          <p className="result__text">{percent}% ({getGradeCount(votes, grade)} player)</p>
+        </li>
+      )
+    });
+>>>>>>> Stashed changes
   }
 
   return (

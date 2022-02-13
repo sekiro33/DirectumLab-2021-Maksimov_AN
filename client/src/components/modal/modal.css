@@ -78,6 +78,11 @@
   line-height: 21px;
 }
 
+.modal__item__grade-icon {
+  width: 30px;
+  height: 21px;
+}
+
 .modal__user-info {
   display: flex;
   align-items: center;

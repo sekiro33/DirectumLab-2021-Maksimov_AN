@@ -10,15 +10,20 @@ interface IVote {
 
 interface IProps {
   playersCount: number;
+<<<<<<< Updated upstream
   average: number;
   votes: IVote[];
+=======
+  average: number | null;
+  grades: Record<string, number> | null;
+>>>>>>> Stashed changes
 }
 
 const Results: React.FC<IProps> = (props) => {
   return (
     <div className='results'>
       <ResultsDiagram playersCount={props.playersCount} average={props.average} />
-      <DiagramLegend votes={props.votes} />
+      {props.grades && <DiagramLegend votes={props.grades} />}
     </div>
   )
 }
