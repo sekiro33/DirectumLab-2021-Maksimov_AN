@@ -24,7 +24,7 @@ export const updateDiscussions = (discussions: IDiscussion[]) => {
   }
 }
 
-export const clearRoom = () => {
+export const clearDiscussion = () => {
   return {
     type: DiscussionActionType.CLEAR_DISCUSSION,
   }

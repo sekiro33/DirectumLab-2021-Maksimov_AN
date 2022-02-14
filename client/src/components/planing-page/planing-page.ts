@@ -38,7 +38,6 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
     },
 
     getRoomInfo: (roomId: string) => {
-      window.console.log('update room');
       dispatch(getRoomInfo(roomId));
       dispatch(updateDiscussions(roomId));
     },

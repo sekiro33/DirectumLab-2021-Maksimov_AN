@@ -10,6 +10,7 @@ interface IProps {
   discussions: IDiscussion[];
   isOwner: boolean;
   gradesConverter: (grades: Record<string, string> | null | undefined, cards: ICard[]) => Record<string, number> | null;
+  calcAverage: (grades: Record<string, number> | null) => number;
   cards: ICard[] | null;
 }
 
@@ -64,7 +65,7 @@ class History extends React.Component<IProps, IState> {
           return (
             <tr key={discussion.name} className="table__tr history__tr" onClick={() => { this.handleClick(discussion) }}>
               <td className="history__name">{discussion.name}</td>
-              <td className="history__average"></td>
+              <td className="history__average">{this.props.cards && this.props.calcAverage(this.props.gradesConverter(discussion.grades, this.props.cards))}</td>
               <td className="history__remove">
                 {isOwner &&
                   <button className="history__delete-button">

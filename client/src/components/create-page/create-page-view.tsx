@@ -21,7 +21,6 @@ const CreatePageView: React.FC<IProps> = (props) => {
     const { current: roomName } = roomNameRef;
     if (userName && roomName) {
       const roomId = await props.createRoom(userName.value, roomName.value);
-      window.console.log(roomId);
       props.history.push(`${RoutePath.ROOM}/${roomId}`);
     }
   }

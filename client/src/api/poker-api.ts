@@ -7,7 +7,7 @@ const api = new Api(baseUrl);
 
 export const signInRequest = async (userName: string): Promise<IUser | null> => {
   return await api.post<IUser>(`User/SignIn?name=${userName}`, null, null);
-}; 
+};
 
 export const createRoomRequest = async (userName: string, roomName: string): Promise<{ room: IRoom | null; user: IUser; } | null> => {
   const userInfo = await signInRequest(userName);
@@ -20,7 +20,7 @@ export const createRoomRequest = async (userName: string, roomName: string): Pro
   return null;
 }
 
-export const getCurrentUserRequest = async() : Promise<IUser | null> => {
+export const getCurrentUserRequest = async (): Promise<IUser | null> => {
   return await api.get<IUser>(`User/GetUser`, null);
 }
 
@@ -44,7 +44,7 @@ export const joinRoomRequest = async (userName: string, roomId: string): Promise
   const userInfo = await signInRequest(userName);
 
   if (userInfo != null) {
-    const response = await api.post<IRoom>(`Room/Connect?roomId=${roomId}&userId=${userInfo.id}`, null, null);
+    await api.post<IRoom>(`Room/Connect?roomId=${roomId}&userId=${userInfo.id}`, null, null);
     return userInfo;
   }
 
@@ -53,4 +53,8 @@ export const joinRoomRequest = async (userName: string, roomId: string): Promise
 
 export const voteRequest = async (discussionId: string, userId: string, cardId: string): Promise<IDiscussion | null> => {
   return await api.post<IDiscussion>(`Discussion/Vote?discussionId=${discussionId}&userId=${userId}&cardId=${cardId}`, null, null)
+}
+
+export const logoutRequest = async () => {
+  await api.get(`User/Logout`, null);
 }

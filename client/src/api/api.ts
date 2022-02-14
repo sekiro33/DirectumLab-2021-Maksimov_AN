@@ -29,10 +29,6 @@ export class Api {
         }),
     });
 
-    window.console.log(`${this.baseUrl}/${url}`);
-    window.console.log(response);
-    window.console.log(response.status);
-
     if (response.ok) {
       return await response.json();
     } else if (response.status == 401) {

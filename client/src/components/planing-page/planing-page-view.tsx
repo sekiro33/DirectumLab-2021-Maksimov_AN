@@ -20,7 +20,7 @@ interface IProps extends RouteComponentProps<IMatchParams> {
   discussions: IDiscussion[];
   updateRoom: (roomId: string) => void;
   getRoomInfo: (roomId: string) => void;
-  updateUser: () => void;
+  updateUser: () => boolean;
   createDiscussion: (roomId: string, discussionName: string) => void;
   finishDiscussion: (discussionId: string) => void;
   vote: (discussionId: string, userId: string, cardId: string) => void;
@@ -30,9 +30,7 @@ class PlaningPageView extends React.Component<IProps, any> {
   constructor(props: IProps) {
     super(props);
 
-    this.state = {
-      timer: null,
-    }
+    this.timer = null;
 
     this.createDiscussion = this.createDiscussion.bind(this);
     this.finishDiscussion = this.finishDiscussion.bind(this);
@@ -41,25 +39,22 @@ class PlaningPageView extends React.Component<IProps, any> {
   }
 
   public componentDidMount() {
+    if (this.props.user == null) {
+      const res = this.props.updateUser();
+    }
+
     if (this.props.room == null) {
       this.props.getRoomInfo(this.props.match.params.roomId);
     }
 
-    if (this.props.user == null) {
-      this.props.updateUser();
-    }
-
-    this.setState({
-      timer: setInterval(this.props.getRoomInfo, 500, this.props.match.params.roomId),
-    })
-
+    this.timer = setInterval(this.props.getRoomInfo, 2000, this.props.match.params.roomId);
   }
 
   public componentWillUnmount(): void {
-    this.setState({
-      timer: clearInterval(this.state.timer)
-    });
+    this.timer = clearInterval(this.timer);
   }
+
+  timer: any;
 
   public getCurrentDiscussion() {
     if (this.props.discussions.length > 0) {
@@ -138,7 +133,7 @@ class PlaningPageView extends React.Component<IProps, any> {
     if (discussions && discussions.length > 0 && discussions[0].endDateTime) {
       const isOwner = room.creator == user.id;
       const cards = room.cardDeck ? room.cardDeck.cards : null;
-      return <History gradesConverter={this.convertGrades} cards={cards} users={room.users} discussions={discussions} isOwner={isOwner} />
+      return <History calcAverage={this.calcAverage} gradesConverter={this.convertGrades} cards={cards} users={room.users} discussions={discussions} isOwner={isOwner} />
     }
   }
 
