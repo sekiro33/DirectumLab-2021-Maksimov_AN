@@ -42,8 +42,8 @@ const mapDispatchToProps = (dispatch: Dispatch) => {
       dispatch(updateDiscussions(roomId));
     },
 
-    updateUser: () => {
-      dispatch(getCurrentUser());
+    updateUser: async (roomId: string) => {
+      return dispatch(getCurrentUser(roomId));
     }
   };
 }

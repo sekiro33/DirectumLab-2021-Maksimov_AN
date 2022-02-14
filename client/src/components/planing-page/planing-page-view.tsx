@@ -9,6 +9,7 @@ import PlayersContainer from '../players-container/players-container';
 import CardDeck from '../card-deck/card-deck';
 import Results from '../results/results';
 import './planing-page.css';
+import { RoutePath } from '../../routes';
 
 interface IMatchParams {
   roomId: string;
@@ -20,7 +21,7 @@ interface IProps extends RouteComponentProps<IMatchParams> {
   discussions: IDiscussion[];
   updateRoom: (roomId: string) => void;
   getRoomInfo: (roomId: string) => void;
-  updateUser: () => boolean;
+  updateUser: (roomId: string) => Promise<boolean>;
   createDiscussion: (roomId: string, discussionName: string) => void;
   finishDiscussion: (discussionId: string) => void;
   vote: (discussionId: string, userId: string, cardId: string) => void;
@@ -38,9 +39,13 @@ class PlaningPageView extends React.Component<IProps, any> {
     this.selectCard = this.selectCard.bind(this);
   }
 
-  public componentDidMount() {
+  public async componentDidMount() {
     if (this.props.user == null) {
-      const res = this.props.updateUser();
+      const response = await this.props.updateUser(this.props.match.params.roomId);
+      window.console.log(response);
+      if (response == false) {
+        this.props.history.push(`${RoutePath.INVITE}/${this.props.match.params.roomId}`);
+      }
     }
 
     if (this.props.room == null) {
@@ -161,6 +166,14 @@ class PlaningPageView extends React.Component<IProps, any> {
     }
   }
 
+  private renderDiscussionTitle() {
+    const currentDiscussion = this.getCurrentDiscussion();
+    if (currentDiscussion) {
+      return (<div className="title">{currentDiscussion.name}</div>)
+    }
+    return null;
+  }
+
   public render() {
     const { room } = this.props;
     const { user } = this.props;
@@ -169,6 +182,7 @@ class PlaningPageView extends React.Component<IProps, any> {
         <Header />
         <main className="main">
           <div className="container main__content">
+            {this.renderDiscussionTitle()}
             <div className="column-container">
               <div className="left-column">
                 {room && user && this.renderContent(room, user)}
