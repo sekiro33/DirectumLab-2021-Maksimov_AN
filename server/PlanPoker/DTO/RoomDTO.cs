@@ -24,11 +24,6 @@ namespace PlanPoker.DTO
     public Guid Creator { get; set; }
 
     /// <summary>
-    /// Список обсуждений в комнате.
-    /// </summary>
-    public IEnumerable<DiscussionDTO> Discussion { get; set; }
-
-    /// <summary>
     /// Список пользователей в комнате.
     /// </summary>
     public IEnumerable<UserDTO> Users { get; set; }

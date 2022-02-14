@@ -45,7 +45,12 @@ namespace PlanPoker
       services
         .AddHttpContextAccessor()
         .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
-          .AddCookie(options => options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/api/Login"));
+          .AddCookie(options =>
+          {
+            options.LoginPath = new Microsoft.AspNetCore.Http.PathString("/api/Login");
+            options.Cookie.SameSite = Microsoft.AspNetCore.Http.SameSiteMode.None;
+            options.Cookie.SecurePolicy = Microsoft.AspNetCore.Http.CookieSecurePolicy.Always;
+          });
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
@@ -64,6 +69,13 @@ namespace PlanPoker
       app.UseRouting();
       app.UseAuthentication();
       app.UseAuthorization();
+
+      app.UseCors(builder => builder
+        .SetIsOriginAllowed(origin => true)
+        .AllowAnyHeader()
+        .AllowAnyMethod()
+        .AllowCredentials()
+      );
 
       app.UseEndpoints(endpoints =>
       {

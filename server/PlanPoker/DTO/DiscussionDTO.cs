@@ -21,7 +21,7 @@ namespace PlanPoker.DTO
     /// <summary>
     /// Оценки по обсуждению.
     /// </summary>
-    public IDictionary<string, string> Grades { get; set; }
+    public IDictionary<Guid, Guid> Grades { get; set; }
 
     /// <summary>
     /// Средняя оценка.

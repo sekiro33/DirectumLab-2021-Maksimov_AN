@@ -17,11 +17,6 @@ namespace PlanPoker.Domain.Entities
     public Guid Id { get; }
 
     /// <summary>
-    /// Строковое представление значения карты.
-    /// </summary>
-    public string Text { get; }
-
-    /// <summary>
     /// Значение карты.
     /// </summary>
     public double? Value { get; set; }
@@ -30,12 +25,10 @@ namespace PlanPoker.Domain.Entities
     /// Конструктор карты.
     /// </summary>
     /// <param name="value">Значение карты.</param>
-    /// <param name="text">Строковое представление значения карты.</param>
-    public Card(double? value, string text)
+    public Card(double? value)
     {
       this.Id = Guid.NewGuid();
       this.Value = value;
-      this.Text = text;
     }
   }
 }

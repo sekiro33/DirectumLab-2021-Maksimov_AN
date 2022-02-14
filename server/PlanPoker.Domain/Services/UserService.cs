@@ -39,18 +39,33 @@ namespace PlanPoker.Domain.Services
       var user = this.userRepository.GetAll().Where(user => user.Name.Equals(name, StringComparison.Ordinal)).FirstOrDefault();
       if (user is null)
         user = this.CreateUser(name);
-      this.Login(name);
+      this.Login(user.Id.ToString());
       return user;
+    }
+
+    /// <summary>
+    /// Получить пользователя.
+    /// </summary>
+    /// <param name="userId">ID пользователя.</param>
+    /// <returns>Пользователь.</returns>
+    public User GetUser(Guid userId)
+    {
+      return this.userRepository.Get(userId);
+    }
+
+    public User GetCurrentUser()
+    {
+      return this.GetUser(Guid.Parse(this.httpContextAccessor.HttpContext.User.Claims.Select((claim) => claim.Value).FirstOrDefault()));
     }
 
     /// <summary>
     /// Вход в систему.
     /// </summary>
-    /// <param name="name">Имя пользователя.</param>
+    /// <param name="userId">ID пользователя.</param>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    public Task Login(string name)
+    public Task Login(string userId)
     {
-      var claim = new Claim(ClaimsIdentity.DefaultNameClaimType, name);
+      var claim = new Claim(ClaimsIdentity.DefaultNameClaimType, userId);
       var identity = new ClaimsIdentity(new[] { claim }, "ApplicationCookie", ClaimsIdentity.DefaultNameClaimType, ClaimsIdentity.DefaultRoleClaimType);
       return this.httpContextAccessor.HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, new ClaimsPrincipal(identity));
     }

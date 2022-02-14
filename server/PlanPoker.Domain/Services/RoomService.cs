@@ -21,8 +21,8 @@ namespace PlanPoker.Domain.Services
     /// <param name="userRepository">Репозиторий пользователей.</param>
     public RoomService(IRepository<Room> roomRepository, IRepository<User> userRepository)
     {
-      this.roomRepository = roomRepository;
       this.userRepository = userRepository;
+      this.roomRepository = roomRepository;
     }
 
     /// <summary>
@@ -32,11 +32,7 @@ namespace PlanPoker.Domain.Services
     /// <param name="userId">Id пользователя.</param>
     public void AddUser(Guid roomId, Guid userId)
     {
-      var users = this.roomRepository.Get(roomId).Users;
-      if (!users.Contains(userId))
-        users.Add(userId);
-      else
-        throw new Exception("Пользователь уже есть в комнате.");
+      this.roomRepository.Get(roomId).Users.Add(userId);
     }
 
     /// <summary>
@@ -46,11 +42,7 @@ namespace PlanPoker.Domain.Services
     /// <param name="userId">Id пользователя.</param>
     public void KickUser(Guid roomId, Guid userId)
     {
-      var users = this.roomRepository.Get(roomId).Users;
-      if (users.Contains(userId))
-        users.Remove(userId);
-      else
-        throw new Exception("Такого пользователя нет в комнате.");
+      this.roomRepository.Get(roomId).Users.Remove(userId);
     }
 
     /// <summary>
@@ -60,8 +52,9 @@ namespace PlanPoker.Domain.Services
     /// <returns>Список пользователей.</returns>
     public IEnumerable<User> GetAllUser(Guid roomId)
     {
-      var userId = this.roomRepository.Get(roomId).Users;
-      return userId.Select(userId => this.userRepository.Get(userId));
+      var usersIds = this.roomRepository.Get(roomId).Users.AsEnumerable();
+      var users = usersIds.Select(userId => this.userRepository.Get(userId));
+      return users;
     }
 
     /// <summary>
