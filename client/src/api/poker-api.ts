@@ -23,25 +23,25 @@ export const createRoomRequest = async (userName: string, roomName: string): Pro
 export const checkUser = async (userId: string, roomId: string): Promise<boolean> => {
   let room = null;
   try {
-      room = await api.get<IRoom>(`Room/GetRoomInfo?roomId=${roomId}`, null);
+    room = await api.get<IRoom>(`Room/GetRoomInfo?roomId=${roomId}`, null);
+    if (room && room.users) {
+      const user = room.users.find(user => user.id == userId);
+      if (user) {
+        return true;
+      }
+    }
+    return false;
   }
   catch (e) {
     return false;
   }
-  if (room && room.users) {
-    const user = room.users.find(user => user.id == userId);
-    if (user) {
-      return true;
-    }
-  }
-  return false;
+
 }
 
 export const getCurrentUserRequest = async (): Promise<IUser | null> => {
-  try{
+  try {
     return await api.get<IUser>(`User/GetUser`, null);
   } catch (e) {
-    window.console.log(e);
     return null;
   }
 }

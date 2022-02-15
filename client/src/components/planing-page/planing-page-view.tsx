@@ -45,6 +45,7 @@ class PlaningPageView extends React.Component<IProps, any> {
       window.console.log(response);
       if (response == false) {
         this.props.history.push(`${RoutePath.INVITE}/${this.props.match.params.roomId}`);
+        return;
       }
     }
 
