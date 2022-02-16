@@ -7,7 +7,7 @@ import { joinRoom } from "../../store/room/room-operations";
 const mapDispatchToProps = (dispatch: Dispatch) => {
   return {
     joinRoom: async (userName: string, roomId: string) => {
-      return dispatch(joinRoom(userName, roomId));
+      return dispatch(await joinRoom(userName, roomId));
     }
   }
 }

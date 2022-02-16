@@ -13,17 +13,17 @@ interface IMatchParams {
 }
 
 interface IProps extends RouteComponentProps<IMatchParams> {
-  joinRoom: (userName: string, roomId: string) => void;
+  joinRoom: (userName: string, roomId: string) => Promise<void>;
 }
 
 const InvitePageView: React.FC<IProps> = (props) => {
   const userNameRef: React.RefObject<HTMLInputElement> = React.createRef();
 
-  const handleClick = (evt: React.FormEvent) => {
+  const handleClick = async (evt: React.FormEvent) => {
     evt.preventDefault();
     const { current: userName } = userNameRef;
     if (userName) {
-      const response = props.joinRoom(userName.value, props.match.params.roomId);
+      await props.joinRoom(userName.value, props.match.params.roomId);
       props.history.push(`${RoutePath.ROOM}/${props.match.params.roomId}`); 
     }
   }

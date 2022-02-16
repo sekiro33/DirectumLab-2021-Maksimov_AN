@@ -38,7 +38,6 @@
 .modal__dialog {
 
   width: 676px;
-  min-height: 433px;
   margin: auto;
   margin-top: 10%;
 
@@ -114,6 +113,7 @@
   display: flex;
   justify-content: flex-end;
   margin-right: 25px;
+  padding-bottom: 25px;
 }
 
 .modal__button {
@@ -121,8 +121,6 @@
 
   width: 238px;
   height: 39px;
-
-  margin-top: 108px;
 
   color: #13406d;
 
