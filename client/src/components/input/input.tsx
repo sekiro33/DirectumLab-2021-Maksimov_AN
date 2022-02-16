@@ -12,12 +12,14 @@ interface IProps {
   readonly?: boolean;
 }
 
-const Input: React.FC<IProps> = (props) => {
+//eslint-disable-next-line react/display-name
+const Input = React.forwardRef(
+  (props: IProps, ref: React.ForwardedRef<HTMLInputElement>) => {
   return (
     <label className={props.labelClassName}>{props.label}
-      <input className={props.inputClassName} type="text" name={props.name} placeholder={props.placeholder} required={props.required} value={props.value} readOnly={props.readonly} />
+      <input ref={ref} className={props.inputClassName} type="text" name={props.name} placeholder={props.placeholder} required={props.required} value={props.value} readOnly={props.readonly} />
     </label>
-  )
-}
+  );
+});
 
 export default Input;

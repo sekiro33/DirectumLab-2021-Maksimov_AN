@@ -30,9 +30,9 @@ namespace PlanPoker.Infrastructure.Repositories
     public Card Delete(Guid id)
     {
       var card = this.Get(id);
-      if (card != null)
+      if (card is not null)
         this.cards.Remove(card);
-      return card;
+      return null;
     }
 
     /// <summary>
@@ -62,7 +62,7 @@ namespace PlanPoker.Infrastructure.Repositories
     public Card Save(Card entity)
     {
       this.cards.Add(entity);
-      return entity;
+      return null;
     }
 
     /// <summary>
@@ -70,17 +70,19 @@ namespace PlanPoker.Infrastructure.Repositories
     /// </summary>
     public void CreateStandartCard()
     {
-      this.Save(new Card(null, "Coffe Break"));
-      this.Save(new Card(0, "0"));
-      this.Save(new Card(0.5, "0.5"));
-      this.Save(new Card(1, "1"));
-      this.Save(new Card(2, "2"));
-      this.Save(new Card(3, "3"));
-      this.Save(new Card(5, "5"));
-      this.Save(new Card(8, "8"));
-      this.Save(new Card(13, "13"));
-      this.Save(new Card(21, "21"));
-      this.Save(new Card(34, "34"));
+      this.Save(new Card(0));
+      this.Save(new Card(0.5));
+      this.Save(new Card(1));
+      this.Save(new Card(2));
+      this.Save(new Card(3));
+      this.Save(new Card(5));
+      this.Save(new Card(8));
+      this.Save(new Card(13));
+      this.Save(new Card(20));
+      this.Save(new Card(40));
+      this.Save(new Card(100));
+      this.Save(new Card(-10));
+      this.Save(new Card(-100));
     }
   }
 }

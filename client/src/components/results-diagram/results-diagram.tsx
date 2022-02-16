@@ -3,16 +3,16 @@ import './results-diagram.css';
 
 interface IProps {
   playersCount: number;
-  average: number;
+  average: number | null;
 }
 
 const ResultsDiagram: React.FC<IProps> = (props) => {
   return (
     <div className="results__diagram">
       <div className="diagram__info">
-        <span className="info__title">{props.playersCount} Playes</span>
+        <span className="info__title">{props.playersCount} Players</span>
         <span className="info__text">voted</span>
-        <span className="info__title">Avg: {props.average}</span>
+        <span className="info__title">Avg: {props.average && props.average.toFixed(2)}</span>
       </div>
     </div>
   );

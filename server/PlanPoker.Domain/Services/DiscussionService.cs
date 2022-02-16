@@ -12,17 +12,14 @@ namespace PlanPoker.Domain.Services
   public class DiscussionService
   {
     private readonly IRepository<Discussion> discussionRepository;
-    private readonly IRepository<Room> roomRepository;
 
     /// <summary>
     /// Конструктор сервиса.
     /// </summary>
     /// <param name="discussionRepository">Репозиторий обсуждений.</param>
-    /// <param name="roomRepository">Репозиторий комнат.</param>
-    public DiscussionService(IRepository<Discussion> discussionRepository, IRepository<Room> roomRepository)
+    public DiscussionService(IRepository<Discussion> discussionRepository)
     {
       this.discussionRepository = discussionRepository;
-      this.roomRepository = roomRepository;
     }
 
     /// <summary>
@@ -34,10 +31,7 @@ namespace PlanPoker.Domain.Services
     public void AddGrade(Guid discussionId, Guid userId, Guid cardId)
     {
       var discussion = this.discussionRepository.Get(discussionId);
-      var room = this.roomRepository.Get(discussion.RoomId);
-      var users = room.Users;
-      if (users.Contains(userId) && !discussion.EndDateTime.HasValue)
-        discussion.AddGrade(userId, cardId);
+      discussion.AddGrade(userId, cardId);
     }
 
     /// <summary>

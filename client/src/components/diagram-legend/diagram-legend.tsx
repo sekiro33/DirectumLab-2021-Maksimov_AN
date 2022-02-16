@@ -2,29 +2,26 @@ import * as React from 'react';
 import cafe from '../../images/cafe.svg';
 import './diagram-legend.css';
 
-interface IVote {
-  grade: number;
-  count: number;
-}
-
 interface IProps {
-  votes: IVote[];
+  votes: Record<string, number>;
 }
 
 const DiagramLegend: React.FC<IProps> = (props) => {
-  const cafeIcon = () => {
-    return (
-      <img className='cafe-icon' src={cafe} />
-    )
+  const getMarker = (grade: number) => {
+    if (grade == -10) {
+      return '?';
+    }
+    if (grade == -100) {
+      return (<img className='cafe-icon' src={cafe} />);
+    }
+    return grade;
   }
 
-  const getPlayersCount = (votes: IVote[]) => {
+  const getPlayersCount = (votes: Record<string, number>) => {
     let playersCount = 0;
-
-    votes.forEach((vote) => {
-      playersCount += vote.count;
-    })
-
+    for (const key in votes) {
+      playersCount++;
+    }
     return playersCount;
   }
 
@@ -74,24 +71,36 @@ const DiagramLegend: React.FC<IProps> = (props) => {
     }
   }
 
-  const getVoteList = (votes: IVote[]) => {
-    const playersCount = getPlayersCount(votes);
+  const getGradeCount = (votes: Record<string, number>, value: number) => {
+    let count = 0;
+    for (const key in votes) {
+      if (votes[key] === value) {
+        count++;
+      }
+    }
+    return count;
+  }
 
-    return (
-      votes.map((vote) => {
-        const percent = vote.count * 100 / playersCount;
-        const className = ['grade__marker', getMarkerStyle(vote.grade)];
-        return (
-          <li key={vote.grade} className="result">
-            <div className="grade">
-              <div className={className.join(' ')}></div>
-              <span className="grade__text">{vote.grade === -100 && cafeIcon() || vote.grade}</span>
-            </div>
-            <p className="result__text">{percent}% ({vote.count} player)</p>
-          </li>
-        );
-      })
-    )
+  const getVoteList = (votes: Record<string, number>) => {
+    const playersCount = getPlayersCount(votes);
+    const grades = [];
+    for (const key in votes) {
+      grades.push(votes[key]);
+    }
+    const result = Array.from(new Set(grades));
+    return result.map((grade) => {
+      const percent = (getGradeCount(votes, grade) * 100 / playersCount).toFixed(2);
+      const className = ['grade__marker', getMarkerStyle(grade)];
+      return (
+        <li key={grade} className="result">
+          <div className="grade">
+            <div className={className.join(' ')}></div>
+            <span className="grade__text">{getMarker(grade)}</span>
+          </div>
+          <p className="result__text">{percent}% ({getGradeCount(votes, grade)} player)</p>
+        </li>
+      )
+    });
   }
 
   return (

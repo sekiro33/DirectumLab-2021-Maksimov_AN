@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using System.Text.Json;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using PlanPoker.Domain.Services;
@@ -17,19 +18,16 @@ namespace PlanPoker.Controllers
   {
     private readonly RoomService roomService;
     private readonly CardDeckService cardDeckService;
-    private readonly DiscussionService discussionService;
 
     /// <summary>
     /// Конструктор контроллера комнат.
     /// </summary>
     /// <param name="roomService">Сервис комнат.</param>
     /// <param name="cardDeckService">Сервис для работы с колодами карт.</param>
-    /// <param name="discussionService">Сервис для работы обсуждениями.</param>
-    public RoomController(RoomService roomService, CardDeckService cardDeckService, DiscussionService discussionService)
+    public RoomController(RoomService roomService, CardDeckService cardDeckService)
     {
       this.roomService = roomService;
       this.cardDeckService = cardDeckService;
-      this.discussionService = discussionService;
     }
 
     /// <summary>
@@ -44,8 +42,7 @@ namespace PlanPoker.Controllers
       var cardDeck = this.cardDeckService.GetCardDeck();
       var room = this.roomService.CreateRoom(roomName, cardDeck, userId);
       var users = this.roomService.GetAllUser(room.Id).Select(user => ConverterDTO.ConvertUser(user));
-      var discussion = this.discussionService.GetAllDiscussion(room.Id).Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
-      return ConverterDTO.ConvertRoom(room, users, discussion);
+      return ConverterDTO.ConvertRoom(room, users);
     }
 
     /// <summary>
@@ -58,10 +55,9 @@ namespace PlanPoker.Controllers
     public RoomDTO Connect(Guid roomId, Guid userId)
     {
       this.roomService.AddUser(roomId, userId);
-      var cardDeck = this.roomService.GetCardDeck(roomId);
+      var room = this.roomService.GetRoom(roomId);
       var users = this.roomService.GetAllUser(roomId).Select(user => ConverterDTO.ConvertUser(user));
-      var discussion = this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
-      return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId), users, discussion);
+      return ConverterDTO.ConvertRoom(room, users);
     }
 
     /// <summary>
@@ -83,10 +79,9 @@ namespace PlanPoker.Controllers
     [HttpGet]
     public RoomDTO GetRoomInfo(Guid roomId)
     {
+      var room = this.roomService.GetRoom(roomId);
       var users = this.roomService.GetAllUser(roomId).Select(user => ConverterDTO.ConvertUser(user));
-      var cardDeck = this.roomService.GetCardDeck(roomId);
-      var discussion = this.discussionService.GetAllDiscussion(roomId).Select(discussion => ConverterDTO.ConvertDiscussion(discussion, users, cardDeck));
-      return ConverterDTO.ConvertRoom(this.roomService.GetRoom(roomId), users, discussion);
+      return ConverterDTO.ConvertRoom(room, users);
     }
   }
 }

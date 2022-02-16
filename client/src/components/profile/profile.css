@@ -48,11 +48,20 @@
 }
 
 .dropdown__content {
+  margin-right: 10%;
+
   padding: 12px 12px;
 
-  color: #13406d;
-
   text-decoration: none;
+
+  background-color: white;
+
+  border: none;
+  cursor: pointer;
+}
+
+.dropdown__content:hover {
+  color: #13406d;
 }
 
 .dropdown__corner {

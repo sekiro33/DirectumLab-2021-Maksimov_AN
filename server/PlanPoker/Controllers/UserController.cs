@@ -37,10 +37,21 @@ namespace PlanPoker.Controllers
     }
 
     /// <summary>
+    /// Получить информацию о текущем пользователе.
+    /// </summary>
+    /// <returns>Данные о пользователе.</returns>
+    [HttpGet]
+    [Authorize]
+    public UserDTO GetUser()
+    {
+      return ConverterDTO.ConvertUser(this.userService.GetCurrentUser());
+    }
+
+    /// <summary>
     /// Выход из системы.
     /// </summary>
     /// <returns>A <see cref="Task"/> representing the asynchronous operation.</returns>
-    [HttpPost]
+    [HttpGet]
     [Authorize]
     public Task Logout()
     {
